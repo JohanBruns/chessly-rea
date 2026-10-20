@@ -1,9 +1,12 @@
-// Baut aus PGN-Text einen Kurs: Kurs → Kapitel (eine PGN-Partie) → Linien
-// (jeder Pfad von der Startstellung bis zu einem Blatt des Zugbaums).
+// Baut aus PGN-Text einen Kurs im Chessly-Aufbau:
+// Kurs → Kapitel → Study (eine PGN-Partie) → Varianten (jeder Pfad bis zu einem Blatt)
+// Jede Study bekommt einen Lernpfad aus Kacheln (Video, Lern-Kacheln, Drill-Kachel).
 import { parsePgn, moveLabel } from './pgnParser.js';
 
+export const VARIATIONS_PER_TILE = 2;
+
 export function hashString(str) {
-  // FNV-1a, 32 Bit – stabil und schnell genug für Linien-IDs
+  // FNV-1a, 32 Bit – stabil und schnell genug für IDs
   let h = 0x811c9dc5;
   for (let i = 0; i < str.length; i++) {
     h ^= str.charCodeAt(i);
@@ -32,8 +35,8 @@ function normalizeColor(value) {
   return null;
 }
 
-function chapterTitle(headers, index, courseName) {
-  if (headers.Chapter) return headers.Chapter;
+function studyTitle(headers, index, courseName) {
+  if (headers.Study) return headers.Study;
   if (headers.ChapterName) return headers.ChapterName;
   const event = headers.Event;
   if (event && event !== '?') {
@@ -41,7 +44,7 @@ function chapterTitle(headers, index, courseName) {
     if (courseName && event.startsWith(`${courseName}: `)) return event.slice(courseName.length + 2);
     return event;
   }
-  return `Kapitel ${index + 1}`;
+  return `Study ${index + 1}`;
 }
 
 function collectLeafPaths(root) {
@@ -66,7 +69,7 @@ function lineName(path) {
   return branches.map(moveLabel).join(' · ');
 }
 
-// Erkennt die Farbe, die der Lernende spielt: Header > Kursvorgabe > wer den ersten Zug hat.
+// Farbe des Lernenden: Header > Kursvorgabe > wer den ersten Zug hat
 function detectColor(headers, courseColor, root) {
   return (
     normalizeColor(headers.Orientation) ||
@@ -76,9 +79,25 @@ function detectColor(headers, courseColor, root) {
   );
 }
 
+function buildTiles(study) {
+  const tiles = [];
+  if (study.video) tiles.push({ id: `${study.id}:video`, type: 'video', studyId: study.id, lines: [] });
+  for (let i = 0; i < study.lines.length; i += VARIATIONS_PER_TILE) {
+    tiles.push({
+      id: `${study.id}:t${i / VARIATIONS_PER_TILE}`,
+      type: 'learn',
+      studyId: study.id,
+      firstVariation: i + 1,
+      lines: study.lines.slice(i, i + VARIATIONS_PER_TILE),
+    });
+  }
+  if (study.lines.length) tiles.push({ id: `${study.id}:drill`, type: 'drill', studyId: study.id, lines: study.lines });
+  return tiles;
+}
+
 /**
  * @param {object} opts
- * @param {string} opts.pgn      PGN-Text (eine oder mehrere Partien = Kapitel)
+ * @param {string} opts.pgn      PGN-Text (jede Partie = eine Study)
  * @param {string} [opts.id]     Kurs-ID (sonst aus dem Namen abgeleitet)
  * @param {string} [opts.name]   Kursname (sonst Header "Course"/"StudyName")
  * @param {string} [opts.color]  'w' | 'b' – überschreibt die Header
@@ -94,23 +113,55 @@ export function buildCourse({ pgn, id, name, color, source = 'builtin', fileName
   const courseId = id || slugify(courseName);
   const courseColor = normalizeColor(color) || normalizeColor(first.CourseColor);
 
+  const chapters = [];
+  const chapterByTitle = new Map();
   const lineIds = new Set();
-  const chapters = games.map((game, index) => {
-    const title = chapterTitle(game.headers, index, first.StudyName || courseName);
-    const userColor = normalizeColor(color) || detectColor(game.headers, courseColor, game.root);
-    const chapterId = `${courseId}/${index}-${slugify(title)}`;
-    const lines = collectLeafPaths(game.root)
+
+  games.forEach((game, gameIndex) => {
+    const h = game.headers;
+    const chapterName = h.Chapter || (h.Study ? 'Kapitel 1' : null) || courseName;
+    let chapter = chapterByTitle.get(chapterName);
+    if (!chapter) {
+      chapter = {
+        id: `${courseId}~c${chapters.length}`,
+        index: chapters.length,
+        title: chapterName,
+        description: h.ChapterDescription || '',
+        studies: [],
+      };
+      chapters.push(chapter);
+      chapterByTitle.set(chapterName, chapter);
+    }
+
+    const userColor = normalizeColor(color) || detectColor(h, courseColor, game.root);
+    const study = {
+      id: `${chapter.id}s${chapter.studies.length}`,
+      index: chapter.studies.length,
+      chapterId: chapter.id,
+      courseId,
+      title: studyTitle(h, gameIndex, first.StudyName || courseName),
+      description: h.Description || game.root.comment || '',
+      video: h.Video || null,
+      userColor,
+      root: game.root,
+      lines: [],
+    };
+
+    study.lines = collectLeafPaths(game.root)
       .filter((path) => path.some((node) => node.color === userColor))
-      .map((path) => {
+      .map((path, i) => {
         let lineId = `${courseId}:${hashString(game.root.fen + '|' + path.map((n) => n.uci).join(' '))}`;
-        // Gleiche Zugfolge in zwei Kapiteln: ID eindeutig halten
+        // Gleiche Zugfolge in zwei Studies: ID eindeutig halten
         while (lineIds.has(lineId)) lineId += '~';
         lineIds.add(lineId);
         return {
           id: lineId,
           courseId,
-          chapterId,
-          chapterTitle: title,
+          chapterId: chapter.id,
+          studyId: study.id,
+          chapterTitle: chapter.title,
+          studyTitle: study.title,
+          variation: i + 1,
           name: lineName(path),
           userColor,
           startFen: game.root.fen,
@@ -118,24 +169,51 @@ export function buildCourse({ pgn, id, name, color, source = 'builtin', fileName
           moves: path,
         };
       });
-    return {
-      id: chapterId,
-      title,
-      description: game.headers.Description || game.root.comment || '',
-      userColor,
-      root: game.root,
-      lines,
-    };
+    study.tiles = buildTiles(study);
+    chapter.studies.push(study);
   });
 
-  const colors = new Set(chapters.map((c) => c.userColor));
+  for (const chapter of chapters) {
+    chapter.lines = chapter.studies.flatMap((s) => s.lines);
+    const colors = new Set(chapter.studies.map((s) => s.userColor));
+    chapter.userColor = colors.size === 1 ? [...colors][0] : 'both';
+  }
+  const studies = chapters.flatMap((c) => c.studies);
+  const colors = new Set(studies.map((s) => s.userColor));
   return {
     id: courseId,
     name: courseName,
     description: first.CourseDescription || '',
+    icon: first.CourseIcon || null,
+    hue: Number.isFinite(Number(first.CourseHue)) && first.CourseHue ? Number(first.CourseHue) : Number.parseInt(hashString(courseName), 36) % 360,
     color: colors.size === 1 ? [...colors][0] : 'both',
     source,
     chapters,
-    lines: chapters.flatMap((c) => c.lines),
+    studies,
+    tiles: studies.flatMap((s) => s.tiles),
+    lines: studies.flatMap((s) => s.lines),
   };
+}
+
+// Stellungsschlüssel ohne Zugzähler – für Course Explorer und Zugumstellungen
+export function positionKey(fen) {
+  return fen.split(' ').slice(0, 4).join(' ');
+}
+
+// Index: Stellung → Repertoire-Knoten (über alle Studies eines Kurses)
+export function buildPositionIndex(course) {
+  const index = new Map();
+  const add = (fen, entry) => {
+    const key = positionKey(fen);
+    if (!index.has(key)) index.set(key, []);
+    index.get(key).push(entry);
+  };
+  for (const study of course.studies) {
+    const walk = (node) => {
+      add(node.fen, { study, node });
+      node.children.forEach(walk);
+    };
+    walk(study.root);
+  }
+  return index;
 }

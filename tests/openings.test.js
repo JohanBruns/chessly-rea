@@ -16,29 +16,31 @@ describe('mitgelieferte Eröffnungen', () => {
     describe(file, () => {
       const course = buildCourse({ pgn: readFileSync(join(dir, file), 'utf8'), fileName: file });
 
-      it('hat Kapitel und Linien', () => {
-        expect(course.chapters.length).toBeGreaterThan(0);
-        for (const chapter of course.chapters) expect(chapter.lines.length).toBeGreaterThan(0);
-      });
-
-      it('hat eindeutige Liniennamen pro Kapitel', () => {
+      it('hat Kapitel, Studies und Varianten', () => {
+        expect(course.chapters.length).toBeGreaterThan(1);
         for (const chapter of course.chapters) {
-          const names = chapter.lines.map((l) => l.name);
-          expect(new Set(names).size, `${chapter.title}: ${names.join(' | ')}`).toBe(names.length);
+          expect(chapter.studies.length, chapter.title).toBeGreaterThan(0);
+          for (const study of chapter.studies) expect(study.lines.length, study.title).toBeGreaterThan(0);
         }
       });
 
-      it('endet jede Linie mit einem eigenen Zug', () => {
+      it('hat eindeutige Variantennamen pro Study', () => {
+        for (const study of course.studies) {
+          const names = study.lines.map((l) => l.name);
+          expect(new Set(names).size, `${study.title}: ${names.join(' | ')}`).toBe(names.length);
+        }
+      });
+
+      it('endet jede Variante mit einem eigenen Zug', () => {
         for (const line of course.lines) {
           const last = line.moves[line.moves.length - 1];
-          expect(last.color, `${line.chapterTitle} – ${line.name}`).toBe(line.userColor);
+          expect(last.color, `${line.studyTitle} – ${line.name}`).toBe(line.userColor);
         }
       });
 
-      it('erklärt jede Linie mindestens einmal', () => {
-        for (const line of course.lines) {
-          expect(line.moves.some((n) => n.comment), line.name).toBe(true);
-        }
+      it('erklärt jede Variante und jede Study', () => {
+        for (const line of course.lines) expect(line.moves.some((n) => n.comment), line.name).toBe(true);
+        for (const study of course.studies) expect(study.description, study.title).not.toBe('');
       });
     });
   }
