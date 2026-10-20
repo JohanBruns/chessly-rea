@@ -5,37 +5,57 @@ import '@lichess-org/chessground/assets/chessground.cburnett.css';
 import './styles.css';
 
 import { clear } from './dom.js';
+import { initLayout, renderTopbar, setSessionHeader } from './ui/layout.js';
+import { renderBot } from './views/botView.js';
 import { renderCourse } from './views/courseView.js';
+import { renderCourses } from './views/coursesView.js';
+import { renderDrillShuffle } from './views/drillShuffleView.js';
 import { renderHome } from './views/homeView.js';
 import { renderImport } from './views/importView.js';
+import { renderProfile } from './views/profileView.js';
+import { renderReview } from './views/reviewView.js';
 import { renderSettings } from './views/settingsView.js';
-import { renderTrainer } from './views/trainerView.js';
+import { renderStudyExplorer } from './views/studyExplorerView.js';
+import { renderTileSession } from './views/tileView.js';
 
 const app = document.getElementById('app');
 let cleanup = null;
 
-function parseHash() {
-  const raw = location.hash.replace(/^#\/?/, '');
+export function parseHash(hash = location.hash) {
+  const raw = hash.replace(/^#\/?/, '');
   const [path, query = ''] = raw.split('?');
   const params = Object.fromEntries(new URLSearchParams(query));
   const parts = path.split('/').filter(Boolean).map(decodeURIComponent);
   return { parts, params };
 }
 
+function resolve(parts, params) {
+  const [view, id, sub, subId] = parts;
+  if (view === 'course' && id && sub === 'tile' && subId) return ['session', () => renderTileSession(app, { courseId: id, tileId: subId })];
+  if (view === 'course' && id && sub === 'study' && subId) return ['explorer', () => renderStudyExplorer(app, { courseId: id, studyId: subId })];
+  if (view === 'course' && id) return ['course', () => renderCourse(app, { id, params })];
+  if (view === 'courses') return ['courses', () => renderCourses(app, params)];
+  if (view === 'review') return ['review', () => renderReview(app, params)];
+  if (view === 'drill') return ['drill', () => renderDrillShuffle(app, params)];
+  if (view === 'bot') return ['bot', () => renderBot(app, params)];
+  if (view === 'profile') return ['profile', () => renderProfile(app)];
+  if (view === 'settings') return ['settings', () => renderSettings(app)];
+  if (view === 'import') return ['import', () => renderImport(app)];
+  return ['home', () => renderHome(app)];
+}
+
 function route() {
   if (cleanup) cleanup();
   cleanup = null;
   clear(app);
+  setSessionHeader(null);
   const { parts, params } = parseHash();
-  const view = parts[0] || '';
-  document.body.dataset.view = view || 'home';
+  const [name, render] = resolve(parts, params);
+  document.body.dataset.view = name;
+  renderTopbar();
 
   try {
-    if (view === 'course' && parts[1]) cleanup = renderCourse(app, { id: parts[1] });
-    else if (view === 'train') cleanup = renderTrainer(app, params);
-    else if (view === 'import') cleanup = renderImport(app);
-    else if (view === 'settings') cleanup = renderSettings(app);
-    else cleanup = renderHome(app);
+    cleanup = render() || null;
   } catch (err) {
     console.error(err);
     app.textContent = `Fehler: ${err.message}`;
@@ -43,5 +63,6 @@ function route() {
   window.scrollTo(0, 0);
 }
 
+initLayout();
 window.addEventListener('hashchange', route);
 route();

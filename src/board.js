@@ -2,7 +2,12 @@
 import { Chessground } from '@lichess-org/chessground';
 import { Chess } from 'chess.js';
 
-const COLOR = { w: 'white', b: 'black' };
+const COLOR = { w: 'white', b: 'black', both: 'both' };
+
+// Eigener Pinsel im Akzent-Türkis für Lernpfeile, Hinweise und Lösungen
+const BRUSHES = {
+  teal: { key: 'tl', color: '#14b8a6', opacity: 0.95, lineWidth: 11 },
+};
 
 export function legalDests(fen) {
   const dests = new Map();
@@ -18,6 +23,37 @@ export function isPromotion(fen, from, to) {
   return !!piece && piece.type === 'p' && (to[1] === '8' || to[1] === '1');
 }
 
+// Stellung nach einem (beliebigen legalen) Zug – für das kurze Anzeigen falscher Züge
+export function fenAfter(fen, from, to, promotion = 'q') {
+  try {
+    const chess = new Chess(fen);
+    const move = chess.move({ from, to, promotion });
+    return move ? { fen: chess.fen(), san: move.san, uci: move.from + move.to + (move.promotion || '') } : null;
+  } catch {
+    return null;
+  }
+}
+
+// Rotes Minus-Abzeichen oben rechts an der Figur (falscher Zug)
+export function mistakeBadge(square) {
+  return {
+    orig: square,
+    customSvg: {
+      html: '<g class="badge-wrong"><circle cx="30" cy="-30" r="16" fill="#ef4444" stroke="#fff" stroke-width="3.5"/><rect x="21" y="-33" width="18" height="6" rx="2" fill="#fff"/></g>',
+    },
+  };
+}
+
+// Grünes Häkchen-Abzeichen (richtiger Zug)
+export function correctBadge(square) {
+  return {
+    orig: square,
+    customSvg: {
+      html: '<g class="badge-right"><circle cx="30" cy="-30" r="16" fill="#14b8a6" stroke="#fff" stroke-width="3.5"/><path d="M22 -30l5.5 5.5 10-11" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></g>',
+    },
+  };
+}
+
 export function createBoard(el, { orientation = 'w', coordinates = true, onMove } = {}) {
   const cg = Chessground(el, {
     orientation: COLOR[orientation],
@@ -27,13 +63,13 @@ export function createBoard(el, { orientation = 'w', coordinates = true, onMove 
     movable: { free: false, color: undefined, showDests: true, events: { after: (orig, dest) => onMove?.(orig, dest) } },
     premovable: { enabled: false },
     draggable: { enabled: true, showGhost: true },
-    drawable: { enabled: true, visible: true },
+    drawable: { enabled: true, visible: true, brushes: BRUSHES },
   });
   let destroyed = false;
 
   return {
-    // Stellung zeigen; `interactive` gibt dem Lernenden die Züge seiner Farbe frei
-    show(fen, { lastMove, interactive = false, userColor, shapes = [] } = {}) {
+    // Stellung zeigen; `interactive` gibt dem Lernenden die Züge seiner Farbe frei ('both' = beide)
+    show(fen, { lastMove, interactive = false, userColor, shapes = [], dests } = {}) {
       const chess = new Chess(fen);
       const turn = COLOR[chess.turn()];
       cg.set({
@@ -43,13 +79,19 @@ export function createBoard(el, { orientation = 'w', coordinates = true, onMove 
         check: chess.inCheck() ? turn : false,
         movable: {
           color: interactive ? COLOR[userColor] : undefined,
-          dests: interactive ? legalDests(fen) : new Map(),
+          dests: interactive ? dests || legalDests(fen) : new Map(),
         },
       });
       cg.setAutoShapes(shapes);
     },
     setOrientation(color) {
       cg.set({ orientation: COLOR[color] });
+    },
+    toggleOrientation() {
+      cg.toggleOrientation();
+    },
+    get orientation() {
+      return cg.state.orientation === 'white' ? 'w' : 'b';
     },
     setShapes(shapes) {
       cg.setAutoShapes(shapes);
@@ -64,4 +106,9 @@ export function createBoard(el, { orientation = 'w', coordinates = true, onMove 
       cg.destroy();
     },
   };
+}
+
+// Lichess-Analysebrett für eine Stellung
+export function lichessAnalysisUrl(fen) {
+  return `https://lichess.org/analysis/standard/${fen.replace(/ /g, '_')}`;
 }

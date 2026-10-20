@@ -1,104 +1,158 @@
-// Kursansicht: Kapitel mit ihren Linien und dem Lernstand jeder Linie.
+// Kursseite: Kopf (Icon, Titel, Kurs-Explorer, Beschreibung, Fortschritt), Kapitel als Akkordeon
+// mit Studies und Lernpfaden, Seitenleiste mit Bot, Drill Shuffle und Wiederholen.
 import { findCourse, lineStats, loadAllCourses } from '../courses.js';
-import { h, colorLabel, formatDue, progressBar } from '../dom.js';
-import { isDue, isMastered } from '../scheduler.js';
-import { loadProgress, removeImportedCourse, resetCourseProgress } from '../storage.js';
-import { courseActions, statsLine } from './homeView.js';
+import { add, clear, colorLabel, fill, h } from '../dom.js';
+import { courseProgress, nextTile, tileStates } from '../progress.js';
+import { isChapterOpen, loadProgress, loadState, removeImportedCourse, setChapterOpen } from '../storage.js';
+import { courseIcon } from '../ui/courseIcon.js';
+import { icon } from '../ui/icons.js';
+import { studyBlock, tileHref } from '../ui/studyBlock.js';
+import { openCourseExplorer } from './courseExplorer.js';
 
-function statusClass(card) {
-  if (!card || card.status === 'new') return 'new';
-  if (isDue(card)) return 'due';
-  if (isMastered(card)) return 'mastered';
-  return 'learning';
+function chapterStats(chapter, progress, state) {
+  let total = 0;
+  let done = 0;
+  for (const study of chapter.studies) {
+    for (const { tile, status } of tileStates(study, progress, state)) {
+      if (tile.type === 'video') continue;
+      total++;
+      if (status === 'completed') done++;
+    }
+  }
+  return { total, done };
 }
 
-export function renderCourse(root, { id }) {
+export function renderCourse(root, { id, params = {} }) {
   const course = findCourse(id);
   if (!course) {
-    root.append(h('div', { class: 'card empty-state' }, h('h2', {}, 'Kurs nicht gefunden'), h('a', { class: 'btn', href: '#/' }, 'Zur Startseite')));
-    return () => {};
+    add(root, h('div', { class: 'card empty-state' }, h('h2', {}, 'Kurs nicht gefunden'), h('a', { class: 'btn btn-primary', href: '#/courses' }, 'Zu den Kursen')));
+    return null;
   }
-  const progress = loadProgress();
-  const stats = lineStats(course.lines, progress);
+  const chaptersEl = h('div', { class: 'chapters' });
+  const headEl = h('section', { class: 'card course-hero' });
+  const sideEl = h('aside', { class: 'course-side' });
 
-  const resetBtn = h(
-    'button',
-    {
-      class: 'btn btn-ghost btn-sm',
-      onclick: () => {
-        if (!confirm(`Lernstand für „${course.name}“ wirklich zurücksetzen?`)) return;
-        resetCourseProgress(course.id);
-        location.reload();
-      },
-    },
-    'Lernstand zurücksetzen',
-  );
-  const deleteBtn =
-    course.source === 'imported'
-      ? h(
-          'button',
-          {
-            class: 'btn btn-danger btn-sm',
-            onclick: () => {
-              if (!confirm(`Importierten Kurs „${course.name}“ löschen? Der Lernstand bleibt erhalten, falls du ihn erneut importierst.`)) return;
-              removeImportedCourse(course.id);
-              loadAllCourses({ refresh: true });
-              location.hash = '#/';
-            },
-          },
-          'Kurs löschen',
-        )
-      : null;
+  function render() {
+    const progress = loadProgress();
+    const state = loadState();
+    const pct = courseProgress(course, progress, state);
+    const next = nextTile(course, progress, state);
+    const stats = lineStats(course.lines, progress);
+    const focusStudy = params.study ? course.studies.find((s) => s.id === params.study) : null;
+    const focusChapterId = focusStudy?.chapterId || next?.chapter.id || course.chapters[0].id;
 
-  root.append(
-    h('a', { class: 'link-muted', href: '#/' }, '← Alle Kurse'),
-    h(
-      'section',
-      { class: 'card course-hero' },
-      h('div', { class: 'course-head' }, h('h1', {}, course.name), h('span', { class: ['color-badge', course.color] }, colorLabel(course.color))),
-      course.description ? h('p', { class: 'muted' }, course.description) : null,
-      progressBar(stats.learned, stats.total),
-      statsLine(stats),
-      courseActions(course, stats),
-      h('div', { class: 'row row-end' }, resetBtn, deleteBtn),
-    ),
-  );
-
-  for (const chapter of course.chapters) {
-    const cStats = lineStats(chapter.lines, progress);
-    root.append(
+    fill(
+      headEl,
       h(
-        'section',
-        { class: 'card chapter' },
-        h('div', { class: 'chapter-head' }, h('h2', {}, chapter.title), h('span', { class: 'muted small' }, `${cStats.learned} / ${cStats.total} gelernt · ${colorLabel(chapter.userColor)}`)),
-        chapter.description ? h('p', { class: 'muted' }, chapter.description) : null,
-        courseActions(course, cStats, { chapter }),
+        'div',
+        { class: 'hero-top' },
+        courseIcon(course, { size: 76 }),
         h(
-          'ul',
-          { class: 'line-list' },
-          chapter.lines.map((line) => {
-            const card = progress[line.id];
-            const preview = line.moves
-              .slice(0, 8)
-              .map((n, i) => (n.color === 'w' || i === 0 ? `${n.moveNumber}.${n.color === 'b' ? '..' : ''}${n.san}` : n.san))
-              .join(' ');
-            return h(
-              'li',
-              { class: 'line-item' },
-              h('span', { class: ['status-dot', statusClass(card)], title: formatDue(card) }),
-              h('div', { class: 'line-info' }, h('div', { class: 'line-name' }, line.name), h('div', { class: 'line-moves' }, preview + (line.moves.length > 8 ? ' …' : ''))),
-              h('span', { class: 'line-due small muted' }, formatDue(card)),
-              h(
-                'div',
-                { class: 'line-buttons' },
-                h('a', { class: 'btn btn-sm btn-ghost', href: `#/train?line=${encodeURIComponent(line.id)}&mode=learn&course=${encodeURIComponent(course.id)}` }, 'Lernen'),
-                h('a', { class: 'btn btn-sm', href: `#/train?line=${encodeURIComponent(line.id)}&mode=drill&course=${encodeURIComponent(course.id)}` }, 'Drillen'),
-              ),
-            );
-          }),
+          'div',
+          { class: 'hero-title' },
+          h('h1', {}, course.name),
+          h(
+            'div',
+            { class: 'tags' },
+            h('span', { class: ['tag', `tag-${course.color}`] }, colorLabel(course.color)),
+            h('span', { class: 'tag' }, `${course.chapters.length} Kapitel`),
+            h('span', { class: 'tag' }, `${course.lines.length} Varianten`),
+          ),
         ),
+        h('button', { class: 'btn btn-ghost explorer-btn', onclick: () => openCourseExplorer(course) }, icon('compass', { size: 18 }), 'Kurs-Explorer'),
+      ),
+      course.description ? h('p', { class: 'muted' }, course.description) : null,
+      h(
+        'div',
+        { class: 'hero-progress' },
+        h('div', { class: 'progress big' }, h('div', { class: 'progress-fill', style: { width: `${pct.percent}%` } })),
+        h('span', {}, h('strong', {}, `${pct.percent}%`), h('span', { class: 'muted' }, ` · ${pct.done} / ${pct.total} Kacheln`)),
+        next ? h('a', { class: 'btn btn-primary', href: tileHref(course, next.tile) }, icon('play', { size: 16 }), loadState().started[course.id] ? 'Weiter lernen' : 'Kurs starten') : null,
       ),
     );
+
+    fill(
+      chaptersEl,
+      ...course.chapters.map((chapter) => {
+        const cs = chapterStats(chapter, progress, state);
+        const open = isChapterOpen(chapter.id, chapter.id === focusChapterId);
+        const details = h(
+          'details',
+          { class: 'chapter-acc', open, 'data-chapter': chapter.id },
+          h(
+            'summary',
+            { class: 'chapter-summary' },
+            h('span', { class: ['chapter-num', cs.done === cs.total ? 'done' : ''] }, cs.done === cs.total ? icon('check', { size: 16, strokeWidth: 3 }) : String(chapter.index + 1)),
+            h('div', { class: 'chapter-text' }, h('div', { class: 'chapter-kicker' }, `KAPITEL ${chapter.index + 1}`), h('div', { class: 'chapter-name' }, chapter.title)),
+            h('span', { class: 'muted small chapter-count' }, `${cs.done}/${cs.total}`),
+            icon('chevronDown', { size: 20, cls: 'chev' }),
+          ),
+          h(
+            'div',
+            { class: 'chapter-content' },
+            chapter.description ? h('p', { class: 'muted chapter-desc' }, chapter.description) : null,
+            chapter.studies.map((study) => studyBlock(course, study, { progress, state, currentTileId: next?.tile.id, onChange: render })),
+          ),
+        );
+        details.addEventListener('toggle', () => setChapterOpen(chapter.id, details.open));
+        return details;
+      }),
+    );
+
+    fill(
+      sideEl,
+      h(
+        'a',
+        { class: 'card side-card', href: `#/bot?course=${encodeURIComponent(course.id)}` },
+        h('span', { class: 'side-icon bot' }, icon('bot', { size: 26 })),
+        h('div', {}, h('strong', {}, 'Gegen den Bot'), h('span', { class: 'muted small' }, 'Spiele deine Eröffnung gegen den Computer')),
+      ),
+      h(
+        'a',
+        { class: 'card side-card', href: `#/drill?course=${encodeURIComponent(course.id)}` },
+        h('span', { class: 'side-icon shuffle' }, icon('shuffle', { size: 26 })),
+        h('div', {}, h('strong', {}, 'Drill Shuffle'), h('span', { class: 'muted small' }, 'Varianten zufällig gemischt abfragen')),
+      ),
+      h(
+        'a',
+        { class: ['card', 'side-card', stats.due ? 'has-due' : ''], href: `#/review?course=${encodeURIComponent(course.id)}` },
+        h('span', { class: 'side-icon review' }, icon('repeat', { size: 26 })),
+        h(
+          'div',
+          {},
+          h('strong', {}, 'Wiederholen'),
+          h('span', { class: 'muted small' }, stats.due ? `${stats.due} Variante${stats.due === 1 ? '' : 'n'} fällig` : `${stats.learned} gelernt · nichts fällig`),
+        ),
+        stats.due ? h('span', { class: 'count-badge' }, String(stats.due)) : null,
+      ),
+      course.source === 'imported'
+        ? h(
+            'button',
+            {
+              class: 'btn btn-danger btn-sm',
+              onclick: () => {
+                if (!confirm(`Importierten Kurs „${course.name}“ löschen? Der Lernstand bleibt erhalten, falls du ihn erneut importierst.`)) return;
+                removeImportedCourse(course.id);
+                loadAllCourses({ refresh: true });
+                location.hash = '#/courses';
+              },
+            },
+            icon('trash', { size: 16 }),
+            'Kurs löschen',
+          )
+        : null,
+    );
   }
-  return () => {};
+
+  add(root, h('div', { class: 'course-layout' }, h('div', { class: 'course-main' }, headEl, chaptersEl), sideEl));
+  render();
+
+  if (params.study) {
+    const el = root.querySelector(`[data-study="${CSS.escape(params.study)}"]`);
+    if (el) {
+      el.closest('details')?.setAttribute('open', '');
+      requestAnimationFrame(() => el.scrollIntoView({ block: 'center' }));
+    }
+  }
+  return null;
 }

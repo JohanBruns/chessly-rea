@@ -7,6 +7,7 @@ const KEYS = {
   settings: 'chesslyRea.settings.v1',
   xp: 'chesslyRea.xp.v1',
   state: 'chesslyRea.state.v1',
+  ui: 'chesslyRea.ui.v1',
 };
 
 export const DEFAULT_SETTINGS = {
@@ -95,6 +96,33 @@ export function resetCourseProgress(courseId) {
   });
 }
 
+// ---------- Ansicht (eingeklappte Studies, offene Kapitel) ----------
+function loadUi() {
+  return { collapsed: {}, openChapters: {}, ...read(KEYS.ui, {}) };
+}
+
+export function isCollapsed(studyId) {
+  return !!loadUi().collapsed[studyId];
+}
+
+export function setCollapsed(studyId, collapsed) {
+  const ui = loadUi();
+  if (collapsed) ui.collapsed[studyId] = true;
+  else delete ui.collapsed[studyId];
+  write(KEYS.ui, ui);
+}
+
+export function isChapterOpen(chapterId, fallback) {
+  const value = loadUi().openChapters[chapterId];
+  return value === undefined ? fallback : value;
+}
+
+export function setChapterOpen(chapterId, open) {
+  const ui = loadUi();
+  ui.openChapters[chapterId] = open;
+  write(KEYS.ui, ui);
+}
+
 // ---------- XP ----------
 export function loadXp() {
   return { total: 0, byDay: {}, ...read(KEYS.xp, {}) };
@@ -112,6 +140,8 @@ export function addXp(amount, time = Date.now()) {
   const key = dayKey(time);
   xp.byDay[key] = (xp.byDay[key] || 0) + amount;
   write(KEYS.xp, xp);
+  // Topbar (Streak, Level) aktualisieren
+  if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('rea:xp', { detail: { amount, xp } }));
   return xp;
 }
 

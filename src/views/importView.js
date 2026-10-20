@@ -1,8 +1,9 @@
 // Import neuer Eröffnungen: Lichess-Studie per Link, PGN-Datei oder eingefügter Text.
 import { buildCourse, slugify } from '../courseLoader.js';
 import { loadAllCourses } from '../courses.js';
-import { h, clear, colorLabel } from '../dom.js';
+import { add, clear, colorLabel, fill, h } from '../dom.js';
 import { saveImportedCourse } from '../storage.js';
+import { icon } from '../ui/icons.js';
 
 // https://lichess.org/study/AbCdEfGh oder .../study/AbCdEfGh/ChapterId
 export function lichessStudyUrl(input) {
@@ -30,7 +31,7 @@ export function renderImport(root) {
   const importBtn = h('button', { class: 'btn btn-primary', disabled: true, onclick: () => doImport() }, 'Kurs importieren');
 
   function setStatus(type, ...content) {
-    clear(statusEl).append(h('div', { class: ['feedback-msg', type] }, ...content));
+    fill(statusEl, h('div', { class: ['feedback-msg', type] }, ...content));
   }
 
   function analyse() {
@@ -47,8 +48,14 @@ export function renderImport(root) {
       const exists = loadAllCourses().courses.find((c) => c.id === course.id);
       setStatus(
         exists && exists.source === 'builtin' ? 'warn' : 'good',
-        `✓ ${course.chapters.length} Kapitel, ${course.lines.length} Linien erkannt – du spielst ${colorLabel(course.color)}.`,
-        exists ? h('div', {}, exists.source === 'builtin' ? '⚠ Ein mitgelieferter Kurs heißt genauso – bitte einen anderen Namen wählen.' : 'Ein importierter Kurs mit diesem Namen wird ersetzt (Lernstand bleibt).') : null,
+        `✓ ${course.chapters.length} Kapitel, ${course.studies.length} Studies, ${course.lines.length} Varianten erkannt – du spielst ${colorLabel(course.color)}.`,
+        exists
+          ? h(
+              'div',
+              {},
+              exists.source === 'builtin' ? '⚠ Ein mitgelieferter Kurs heißt genauso – bitte einen anderen Namen wählen.' : 'Ein importierter Kurs mit diesem Namen wird ersetzt (Lernstand bleibt).',
+            )
+          : null,
       );
       importBtn.disabled = !course.lines.length || (exists && exists.source === 'builtin');
     } catch (err) {
@@ -102,22 +109,29 @@ export function renderImport(root) {
   nameInput.addEventListener('change', analyse);
   colorSelect.addEventListener('change', analyse);
 
-  root.append(
-    h('a', { class: 'link-muted', href: '#/' }, '← Alle Kurse'),
+  const page = h('div', { class: 'page narrow' });
+  add(root, page);
+  add(
+    page,
+    h(
+      'div',
+      { class: 'page-head' },
+      h('div', { class: 'page-icon' }, icon('plus', { size: 26 })),
+      h('div', {}, h('h1', {}, 'Eröffnung hinzufügen'), h('p', { class: 'muted' }, 'Aus einer Lichess-Studie, einer PGN-Datei oder eingefügtem Text wird ein Kurs mit Lernpfad.')),
+    ),
     h(
       'section',
       { class: 'card' },
-      h('h1', {}, 'Eröffnung hinzufügen'),
       h(
         'p',
         { class: 'muted' },
-        'Jede PGN-Partie wird ein Kapitel, jede Variante darin eine eigene Linie. Kommentare in {geschweiften Klammern} werden im Lernmodus als Erklärung angezeigt, Lichess-Pfeile ([%cal …]) als Pfeile auf dem Brett.',
+        'Jede PGN-Partie wird eine Study mit eigenem Lernpfad, jede Variante darin eine Variante zum Lernen. [Chapter "…"] fasst Studies zu Kapiteln zusammen (Lichess-Studien: ein Kapitel, jedes Studienkapitel eine Study). Kommentare in {geschweiften Klammern} erscheinen beim Lernen als Erklärung, Lichess-Pfeile ([%cal …]) als Pfeile auf dem Brett.',
       ),
-      h('h3', {}, '1. Lichess-Studie'),
+      h('h2', {}, '1. Lichess-Studie'),
       h('div', { class: 'row' }, urlInput, h('button', { class: 'btn', onclick: loadFromLichess }, 'Laden')),
-      h('h3', {}, '2. oder PGN-Datei'),
+      h('h2', {}, '2. oder PGN-Datei'),
       fileInput,
-      h('h3', {}, '3. oder PGN einfügen'),
+      h('h2', {}, '3. oder PGN einfügen'),
       textArea,
       h('div', { class: 'form-grid' }, h('label', {}, 'Kursname', nameInput), h('label', {}, 'Meine Farbe', colorSelect)),
       statusEl,

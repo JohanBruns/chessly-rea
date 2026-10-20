@@ -8,7 +8,10 @@ export function h(tag, attrs = {}, ...children) {
     } else if (key === 'class') {
       el.className = Array.isArray(value) ? value.filter(Boolean).join(' ') : value;
     } else if (key === 'style' && typeof value === 'object') {
-      Object.assign(el.style, value);
+      for (const [prop, v] of Object.entries(value)) {
+        if (prop.startsWith('--')) el.style.setProperty(prop, v);
+        else el.style[prop] = v;
+      }
     } else if (key in el && typeof value !== 'string') {
       el[key] = value;
     } else {
@@ -31,6 +34,19 @@ function append(el, children) {
 
 export function clear(el) {
   while (el.firstChild) el.removeChild(el.firstChild);
+  return el;
+}
+
+// Inhalt ersetzen; null/false/Arrays wie bei h() erlaubt
+export function fill(el, ...children) {
+  clear(el);
+  append(el, children);
+  return el;
+}
+
+// Anhängen; null/false/Arrays wie bei h() erlaubt
+export function add(el, ...children) {
+  append(el, children);
   return el;
 }
 
