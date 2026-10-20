@@ -1,12 +1,27 @@
 # Chessly-REA – persönlicher Eröffnungstrainer
 
-Ein eigener Nachbau des Chessly-Lernprinzips für die private Nutzung:
+Ein eigener Nachbau der Lernlogik und Navigation von Chessly für die private Nutzung – mit eigenem Design
+(dunkles Navy mit Türkis, eigenes Logo, eigene Kachelgrafik) und eigenen Repertoires.
 
-1. **Lernen** – Die Linie wird Zug für Zug gezeigt. Der eigene Zug ist mit einem grünen Pfeil markiert, die Erklärung steht daneben.
-2. **Drillen** – Direkt danach spielst du die Linie aus dem Gedächtnis. Der Gegner zieht automatisch.
-3. **Wiederholen** – Spaced Repetition (vereinfachtes SM-2): Fehlerfreie Linien kommen in wachsenden Abständen wieder (1 → 3 → 8 → 21 … Tage). Fehlerhafte Linien kommen sofort noch einmal dran.
+## So lernst du
 
-Enthalten sind ein **Caro-Kann-Repertoire** (Schwarz) und ein **London-System-Repertoire** (Weiß). Weitere Eröffnungen lassen sich jederzeit hinzufügen.
+1. **Kurs → Kapitel → Study.** Jeder Kurs hat Kapitel (Akkordeon), jedes Kapitel mehrere Studies.
+2. **Lernpfad aus Kacheln.** Jede Study hat einen Pfad aus isometrischen Kacheln: optional ein Video,
+   Lern-Kacheln (je 2 Varianten) und am Ende eine Drill-Kachel. Kacheln werden nacheinander freigeschaltet.
+3. **Lern-Kachel.** Pro Variante erst **Lernen** (Pfeil + Kommentar, falsche Züge springen still zurück),
+   dann „Variante abgeschlossen!“ mit *Nochmal* oder *Weiter zur Wiederholung*, dann **Wiederholen** aus dem
+   Gedächtnis (+5 XP). Der Fortschrittsbalken hat 2 Segmente pro Variante.
+4. **Hinweis in 2 Stufen.** Der 1. Klick markiert die Figur (Button heißt dann „Lösung“), der 2. Klick zeigt
+   Pfeil und Kommentar. Falsche Züge bekommen ein rotes Minus-Abzeichen und werden zurückgesetzt.
+5. **Drill-Kachel.** Alle Varianten der Study gemischt (+10 XP). Varianten mit Fehlern kommen am Ende noch einmal.
+6. **Wiederholen.** Spaced Repetition (vereinfachtes SM-2): Gelernte Varianten werden in wachsenden Abständen
+   fällig (Menü → *Wiederholen*).
+
+Außerdem: **Drill Shuffle** (Kurs wählen, Varianten zufällig), **Gegen den Bot** (Repertoire-Züge, danach
+Stockfish), **Study-Linien-Explorer** (Klick auf den Study-Titel), **Kurs-Explorer** (freies Brett mit Kurszügen),
+**XP, Level, Streak** und eine persönliche **Wochenliga** im Profil.
+
+Enthalten sind ein **Caro-Kann-Repertoire** (Schwarz) und ein **London-System-Repertoire** (Weiß).
 
 ## Starten
 
@@ -14,73 +29,101 @@ Doppelklick auf `start.cmd` – oder im Terminal:
 
 ```bash
 npm install
+```
+
+```bash
 npm run dev
 ```
 
-Dann <http://localhost:5173> öffnen.
+Dann <http://localhost:5173> öffnen. `npm install` kopiert die Stockfish-Engine (Lite, WASM) nach `public/stockfish/`.
 
-**Tastatur im Training:** `H` Hinweis · `R` Linie neu starten · `Enter` weiter · `Esc` beenden
+**Tastatur in Sitzungen:** `←`/`→` Züge zurück/vor (nur bis zur aktuellen Stellung) · `Pos1`/`Ende` · `H` Hinweis ·
+`Enter` weiter · `Esc` zurück zum Pfad
 
-## Weitere Eröffnungen hinzufügen
+## Navigation
+
+| Ansicht | Adresse |
+|---|---|
+| Home („Hallo, Name“, Level, XP-Diagramm, aktueller Kurs) | `#/` |
+| Alle Kurse (Suche, Filter Weiß/Schwarz/Importiert) | `#/courses` |
+| Kursseite (Kapitel, Studies, Lernpfade, Bot/Drill/Wiederholen) | `#/course/<kurs>` |
+| Kachel-Sitzung | `#/course/<kurs>/tile/<kachel>` |
+| Study-Linien-Explorer | `#/course/<kurs>/study/<study>` |
+| Wiederholen · Drill Shuffle · Bot | `#/review` · `#/drill` · `#/bot` |
+| Profil · Einstellungen · Hinzufügen | `#/profile` · `#/settings` · `#/import` |
+
+Das Menü (Hamburger oben rechts) enthält alle Bereiche und den Schalter für Dunkel/Hell. Die Flamme zeigt die
+Streak; ein Klick öffnet die Wochenleiste.
+
+## Eigene Eröffnungen hinzufügen
 
 ### Variante A: PGN-Datei in `openings/` legen (dauerhaft)
 
-Jede `.pgn`-Datei im Ordner `openings/` wird beim Neuladen automatisch zu einem Kurs.
+Jede `.pgn`-Datei im Ordner `openings/` wird beim Neuladen automatisch zu einem Kurs. **Jede PGN-Partie ist eine
+Study**, `[Chapter]` fasst Studies zu Kapiteln zusammen.
 
 ```pgn
 [Course "Wiener Partie"]
 [CourseDescription "Aggressives Repertoire gegen 1...e5."]
+[CourseIcon "Nc3"]
+[CourseHue "200"]
 [Chapter "Hauptlinie mit 3.f4"]
+[ChapterDescription "Weiß greift sofort mit f4 an."]
+[Study "Gegen 2...Nf6"]
 [Orientation "white"]
 
-{Einführungstext zum Kapitel.}
+{Einführungstext zur Study.}
 1. e4 e5 2. Nc3 {Erklärung zu diesem Zug.} Nf6 (2... Nc6 3. Bc4) 3. f4 *
-
-[Chapter "Gegen 2...Bc5"]
-[Orientation "white"]
-
-1. e4 e5 2. Nc3 Bc5 3. Nf3 *
 ```
 
 | Element | Bedeutung |
 |---|---|
-| Jede Partie (`[Chapter …]` … `*`) | ein **Kapitel** |
-| Jede Variante `( … )` | eine eigene **Linie** (jeder Pfad bis zum Ende = eine Lernkarte) |
-| `{Kommentar}` nach einem Zug | **Erklärung** im Lernmodus |
+| `[Course]`, `[CourseDescription]` (erste Partie) | Kursname und Beschreibung |
+| `[CourseIcon "Bf4"]`, `[CourseHue "355"]` | Figur und Farbton des generierten Kurs-Icons |
+| `[Chapter]`, `[ChapterDescription]` | Kapitel, zu dem die Study gehört |
+| `[Study]` | Titel der Study (sonst Lichess-Kapitelname) |
+| `[Video "https://…"]` | optionale Video-Kachel am Anfang des Pfads |
 | `[Orientation "white"/"black"]` | welche Farbe du spielst |
-| `[Course "…"]` (erste Partie) | Kursname (sonst Dateiname) |
-| `{[%title Name]}` | eigener Name für die Linie(n) ab diesem Zug |
+| Jede Variante `( … )` | eine eigene **Variante** (jeder Pfad bis zum Ende) |
+| `{Kommentar}` nach einem Zug | Erklärung beim Lernen |
+| `{[%title Name]}` | eigener Name für die Variante(n) ab diesem Zug |
 | `{[%cal Ge2e4]}`, `{[%csl Rd4]}` | Pfeile/Kreise auf dem Brett (wie bei Lichess) |
 
-Tipp: Linien sollten mit **deinem eigenen Zug** enden.
+Tipp: Varianten sollten mit **deinem eigenen Zug** enden; der Kommentar des letzten Zugs erscheint bei
+„Variante abgeschlossen!“, seine Pfeile zeigen den Plan.
 
 ### Variante B: Im Browser importieren
 
-Über **„Hinzufügen“** in der App:
-
-- **Lichess-Studie:** Link einfügen (`https://lichess.org/study/…`), dann „Laden“. Öffentliche Studien funktionieren direkt.
-- **PGN-Datei** hochladen oder **PGN-Text** einfügen.
-
-Importierte Kurse liegen im Browser-Speicher. Dauerhafter ist Variante A.
+Über **Menü → Hinzufügen**: Lichess-Studie per Link, PGN-Datei oder PGN-Text. Importierte Kurse liegen im
+Browser-Speicher.
 
 ## Lernstand sichern
 
-Der Lernstand liegt im `localStorage` des Browsers. Unter **Einstellungen → Sicherung herunterladen** exportierst du ihn als JSON und kannst ihn in einem anderen Browser wiederherstellen.
+Lernstand, XP und Streak liegen im `localStorage` des Browsers. Unter **Einstellungen → Sicherung herunterladen**
+exportierst du alles als JSON und kannst es in einem anderen Browser wiederherstellen. Dort lässt sich auch der
+Fortschritt einzelner Kurse zurücksetzen.
 
 ## Entwicklung
 
 ```bash
-npm test        # Vitest: Parser, Kurs-Loader, Spaced Repetition, Trainingslogik, Repertoire-Dateien
-npm run build   # statische Version in dist/
+npm test
+```
+
+```bash
+npm run build
 ```
 
 | Datei | Aufgabe |
 |---|---|
 | `src/pgnParser.js` | PGN → Zugbaum (Varianten, Kommentare, NAGs, Lichess-Annotationen) |
-| `src/courseLoader.js` | Zugbaum → Kurs / Kapitel / Linien |
+| `src/courseLoader.js` | Zugbaum → Kurs / Kapitel / Study / Varianten / Kacheln, Stellungsindex |
+| `src/progress.js` | Kachel-Freischaltung, Kursfortschritt, Level, Streak, Wochenliga |
+| `src/lineSession.js` | Ablauf einer Variante (Lernen/Wiederholen, Hinweis-Stufen, Navigation), ohne DOM |
+| `src/tileSession.js` | Ablauf einer Kachel (Lernen + Wiederholen je Variante, gemischter Drill), ohne DOM |
 | `src/scheduler.js` | Spaced Repetition |
-| `src/lineSession.js` | Ablauf einer Linie (Lernen/Drillen), ohne DOM |
-| `src/courses.js` | lädt `openings/*.pgn` + Importe, stellt Trainings-Warteschlangen zusammen |
-| `src/views/` | Startseite, Kurs, Training, Import, Einstellungen |
+| `src/bot.js`, `src/engine.js` | Repertoire-Züge des Bots, Stockfish als Web Worker |
+| `src/ui/` | Topbar & Menü, Icons & Logo, Kurs-Icons, Kachelpfad (SVG), XP-Diagramm, Toasts |
+| `src/views/` | Home, Kurse, Kursseite, Sitzung, Explorer, Drill Shuffle, Wiederholen, Bot, Profil, Einstellungen, Import |
 
-Brett: [chessground](https://github.com/lichess-org/chessground) (Lichess, GPL-3.0), Regeln: [chess.js](https://github.com/jhlywa/chess.js).
+Brett: [chessground](https://github.com/lichess-org/chessground) (Lichess, GPL-3.0), Regeln:
+[chess.js](https://github.com/jhlywa/chess.js), Engine: [stockfish.js](https://github.com/nmrugg/stockfish.js) (GPL-3.0).

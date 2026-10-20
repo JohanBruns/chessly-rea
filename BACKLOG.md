@@ -38,12 +38,15 @@ Abläufe und Navigation**, keine Kursinhalte, Texte, Grafiken oder Code.
 
 ## Status
 
-- [ ] Kapitel/Study-Struktur + Lernpfad mit Kacheln
-- [ ] Lern-Kachel: Lernen → Wiederholen pro Variation, Fortschrittssegmente, Redo
-- [ ] Hint in 2 Stufen, Fehler-Abzeichen, Brett-Navigation
-- [ ] XP, Level, Streak, XP-Diagramm
-- [ ] Navigation mit Hamburger-Menü, Kursübersicht mit Filtern
-- [ ] Study-Linien-Explorer, Course Explorer
-- [ ] Drill Shuffle
-- [ ] Bot (Repertoire + Stockfish)
-- [ ] Profil mit Wochenliga, Einstellungen (Brettfarben, Theme, Reset pro Kurs)
+- [x] Kapitel/Study-Struktur + Lernpfad mit Kacheln
+- [x] Lern-Kachel: Lernen → Wiederholen pro Variation, Fortschrittssegmente, Redo
+- [x] Hint in 2 Stufen, Fehler-Abzeichen, Brett-Navigation
+- [x] XP, Level, Streak, XP-Diagramm
+- [x] Navigation mit Hamburger-Menü, Kursübersicht mit Filtern
+- [x] Study-Linien-Explorer, Course Explorer
+- [x] Drill Shuffle
+- [x] Bot (Repertoire + Stockfish)
+- [x] Profil mit Wochenliga, Einstellungen (Brettfarben, Theme, Reset pro Kurs)
+
+Zusätzlich umgesetzt: Spaced-Repetition-Wiederholung (`#/review`) mit fälligen Varianten,
+Kurs-Explorer als Dialog, helles Theme, Brettfarben Braun/Blau/Grün, Fortschritt pro Kurs zurücksetzen.
