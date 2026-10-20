@@ -1,85 +1,158 @@
 [Course "Caro-Kann-Verteidigung"]
-[CourseDescription "Solides Repertoire für Schwarz gegen 1.e4: Läufer vor ...e6 entwickeln, gesunde Bauernstruktur, klare Pläne."]
+[CourseDescription "Solides Repertoire für Schwarz gegen 1.e4: gesunde Bauernstruktur, aktive Läufer, klare Pläne – in derselben Kapitelfolge wie bei Chessly."]
 [CourseIcon "c6"]
 [CourseHue "250"]
-[Chapter "Vorstoßvariante (3.e5)"]
-[ChapterDescription "Gegen die Vorstoßvariante entwickelt Schwarz zuerst den Läufer nach f5 und greift dann mit ...c5 die weiße Bauernkette an der Basis an."]
-[Study "Short-System (4.Nf3)"]
+[Chapter "Vorstoß (3.e5): Abweichungen im 4. Zug"]
+[ChapterDescription "Gegen die Vorstoßvariante greift Schwarz sofort mit 3...c5 die Bauernkette an. Hier lernst du die weißen Nebenzüge im 4. Zug."]
+[Study "4.c3 – die gute Französische"]
 [Orientation "black"]
 
-{Willkommen zur Caro-Kann! Wir beginnen mit der Vorstoßvariante im ruhigen Short-System.}
-1. e4 {Weiß besetzt das Zentrum.} c6 {Die Caro-Kann: Schwarz bereitet ...d5 vor und lässt dabei die Diagonale des Läufers c8 offen – anders als in der Französischen mit 1...e6.} 2. d4 d5 {Schwarz greift e4 sofort an.} 3. e5 {Die Vorstoßvariante: Weiß gewinnt Raum und nimmt dem Springer das Feld f6.} Bf5 {Der typische Caro-Kann-Zug: Der Läufer kommt VOR ...e6 heraus und wird nicht eingesperrt.} 4. Nf3 {Das ruhige Short-System – Weiß entwickelt sich einfach.} e6 {Jetzt kann ...e6 kommen, der Läufer ist schon draußen.} 5. Be2 c5 {Schwarz greift die Bauernkette an ihrer Basis an – der wichtigste Hebel in jeder Vorstoßstruktur.} 6. Be3 (6. O-O Nc6 {Druck gegen d4.} 7. c3 cxd4 8. cxd4 Nge7 {Der Springer zielt nach f5 und greift d4 ein drittes Mal an. [%cal Ge7f5,Gf5d4]}) 6... cxd4 {Schwarz öffnet die c-Linie.} 7. Nxd4 Ne7 {Der Springer geht nach c6 oder g6 und unterstützt den Druck auf e5. Danach folgen ...Nbc6 und ...a6. [%cal Ge7c6,Ge7g6]} *
+{Nach 3...c5 4.c3 entsteht eine Französisch-Struktur – aber mit einem großen Unterschied: Der weißfeldrige Läufer von Schwarz kommt noch nach g4 heraus.}
+1. e4 {Weiß besetzt das Zentrum.} c6 {Die Caro-Kann: Schwarz bereitet ...d5 vor, ohne die Diagonale des Läufers c8 zu verstellen.} 2. d4 d5 {Schwarz greift e4 sofort an.} 3. e5 {Die Vorstoßvariante: Weiß gewinnt Raum.} c5 {Der direkte Hebel gegen die Bauernkette – Schwarz verliert ein Tempo (...c6-c5), bekommt aber sofort Gegenspiel.} 4. c3 {Weiß stützt d4 wie in der Französischen.} Nc6 {Mehr Druck auf d4.} 5. Nf3 (5. dxc5 {Weiß gibt das Zentrum auf.} e6 {Bereitet ...Bxc5 vor.} 6. Nf3 Bxc5 {Schwarz hat den Bauern zurück und einen aktiven Läufer.}) 5... Bg4 {Darum ist es die „gute“ Französische: Der Läufer steht außerhalb der Bauernkette und fesselt den Springer, der d4 deckt.} 6. Be2 e6 7. O-O cxd4 8. cxd4 Nge7 {Der Springer will nach f5 und greift d4 noch einmal an.} 9. Nc3 Nf5 {Drei Figuren zielen auf d4 – Weiß muss passiv verteidigen. [%cal Gf5d4,Gc6d4,Gg4f3]} *
 
-[Chapter "Vorstoßvariante (3.e5)"]
-[Study "Scharfe Systeme: 4.Nc3 und 4.h4"]
+[Chapter "Vorstoß (3.e5): Abweichungen im 4. Zug"]
+[Study "4.c4 – Druck im Zentrum"]
 [Orientation "black"]
 
-{Weiß will mit g4 oder h4-h5 den Läufer f5 jagen. Schwarz bleibt ruhig und greift im Zentrum an.}
-1. e4 c6 2. d4 d5 3. e5 Bf5 4. Nc3 {Weiß will g4 spielen und den Läufer jagen.} (4. h4 {Weiß droht g4 und h5 mit Läuferfang.} h5 {Stoppt den weißen h-Bauern und verhindert g4-Ideen. Das Feld g5 wird zwar schwach, aber der Läufer f5 steht sicher.} 5. c4 e6 6. Nc3 Ne7 {Der Springer geht nach f5 oder g6 und greift d4 an.}) 4... e6 5. g4 Bg6 {Der Läufer bleibt auf der Diagonale b1-h7.} 6. Nge2 c5 {Wie immer: Hebel gegen die Bauernkette. Danach folgen ...Nc6 und ...cxd4 mit Druck auf das Zentrum, während die weißen Königsflügelbauern weit vorgerückt sind. [%cal Gc5d4,Gb8c6]} *
+{Mit 4.c4 öffnet Weiß sofort das Zentrum. Schwarz schlägt auf d4 und entwickelt den Springer mit Tempo.}
+1. e4 c6 2. d4 d5 3. e5 c5 4. c4 {Weiß greift d5 an.} cxd4 {Schwarz nimmt zuerst im Zentrum.} 5. Qxd4 Nc6 {Entwicklung mit Tempo gegen die Dame.} 6. Qd1 (6. Qxd5 {Weiß tauscht die Damen.} Qxd5 7. cxd5 Nb4 {Der Springer greift d5 und c2 gleichzeitig an.} 8. Na3 Nxd5 {Schwarz hat den Bauern zurück und steht bequem.}) 6... dxc4 {Jetzt öffnet Schwarz die d-Linie.} 7. Qxd8+ Kxd8 8. Bxc4 Nxe5 {Der Bauer e5 war nicht gedeckt – Schwarz gewinnt ihn mit Tempo auf den Läufer. [%cal Ge5c4]} *
 
-[Chapter "Vorstoßvariante (3.e5)"]
-[Study "Läufertausch mit 4.Bd3"]
+[Chapter "Vorstoß (3.e5): Abweichungen im 4. Zug"]
+[Study "4.Nf3 – natürliche Entwicklung"]
 [Orientation "black"]
 
-{Weiß bietet früh den Tausch der weißfeldrigen Läufer an – für Schwarz ein Geschenk.}
-1. e4 c6 2. d4 d5 3. e5 Bf5 4. Bd3 {Weiß bietet den Läufertausch an.} Bxd3 {Gerne! Der „schlechte“ Caro-Kann-Läufer wird gegen den guten weißen Läufer getauscht.} 5. Qxd3 e6 6. Nf3 c5 {Wieder der Hebel gegen d4.} 7. O-O Nc6 8. c3 Qb6 {Druck auf d4 und b2 – Schwarz steht bequem. [%cal Gb6b2,Gb6d4]} *
+{Weiß entwickelt einfach den Springer. Schwarz bringt den Läufer nach g4 und baut eine aktive Französisch-Struktur auf.}
+1. e4 c6 2. d4 d5 3. e5 c5 4. Nf3 {Natürliche Entwicklung.} Bg4 {Der Läufer kommt vor ...e6 heraus und fesselt den Springer.} 5. c3 (5. Be2 e6 6. O-O Nc6 7. c3 cxd4 8. cxd4 Nge7 {Derselbe Plan: ...Nf5 und Druck auf d4.}) (5. dxc5 {Weiß nimmt den Bauern.} e6 6. Be3 Ne7 7. c3 Nd7 {Schwarz holt den Bauern auf c5 oder e5 zurück – beide Springer zielen dorthin. [%cal Gd7c5,Gd7e5]}) 5... e6 6. Be2 Nc6 7. O-O Nge7 {Wie in der „guten Französischen“: ...cxd4 und ...Nf5 folgen. [%cal Ge7f5]} *
 
-[Chapter "Hauptvariante (3.Nc3 / 3.Nd2)"]
-[ChapterDescription "In der klassischen Hauptvariante tauscht Schwarz auf e4 und entwickelt den Läufer mit Tempo. Ziel: Läufertausch auf d3 und eine solide Stellung ohne Schwächen."]
-[Study "Die Hauptlinie mit 6.h4"]
+[Chapter "Vorstoß (3.e5): Waffe 1"]
+[ChapterDescription "Die Hauptlinie gegen 3...c5 ist 4.dxc5. Schwarz entwickelt mit 4...Nc6 und ...e6 und holt den Bauern auf c5 zurück."]
+[Study "Die Fesselung mit Bb5 (5.Bb5 und 6.Bb5)"]
 [Orientation "black"]
 
-{Die klassische Caro-Kann: Schwarz tauscht auf e4, entwickelt den Läufer mit Tempo und tauscht ihn später auf d3.}
-1. e4 c6 2. d4 d5 3. Nc3 {Weiß deckt e4 mit dem Springer.} (3. Nd2 {Dieselbe Idee – der Springer blockiert nur nicht den c-Bauern.} dxe4 4. Nxe4 Bf5 {Transponiert in die Hauptvariante.}) 3... dxe4 {Schwarz tauscht im Zentrum.} 4. Nxe4 Bf5 {Der Läufer kommt wieder aktiv heraus und greift dabei den Springer an.} 5. Ng3 {Der Springer weicht aus und greift seinerseits den Läufer an.} Bg6 {Der Läufer bleibt auf der Diagonale b1-h7.} 6. h4 {Weiß droht h5 mit Läuferfang.} (6. Nf3 Nd7 {Kontrolliert e5, damit Ne5 den Läufer nicht angreifen kann.} 7. h4 h6 8. h5 Bh7 9. Bd3 Bxd3 10. Qxd3 e6 {Dieselbe Struktur wie in der Hauptvariante.}) 6... h6 {Schafft dem Läufer das Rückzugsfeld h7.} 7. Nf3 Nd7 {Kontrolliert e5 und verhindert Ne5, das den Läufer g6 angreifen würde.} 8. h5 Bh7 9. Bd3 Bxd3 {Der Läufertausch – eines der Ziele der Caro-Kann.} 10. Qxd3 e6 11. Bd2 Ngf6 12. O-O-O Be7 {Schwarz rochiert kurz (oder auch lang). Pläne: ...c5 oder ...Qc7 nebst ...O-O-O. Eine solide Stellung ohne Schwächen. [%cal Gc6c5,Gd8c7]} *
+{Weiß fesselt den Springer c6, um den Druck auf e5 zu mindern. Schwarz bleibt ruhig, entwickelt sich und holt c5 zurück.}
+1. e4 c6 2. d4 d5 3. e5 c5 4. dxc5 {Die Hauptlinie: Weiß nimmt den Bauern.} Nc6 {Entwicklung und Druck auf e5.} 5. Bb5 (5. Nf3 e6 6. Bb5 {Die Fesselung einen Zug später.} Bxc5 {Schwarz hat den Bauern zurück.} 7. O-O Nge7 {Kurze Rochade folgt – eine angenehme Stellung.}) 5... e6 {Öffnet dem Läufer f8 den Weg nach c5.} 6. Be3 {Weiß hält den Bauern c5.} Nge7 7. c3 Bd7 {Löst die Fesselung.} 8. Nf3 Nf5 {Greift den Läufer e3 an – danach fällt der Bauer c5. [%cal Gf5e3,Gf8c5]} *
 
-[Chapter "Hauptvariante (3.Nc3 / 3.Nd2)"]
-[Study "Nebenwege: 5.Nc5 und 6.N1e2"]
+[Chapter "Vorstoß (3.e5): Waffe 1"]
+[Study "Die Hauptlinie 5.Nf3"]
 [Orientation "black"]
 
-{Zwei seltenere Versuche von Weiß – mit einem schönen Konter gegen 6.N1e2.}
-1. e4 c6 2. d4 d5 3. Nc3 dxe4 4. Nxe4 Bf5 5. Ng3 (5. Nc5 {Der Springer zielt auf b7 und e6.} b6 {Vertreibt den Springer sofort.} 6. Nb3 e6 7. Nf3 Nd7 {Normale Entwicklung: ...Ngf6, ...Bd6 und kurze Rochade.}) 5... Bg6 6. N1e2 Nf6 7. Nf4 {Weiß will den Läufer g6 abtauschen.} e5 {Der Konter! Nach 8.Nxg6 hxg6 9.dxe5 Qa5+ holt Schwarz den Bauern mit Schach zurück.} 8. Nxg6 hxg6 {Die halboffene h-Linie gehört jetzt Schwarz. [%cal Gh8h2]} *
+{Nach 5.Nf3 fesselt Schwarz mit ...Bg4, spielt ...e6 und schlägt mit dem Läufer auf c5 zurück.}
+1. e4 c6 2. d4 d5 3. e5 c5 4. dxc5 Nc6 5. Nf3 {Weiß deckt e5.} Bg4 {Fesselt den Verteidiger von e5.} 6. Be2 (6. c3 e6 7. Be3 Nge7 8. Bb5 Nf5 {Der Springer vertreibt den Läufer e3, dann folgt ...Bxc5.}) 6... e6 7. O-O Bxc5 {Der Bauer ist zurück, alle Figuren stehen aktiv.} 8. Nbd2 Nge7 {Plan: kurze Rochade und ...Ng6 gegen e5. [%cal Ge7g6]} *
 
-[Chapter "Abtausch & Panow (3.exd5)"]
-[ChapterDescription "Nach 3.exd5 cxd5 entsteht eine symmetrische Struktur. Schwarz entwickelt den Läufer wieder vor ...e6 und spielt später am Damenflügel."]
-[Study "Abtauschvariante (4.Bd3)"]
+[Chapter "Vorstoß (3.e5): Waffe 1"]
+[Study "Gotham 5.f4"]
+[Orientation "black"]
+
+{Mit 5.f4 stützt Weiß e5 mit einem Bauern. Schwarz entwickelt sich schnell und nutzt die geschwächten schwarzen Felder.}
+1. e4 c6 2. d4 d5 3. e5 c5 4. dxc5 Nc6 5. f4 {Weiß stützt e5 mit dem f-Bauern.} e6 6. Nf3 (6. Be3 Nh6 {Der Springer will nach f5 und greift e3 an.} 7. Nf3 Nf5 {Schwarz holt c5 bald zurück.}) 6... Bxc5 {Der Bauer ist zurück.} 7. Bd3 Nge7 {Nach der kurzen Rochade folgt ...f6 gegen die weiße Bauernkette. [%cal Gf7f6]} *
+
+[Chapter "Abtausch (3.exd5): Waffe 1"]
+[ChapterDescription "Nach 3.exd5 cxd5 entsteht eine symmetrische Struktur. Schwarz entwickelt den Läufer vor ...e6 und spielt später am Damenflügel."]
+[Study "Frühe Abweichungen"]
+[Orientation "black"]
+
+{Weiß verzichtet auf das klassische 4.Bd3. Schwarz entwickelt sich trotzdem nach demselben Muster.}
+1. e4 c6 2. d4 d5 3. exd5 cxd5 {Schwarz hat die halboffene c-Linie.} 4. Nf3 (4. c3 Nc6 5. Bf4 Bf5 {Spiegelbildlich – Schwarz spielt danach ...e6 und ...Nf6.}) 4... Bg4 {Fesselt den Springer.} 5. Be2 Nc6 6. c3 e6 {Solide Entwicklung: ...Bd6 und ...Nge7 oder ...Nf6 folgen.} *
+
+[Chapter "Abtausch (3.exd5): Waffe 1"]
+[Study "Das vorsichtige 6.h3"]
+[Orientation "black"]
+
+{Weiß verhindert mit 6.h3 den Läuferausfall nach g4. Schwarz entwickelt sich ruhig.}
+1. e4 c6 2. d4 d5 3. exd5 cxd5 4. Bd3 Nc6 5. c3 Nf6 6. h3 {Verhindert ...Bg4.} e6 (6... g6 7. Nf3 Bf5 {Der Läufer findet einen anderen Weg – Tausch auf d3 ist für Schwarz willkommen.}) 7. Nf3 Bd6 8. O-O O-O {Plan: Minoritätsangriff mit ...b5-b4. [%cal Gb7b5]} *
+
+[Chapter "Abtausch (3.exd5): Waffe 1"]
+[Study "Die Hauptlinien"]
 [Orientation "black"]
 
 {Die Carlsbad-Struktur: Schwarz hat die halboffene c-Linie und spielt später den Minoritätsangriff.}
-1. e4 c6 2. d4 d5 3. exd5 cxd5 {Schwarz hat die halboffene c-Linie.} 4. Bd3 {Die klassische Abtauschvariante.} Nc6 5. c3 Nf6 6. Bf4 Bg4 {Der Läufer kommt wieder vor ...e6 heraus.} 7. Qb3 {Weiß greift b7 an.} Qd7 {Deckt b7 ruhig.} 8. Nd2 e6 9. Ngf3 Bxf3 {Tausch, danach geht der Läufer nach d6.} 10. Nxf3 Bd6 11. Bxd6 Qxd6 12. O-O O-O {Plan: Minoritätsangriff mit ...Rab8 und ...b5-b4 am Damenflügel. [%cal Gb7b5,Gb5b4]} *
+1. e4 c6 2. d4 d5 3. exd5 cxd5 4. Bd3 {Die klassische Abtauschvariante.} Nc6 5. c3 Nf6 6. Bf4 Bg4 {Der Läufer kommt wieder vor ...e6 heraus.} 7. Qb3 (7. Nf3 e6 8. Nbd2 Bd6 {Tausch der schwarzfeldrigen Läufer, danach ...O-O.}) 7... Qd7 {Deckt b7 ruhig.} 8. Nd2 e6 9. Ngf3 Bxf3 {Tausch, danach geht der Läufer nach d6.} 10. Nxf3 Bd6 11. Bxd6 Qxd6 12. O-O O-O {Plan: Minoritätsangriff mit ...Rab8 und ...b5-b4 am Damenflügel. [%cal Gb7b5,Gb5b4]} *
 
-[Chapter "Abtausch & Panow (3.exd5)"]
-[Study "Panow-Angriff (4.c4)"]
+[Chapter "Panow (3.exd5, 4.c4)"]
+[ChapterDescription "Im Panow-Angriff spielt Schwarz ...g6 und ...Bg7: Der Läufer drückt auf d4, der Bauer d5 wird oft erst später zurückgeholt."]
+[Study "Hauptlinie 6.Qb3"]
 [Orientation "black"]
 
-{Weiß bekommt einen isolierten d-Bauern und aktive Figuren. Schwarz blockiert und tauscht.}
-1. e4 c6 2. d4 d5 3. exd5 cxd5 4. c4 {Der Panow-Angriff: Weiß bekommt nach cxd5 einen isolierten d-Bauern, dafür aktive Figuren.} Nf6 5. Nc3 e6 6. Nf3 Be7 7. cxd5 Nxd5 {Der Springer blockiert auf d5 – genau vor dem Isolani.} 8. Bd3 Nc6 9. O-O O-O {Plan gegen den Isolani: blockieren, Figuren tauschen und den Bauern später angreifen (...Nf6, ...b6, ...Bb7). [%csl Rd4]} *
+{Gegen 6.Qb3 gibt Schwarz den Bauern d5 vorübergehend her und holt ihn mit ...Nbd7-b6 zurück.}
+1. e4 c6 2. d4 d5 3. exd5 cxd5 4. c4 {Der Panow-Angriff.} Nf6 5. Nc3 g6 {Der Läufer kommt nach g7 und drückt auf d4.} 6. Qb3 {Weiß greift d5 an.} Bg7 7. cxd5 O-O {Schwarz rochiert zuerst – der Bauer wird später zurückgeholt.} 8. Be2 (8. Bc4 Nbd7 9. Nge2 Nb6 {Greift den Läufer an und holt d5 zurück.}) 8... Nbd7 9. Bf3 Nb6 {Der Springer blockiert und greift d5 an – Schwarz gewinnt den Bauern zurück. [%cal Gb6d5,Gf6d5]} *
 
-[Chapter "Zwei Springer (2.Nc3 / 3.Nf3)"]
+[Chapter "Panow (3.exd5, 4.c4)"]
+[Study "Direkt: 6.cxd5"]
+[Orientation "black"]
+
+{Weiß nimmt sofort auf d5. Schwarz schlägt mit dem Springer zurück und hält das Feld d5.}
+1. e4 c6 2. d4 d5 3. exd5 cxd5 4. c4 Nf6 5. Nc3 g6 6. cxd5 {Der direkte Weg.} Nxd5 {Der Springer steht zentral.} 7. Qb3 (7. Bc4 Nb6 8. Bb3 Bg7 {Normale Entwicklung, danach ...O-O und ...Nc6.}) 7... Nb6 {Der Springer weicht der Dame aus. Danach ...Bg7, ...O-O und ...Nc6 gegen d4. [%cal Gf8g7,Gb8c6]} *
+
+[Chapter "Panow (3.exd5, 4.c4)"]
+[Study "Zahm: 6.Nf3 und andere"]
+[Orientation "black"]
+
+{Ruhige Züge von Weiß beantwortet Schwarz mit derselben Aufstellung: ...Bg7, ...O-O und Druck auf d4.}
+1. e4 c6 2. d4 d5 3. exd5 cxd5 4. c4 Nf6 5. Nc3 g6 6. Nf3 (6. Bg5 dxc4 {Schwarz nimmt den Bauern.} 7. Bxc4 Bg7 {Weiß bekommt einen Isolani, Schwarz entwickelt sich schnell.}) 6... Bg7 7. cxd5 O-O 8. Be2 Nxd5 {Der Springer blockiert vor dem Isolani – ein klassischer Plan. [%csl Rd4]} *
+
+[Chapter "Klassisch (3.Nc3/3.Nd2): Waffe 1"]
+[ChapterDescription "Nach 3...dxe4 4.Nxe4 spielt Schwarz 4...Nf6. Nach 5.Nxf6+ exf6 hat Schwarz zwar Doppelbauern, aber schnelle Entwicklung und einen sicheren König."]
+[Study "Seltene 5. Züge"]
+[Orientation "black"]
+
+{Weicht der Springer aus statt zu tauschen, entwickelt sich Schwarz einfach weiter.}
+1. e4 c6 2. d4 d5 3. Nc3 dxe4 {Schwarz tauscht im Zentrum.} 4. Nxe4 Nf6 {Greift den Springer an – Weiß muss sich entscheiden.} 5. Ng3 (5. Bd3 Nxe4 {Schwarz tauscht.} 6. Bxe4 Nd7 7. Nf3 Nf6 {Mit Tempo gegen den Läufer.}) 5... c5 {Der Hebel gegen d4.} 6. Nf3 cxd4 7. Nxd4 e5 {Vertreibt den Springer aus dem Zentrum – Schwarz steht aktiv. [%cal Ge5d4]} *
+
+[Chapter "Klassisch (3.Nc3/3.Nd2): Waffe 1"]
+[Study "5.Nxf6+ ohne 6.c3"]
+[Orientation "black"]
+
+{Nach 5.Nxf6+ exf6 spielt Schwarz schnell ...Bd6, ...O-O und ...Re8 – die offene e-Linie gehört Schwarz.}
+1. e4 c6 2. d4 d5 3. Nc3 dxe4 4. Nxe4 Nf6 5. Nxf6+ exf6 {Doppelbauern, aber die e-Linie ist offen und der König steht sicher.} 6. Nf3 (6. Bc4 Bd6 7. Qe2+ Qe7 {Schwarz blockiert und tauscht die Damen bei Bedarf.}) 6... Bd6 7. Bd3 O-O 8. O-O Re8 {Der Turm besetzt die offene Linie. [%cal Ge8e1]} *
+
+[Chapter "Klassisch (3.Nc3/3.Nd2): Waffe 1"]
+[Study "Hauptlinie 6.c3"]
+[Orientation "black"]
+
+{In der Hauptlinie zielt Weiß mit Bd3 und Qc2 auf h7. Schwarz kontert mit ...Re8+ und ...g6.}
+1. e4 c6 2. d4 d5 3. Nc3 (3. Nd2 {Dieselbe Idee – der Springer blockiert nur nicht den c-Bauern.} dxe4 4. Nxe4 Nf6 5. Nxf6+ exf6 {Transponiert in die Hauptlinie.}) 3... dxe4 4. Nxe4 Nf6 5. Nxf6+ exf6 6. c3 {Die Hauptlinie: Weiß stützt d4.} Bd6 7. Bd3 O-O 8. Qc2 {Batterie gegen h7.} Re8+ {Schach – Weiß muss den Springer nach e2 stellen.} 9. Ne2 g6 {Deckt h7 dauerhaft. Danach ...Bf5 zum Läufertausch. [%cal Gc8f5]} *
+
+[Chapter "Zwei Springer (Nf3 + Nc3)"]
 [ChapterDescription "Schwarz fesselt den Springer f3 und tauscht ihn ab. Weiß bekommt das Läuferpaar, Schwarz eine sehr solide Stellung."]
-[Study "Hauptlinie mit 4.h3"]
+[Study "Das solide 3...Bg4"]
 [Orientation "black"]
 
-{Nach 4.h3 gibt Schwarz das Läuferpaar für eine gesunde Struktur und schnelle Entwicklung.}
-1. e4 c6 2. Nc3 d5 3. Nf3 Bg4 {Fesselt den Springer an die Dame.} 4. h3 Bxf3 {Schwarz gibt das Läuferpaar für eine gesunde Struktur.} 5. Qxf3 e6 6. d4 (6. d3 Nf6 7. Bd2 Nbd7 {Normale Entwicklung: ...Bd6 oder ...Bb4 und kurze Rochade.}) 6... Nf6 7. Bd3 dxe4 8. Nxe4 Nxe4 9. Qxe4 (9. Bxe4 Nd7 {Danach ...Nf6 und ...Bd6.}) 9... Nd7 {Solide: ...Nf6 und ...Bd6 oder ...Be7 folgen.} *
+{Gegen das Zwei-Springer-System spielt Schwarz ...Bg4: Fesselung, Tausch und eine gesunde Struktur.}
+1. e4 c6 2. Nc3 d5 3. Nf3 Bg4 {Fesselt den Springer an die Dame.} 4. h3 (4. Be2 e6 5. d4 Nf6 6. e5 Nfd7 {Eine Französisch-ähnliche Struktur, aber der Läufer ist schon draußen. Plan: ...c5 gegen die Kette. [%cal Gc6c5]}) 4... Bxf3 {Schwarz gibt das Läuferpaar für eine gesunde Struktur.} 5. Qxf3 e6 6. d4 (6. d3 Nf6 7. Bd2 Nbd7 {Normale Entwicklung: ...Bd6 oder ...Bb4 und kurze Rochade.}) 6... Nf6 7. Bd3 dxe4 8. Nxe4 Nxe4 9. Qxe4 (9. Bxe4 Nd7 {Danach ...Nf6 und ...Bd6.}) 9... Nd7 {Solide: ...Nf6 und ...Bd6 oder ...Be7 folgen.} *
 
-[Chapter "Zwei Springer (2.Nc3 / 3.Nf3)"]
-[Study "Ruhige Entwicklung mit 4.Be2"]
-[Orientation "black"]
-
-{Wenn Weiß die Fesselung mit Be2 löst, entsteht eine Französisch-ähnliche Struktur – mit aktivem Läufer.}
-1. e4 c6 2. Nc3 d5 3. Nf3 Bg4 4. Be2 e6 5. d4 Nf6 6. e5 Nfd7 {Eine Französisch-ähnliche Struktur, aber der Läufer ist schon draußen. Plan: ...c5 gegen die Kette. [%cal Gc6c5]} *
-
-[Chapter "Seltene Systeme"]
-[ChapterDescription "Fantasy-Variante, Königsindischer Angriff und das frühe 2.c4 – mit klaren Antworten."]
-[Study "Fantasy-Variante (3.f3)"]
+[Chapter "Fantasy (3.f3): Waffe 2"]
+[ChapterDescription "Weiß stützt e4 mit dem f-Bauern. Schwarz antwortet solide mit ...e6 und dem Hebel ...c5."]
+[Study "Das solide 3...e6"]
 [Orientation "black"]
 
 {Weiß stützt e4 mit dem f-Bauern. Schwarz antwortet solide mit ...e6 und dem Hebel ...c5.}
 1. e4 c6 2. d4 d5 3. f3 {Die Fantasy-Variante: Weiß stützt e4 mit dem f-Bauern.} e6 {Solide: eine Französisch-ähnliche Stellung, in der f3 eher unpassend wirkt.} 4. Nc3 Nf6 5. e5 (5. Bg5 Be7 6. e5 Nfd7 7. Bxe7 Qxe7 8. f4 c5 {Wieder der Hebel gegen d4.}) 5... Nfd7 6. f4 c5 {Der Hebel gegen die Bauernkette.} 7. Nf3 Nc6 {Druck auf d4 – Schwarz steht aktiv. [%cal Gc6d4,Gc5d4]} *
 
-[Chapter "Seltene Systeme"]
-[Study "Frühe Abweichungen: 2.c4 und 2.d3"]
+[Chapter "Alles andere!"]
+[ChapterDescription "Seltene Systeme im zweiten und dritten Zug – mit einfachen, klaren Antworten."]
+[Study "Der lästige Pseudo-Panow"]
 [Orientation "black"]
 
-{Weiß weicht schon im zweiten Zug ab. Schwarz besetzt trotzdem das Zentrum.}
-1. e4 c6 2. c4 {Das frühe c4 – oft ein Übergang in den Panow-Angriff.} (2. d3 {Der Königsindische Aufbau.} d5 3. Nd2 e5 {Gegen den Aufbau mit d3 besetzt Schwarz das Zentrum mit Bauern.} 4. Ngf3 Bd6 5. g3 Nf6 6. Bg2 O-O 7. O-O Re8 {Der Turm unterstützt e5. Schwarz hat ein bequemes Spiel.}) 2... d5 3. exd5 cxd5 4. cxd5 Nf6 {Schwarz holt den Bauern zurück.} 5. Nc3 Nxd5 6. Nf3 Nc6 7. d4 e6 {Eine Panow-Struktur mit Isolani für Weiß.} *
+{Mit 2.c4 strebt Weiß eine Panow-Struktur an. Schwarz holt den Bauern d5 mit dem Springer zurück.}
+1. e4 c6 2. c4 {Das frühe c4.} d5 3. exd5 cxd5 4. cxd5 (4. d4 Nf6 5. Nc3 g6 {Zugumstellung in den Panow-Angriff.}) 4... Nf6 {Schwarz holt den Bauern zurück.} 5. Nc3 Nxd5 6. Nf3 Nc6 7. d4 e6 {Eine Panow-Struktur mit Isolani für Weiß.} *
+
+[Chapter "Alles andere!"]
+[Study "Der gescheiterte Königsinder (2.d3)"]
+[Orientation "black"]
+
+{Gegen den Aufbau mit d3 besetzt Schwarz das Zentrum mit beiden Bauern.}
+1. e4 c6 2. d3 {Der Königsindische Aufbau.} d5 3. Nd2 e5 {Schwarz besetzt das Zentrum mit Bauern.} 4. Ngf3 Bd6 5. g3 Nf6 6. Bg2 O-O 7. O-O Re8 {Der Turm unterstützt e5. Schwarz hat ein bequemes Spiel.} *
+
+[Chapter "Alles andere!"]
+[Study "Goldman-Caro (2.Nc3, 3.Qf3!?)"]
+[Orientation "black"]
+
+{Die Dame auf f3 deckt e4 und zielt auf f7. Schwarz tauscht auf e4 und entwickelt sich mit ...Nd7 und ...Ngf6.}
+1. e4 c6 2. Nc3 d5 3. Qf3 {Die Goldman-Variante.} dxe4 4. Nxe4 Nd7 {Bereitet ...Ngf6 vor, ohne Doppelbauern zuzulassen.} 5. d4 Ngf6 {Greift den Springer an – Schwarz hat eine gesunde Stellung. [%cal Gf6e4]} *
+
+[Chapter "Alles andere!"]
+[Study "Phantastische Tierwesen (2.b3, 2.Bc4, 2.f4 usw.)"]
+[Orientation "black"]
+
+{Exotische zweite Züge: Schwarz spielt einfach ...d5 und besetzt das Zentrum.}
+1. e4 c6 2. b3 {Der Damenläufer soll nach b2.} (2. Bc4 {Der Läufer beißt auf Granit.} d5 3. exd5 cxd5 4. Bb3 Nf6 {Schwarz hat ein schönes Zentrum.}) (2. f4 {Weiß will schnell angreifen.} d5 3. e5 Bf5 4. Nf3 e6 {Der Läufer steht vor der Kette – wie in der Vorstoßvariante.}) 2... d5 3. Bb2 dxe4 {Schwarz nimmt den Bauern und hält ihn mit ...Nf6 und ...Bf5.} *

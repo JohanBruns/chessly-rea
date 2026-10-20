@@ -50,3 +50,6 @@ Abläufe und Navigation**, keine Kursinhalte, Texte, Grafiken oder Code.
 
 Zusätzlich umgesetzt: Spaced-Repetition-Wiederholung (`#/review`) mit fälligen Varianten,
 Kurs-Explorer als Dialog, helles Theme, Brettfarben Braun/Blau/Grün, Fortschritt pro Kurs zurücksetzen.
+Kapitel- und Study-Gliederung von Caro-Kann (8 Kapitel, 21 Studies) und London-System (10 Kapitel, 25 Studies)
+entspricht auf Wunsch 1:1 der Chessly-Kursübersicht (Titel auf Deutsch, gleiche Systeme); Varianten und Kommentare
+sind selbst geschrieben.
