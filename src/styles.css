@@ -2339,3 +2339,9 @@ cg-board square.last-move {
     font-size: 1.4rem;
   }
 }
+
+/* Eingabefeld + Button in einer Zeile (Import) */
+.row > .input {
+  flex: 1 1 240px;
+  width: auto;
+}
