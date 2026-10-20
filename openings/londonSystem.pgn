@@ -1,71 +1,188 @@
 [Course "London-System"]
-[CourseDescription "Ein Aufbau für Weiß gegen fast alles: d4, Bf4, e3, Nf3, c3, Nbd2, Bd3 – mit den wichtigsten Antworten auf schwarze Abweichungen."]
+[CourseDescription "Ein Aufbau für Weiß gegen fast alles: d4, Bf4, e3, Nf3, c3, Nbd2, Bd3 – in derselben Kapitelfolge wie bei Chessly."]
 [CourseIcon "Bf4"]
 [CourseHue "355"]
-[Chapter "Grundaufstellung gegen ...d5 / ...e6"]
-[ChapterDescription "Weiß stellt fast immer dieselbe Pyramide auf (c3-d4-e3), entwickelt den Läufer nach f4 VOR e3 und greift später mit Ne5 und f4 am Königsflügel an."]
-[Study "Der Aufbau und der Angriff mit Ne5"]
+[Chapter "Die beste Aufstellung von Schwarz (d5, e6, Nf6)"]
+[ChapterDescription "Gegen die solideste schwarze Aufstellung baut Weiß die Pyramide c3-d4-e3, entwickelt den Läufer nach f4 VOR e3 und greift später mit Ne5 und f4 an."]
+[Study "Schwarz spielt Be7"]
 [Orientation "white"]
 
-{Willkommen zum London-System! Zuerst lernst du die Grundaufstellung und den typischen Angriffsplan.}
-1. d4 {Weiß besetzt das Zentrum mit dem Damenbauern.} d5 2. Bf4 {Der Läufer kommt VOR e3 heraus – sonst wäre er hinter den eigenen Bauern eingesperrt.} Nf6 3. e3 e6 4. Nf3 c5 {Schwarz greift sofort d4 an.} 5. c3 {Die Pyramide c3-d4-e3 hält das Zentrum stabil.} Nc6 6. Nbd2 {Der Springer deckt e4 und f3, der c-Bauer bleibt beweglich.} Bd6 {Schwarz bietet den Läufertausch an.} 7. Bg3 {Weiß hält den Läufer; nach ...Bxg3 hxg3 bekäme Weiß die halboffene h-Linie.} O-O 8. Bd3 {Der Läufer zielt auf h7. [%cal Gd3h7]} b6 (8... Qe7 9. Ne5 {Typisch: Erst Ne5, dann f4 – ein Stonewall-ähnlicher Angriff. [%cal Gf2f4]}) 9. Ne5 Bb7 10. f4 {Weiß baut den Angriff am Königsflügel auf: Qf3, g4 oder Rf1-f3-h3 sind typische Ideen. [%cal Gd1f3,Gg2g4]} *
+{Willkommen zum London-System! Gegen ...Be7 spielt Weiß Bd3, Nbd2 und Ne5 mit Angriff am Königsflügel.}
+1. d4 {Weiß besetzt das Zentrum mit dem Damenbauern.} d5 2. Bf4 {Der Läufer kommt VOR e3 heraus – sonst wäre er hinter den eigenen Bauern eingesperrt.} Nf6 3. e3 e6 4. Nf3 Be7 {Schwarz entwickelt bescheiden.} 5. Bd3 {Der Läufer zielt auf h7. [%cal Gd3h7]} O-O 6. Nbd2 {Der Springer deckt e4 und f3, der c-Bauer bleibt beweglich.} c5 (6... b6 7. Ne5 Bb7 8. Qf3 {Dame und Läufer zielen auf den Königsflügel – Pläne: Qh3 und g4. [%cal Gf3h3,Gg2g4]}) 7. c3 {Die Pyramide c3-d4-e3 hält das Zentrum stabil.} Nc6 8. Ne5 {Typisch: Der Springer besetzt e5, danach folgen f4 oder Qf3. [%cal Gf2f4,Gd1f3]} *
 
-[Chapter "Grundaufstellung gegen ...d5 / ...e6"]
-[Study "Gegen ...Qb6: Dame gegen Dame"]
+[Chapter "Die beste Aufstellung von Schwarz (d5, e6, Nf6)"]
+[Study "Schwarz spielt Bd6"]
 [Orientation "white"]
 
-{Schwarz greift mit ...Qb6 den Bauern b2 an. Die Standardantwort im London: Qb3!}
-1. d4 d5 2. Bf4 Nf6 3. e3 e6 4. Nf3 c5 5. c3 Nc6 6. Nbd2 Qb6 {Schwarz greift b2 an. [%cal Rb6b2]} 7. Qb3 {Die Standardantwort auf ...Qb6: Dame gegen Dame.} c4 {Schwarz vertreibt die Dame mit Raumgewinn.} (7... Qxb3 8. axb3 {Weiß schlägt vom Zentrum weg – dafür bekommt der Turm a1 die halboffene a-Linie. [%cal Ga1a7]}) 8. Qc2 {Weiß plant e4 oder b3, um den vorgerückten Bauern c4 zu untergraben. [%cal Ge3e4,Gb2b3]} *
+{Schwarz bietet mit ...Bd6 den Läufertausch an. Weiß hält den Läufer mit Bg3 und greift dann an.}
+1. d4 d5 2. Bf4 Nf6 3. e3 e6 4. Nf3 c5 {Schwarz greift sofort d4 an.} 5. c3 {Die Pyramide.} Nc6 6. Nbd2 Bd6 {Schwarz bietet den Läufertausch an.} 7. Bg3 {Weiß hält den Läufer; nach ...Bxg3 hxg3 bekäme Weiß die halboffene h-Linie.} O-O 8. Bd3 {Der Läufer zielt auf h7. [%cal Gd3h7]} b6 (8... Qe7 9. Ne5 {Erst Ne5, dann f4 – ein Stonewall-ähnlicher Angriff. [%cal Gf2f4]}) 9. Ne5 Bb7 10. f4 {Weiß baut den Angriff am Königsflügel auf: Qf3, g4 oder Rf1-f3-h3 sind typische Ideen. [%cal Gd1f3,Gg2g4]} *
 
-[Chapter "Frühes ...c5"]
-[ChapterDescription "Schwarz greift mit ...c5 und ...Qb6 früh d4 und den Bauern b2 an. Weiß bleibt ruhig oder bestraft die frühe Damenaktion."]
-[Study "Ruhig mit der Pyramide"]
+[Chapter "Die beste Aufstellung von Schwarz (d5, e6, Nf6)"]
+[Study "Schwarz spielt Bd6 früher"]
 [Orientation "white"]
 
-{Gegen das frühe ...c5 stellt Weiß einfach die Pyramide auf.}
-1. d4 d5 2. Bf4 c5 {Schwarz greift früh das Zentrum an.} 3. e3 Nc6 4. c3 {Die Pyramide.} Nf6 (4... Qb6 5. Qb3 {Wieder Dame gegen Dame.} c4 (5... Qxb3 6. axb3 {Die halboffene a-Linie für den Turm.}) 6. Qc2 {Weiß spielt später e4 oder b3 gegen den Bauern c4.}) 5. Nd2 e6 6. Ngf3 Bd6 7. Bg3 O-O 8. Bd3 {Dieselbe Aufstellung wie in der Grundaufstellung – nun folgen Ne5 und f4.} *
+{Kommt ...Bd6 schon im 4. Zug, weicht Weiß mit Bg3 aus. Nach dem Tausch auf g3 hilft die halboffene h-Linie.}
+1. d4 d5 2. Bf4 Nf6 3. e3 e6 4. Nf3 Bd6 {Der frühe Tauschversuch.} 5. Bg3 {Weiß weicht nicht aus, tauscht aber auch nicht selbst.} O-O (5... Bxg3 6. hxg3 Nbd7 7. Bd3 {Gut für Weiß: Die h-Linie ist halb offen, und der Bauer g3 kontrolliert f4. [%cal Gh1h7]}) 6. Bd3 c5 7. c3 Nc6 8. Nbd2 {Die Grundaufstellung steht – als Nächstes Ne5 oder Qe2 und e4.} *
 
-[Chapter "Frühes ...c5"]
-[Study "Das Gambit gegen 3...Qb6"]
+[Chapter "Die beste Aufstellung von Schwarz (d5, e6, Nf6)"]
+[Study "Andere Möglichkeiten von Schwarz"]
 [Orientation "white"]
 
-{Holt sich Schwarz früh den Bauern b2, gerät die Dame schnell in Gefahr.}
-1. d4 d5 2. Bf4 c5 3. e3 Qb6 {Greift b2 sofort an.} 4. Nc3 {Weiß bietet den Bauern an.} Qxb2 {Nimmt Schwarz an, wird es gefährlich für die Dame.} 5. Nb5 {Droht Nc7+ mit Gabel gegen König und Turm. [%cal Rb5c7]} Na6 {Deckt c7.} 6. Rb1 {Die Dame wird gejagt – Weiß hat für den Bauern einen großen Entwicklungsvorsprung.} *
+{Damenindisch mit ...b6, der Springer nach d7 oder die frühe Dame nach b6 – Weiß bleibt bei seinem Aufbau.}
+1. d4 d5 2. Bf4 Nf6 3. e3 e6 4. Nf3 b6 {Der Läufer soll nach b7.} (4... Nbd7 5. Bd3 c5 6. c3 {Die Pyramide. Danach Nbd2 und Ne5.}) (4... c5 5. c3 Qb6 {Greift b2 an.} 6. Qb3 {Die Standardantwort: Dame gegen Dame. Nach ...Qxb3 axb3 hat der Turm a1 die halboffene a-Linie.}) 5. Bd3 Bb7 6. Nbd2 {Weiß spielt Ne5 und Qf3 gegen den Läufer b7 und den Königsflügel.} *
 
-[Chapter "Gegen 1...Nf6"]
-[ChapterDescription "Auch gegen 1...Nf6 bleibt Weiß beim Londoner Aufbau. Gegen die Königsindische Aufstellung ist h3 wichtig, damit der Läufer nach h2 ausweichen kann."]
-[Study "Die Königsindische Aufstellung"]
+[Chapter "Die c5-Aufstellung (ohne e6)"]
+[ChapterDescription "Schwarz spielt ...d5, ...c5, ...Nf6 und ...Nc6, lässt den Läufer c8 aber noch frei. Weiß baut ruhig die Pyramide und reagiert auf ...Qb6 mit Qb3."]
+[Study "Schwarz spielt d5, c5, Nf6, Nc6"]
 [Orientation "white"]
 
-{Schwarz fianchettiert den Königsläufer. Weiß sichert seinen Läufer mit h3.}
-1. d4 Nf6 2. Bf4 g6 {Schwarz fianchettiert den Königsläufer.} 3. e3 Bg7 4. Nf3 O-O 5. Be2 d6 6. h3 {Wichtig: Der Läufer bekommt das Feld h2, damit ...Nh5 ihn nicht abtauschen kann. [%cal Gf4h2]} Nbd7 (6... c5 7. c3 {Die Pyramide. Auf ...Qb6 folgt wie immer Qb3.}) 7. O-O e5 {Schwarz greift das Zentrum an.} 8. Bh2 {Der Läufer zieht sich zurück und hält den Druck auf e5.} *
+{Gegen die c5-Aufstellung stellt Weiß einfach die Pyramide auf.}
+1. d4 d5 2. Bf4 Nf6 3. e3 c5 {Schwarz greift früh das Zentrum an.} 4. c3 {Die Pyramide.} Nc6 5. Nd2 {Der Springer nach d2 hält c4 und e4 im Blick.} g6 (5... Qb6 6. Qb3 {Wieder Dame gegen Dame.} c4 7. Qc2 {Weiß spielt später e4 oder b3 gegen den Bauern c4. [%cal Ge3e4,Gb2b3]}) (5... cxd4 6. exd4 Qb6 7. Qb3 Qxb3 8. axb3 {Die halboffene a-Linie für den Turm. [%cal Ga1a7]}) 6. Ngf3 Bg7 7. Bd3 O-O 8. O-O {Ruhige Entwicklung. Weiß spielt später Re1 und e4.} *
 
-[Chapter "Gegen 1...Nf6"]
-[Study "Andere Antworten: 2...e6 und 2...c5"]
+[Chapter "Bonuswaffe gegen ...c5"]
+[ChapterDescription "Statt ruhig zu bleiben, kann Weiß gegen ...c5 auch aktiv werden: mit e4!?, mit dxc5 oder mit einem Stonewall-Aufbau."]
+[Study "Der umgekehrte Albin (e4!?)"]
 [Orientation "white"]
 
-{Nach 2...e6 geht es in die Grundaufstellung, gegen 2...c5 gewinnt Weiß mit d5 Raum.}
-1. d4 Nf6 2. Bf4 e6 (2... c5 3. d5 {Weiß gewinnt Raum – der Läufer f4 steht in dieser Benoni-Struktur ausgezeichnet.} d6 4. Nc3 g6 5. e4 Bg7 6. Nf3 O-O 7. Be2 {Einfache Entwicklung, Weiß hat ein angenehmes Zentrum.}) 3. e3 c5 4. c3 d5 5. Nd2 Nc6 6. Ngf3 Bd6 7. Bg3 O-O 8. Bd3 {Übergang in die Grundaufstellung.} *
+{Gegen das frühe ...c5 spielt Weiß sofort e4 – eine scharfe Gambit-Idee.}
+1. d4 d5 2. Bf4 c5 3. e4 {Das Gambit: Weiß opfert den e-Bauern für schnelle Entwicklung.} dxe4 (3... cxd4 4. exd5 Qxd5 5. Nf3 {Weiß entwickelt mit Tempo – Nc3 greift die Dame bald an.}) 4. d5 {Der Bauer d5 engt Schwarz ein – wie im Albin-Gegengambit, nur mit vertauschten Farben.} Nf6 5. Nc3 {Danach Bb5+ oder Qe2 und O-O-O, der Bauer e4 fällt oft zurück.} *
 
-[Chapter "Symmetrisch: 2...Bf5"]
-[ChapterDescription "Wenn Schwarz die Londoner Aufstellung spiegelt, nutzt Weiß den Moment: c4 und Qb3 greifen den Bauern b7 an, den der Läufer f5 nicht mehr deckt."]
-[Study "Qb3 gegen b7"]
+[Chapter "Bonuswaffe gegen ...c5"]
+[Study "Wir spielen 4.dxc5"]
 [Orientation "white"]
 
-{Der Läufer f5 fehlt bei der Verteidigung von b7 – genau dort setzt Weiß an.}
+{Weiß nimmt auf c5 und versucht, den Mehrbauern mit b4 zu halten.}
+1. d4 d5 2. Bf4 Nf6 3. e3 c5 4. dxc5 {Weiß nimmt den Bauern.} e6 (4... Qa5+ {Schach – Schwarz will c5 zurückholen.} 5. Nc3 {Blockt und entwickelt. Nach ...Qxc5 folgt Nf3 mit Entwicklungsvorsprung.}) 5. b4 {Hält den Bauern c5.} a5 6. c3 {Die Kette b4-c3 hält – Weiß hat einen Mehrbauern am Damenflügel.} *
+
+[Chapter "Bonuswaffe gegen ...c5"]
+[Study "Die Stonewall-Aufstellung (6.Bd3)"]
+[Orientation "white"]
+
+{Mit Bd3, Bg3 und f4 baut Weiß einen Stonewall auf – der Springer kommt nach e5.}
+1. d4 d5 2. Bf4 Nf6 3. e3 c5 4. c3 Nc6 5. Nd2 e6 6. Bd3 {Der Läufer zielt auf h7.} Bd6 (6... Be7 7. Ngf3 O-O 8. Ne5 {Erst der Springer nach e5, dann Bg3 und f4.}) 7. Bg3 O-O 8. f4 {Der Stonewall: c3-d4-e3-f4. Danach Ngf3 und Ne5. [%cal Gg1f3,Gf3e5]} *
+
+[Chapter "Schwarz spielt Bf5 oder Bg4"]
+[ChapterDescription "Entwickelt Schwarz den Damenläufer, fehlt er bei der Verteidigung von b7. Weiß greift mit Qb3 (oft nach c4) genau dort an."]
+[Study "Schwarz spielt 3...c5 und 5...Bf5 oder 5...Bg4"]
+[Orientation "white"]
+
+{Der Läufer hat b7 verlassen – Weiß greift mit Qb3 an.}
+1. d4 d5 2. Bf4 Nf6 3. e3 c5 4. c3 Nc6 5. Nd2 Bf5 {Der Läufer verlässt c8 – b7 ist geschwächt.} (5... Bg4 6. Qb3 {Auch hier: Angriff auf b7.} Qc8 7. h3 Bh5 8. Ngf3 {Weiß ist gut entwickelt, Schwarz musste die Dame passiv stellen.}) 6. Qb3 {Greift b7 an. [%cal Rb3b7]} Qd7 7. Ngf3 {Weiß entwickelt sich weiter – die schwarze Dame steht ungünstig.} *
+
+[Chapter "Schwarz spielt Bf5 oder Bg4"]
+[Study "Schwarz spielt 3...Bg4"]
+[Orientation "white"]
+
+{Nach 3...Bg4 entwickelt Weiß sich normal und nutzt wieder die Schwäche b7.}
+1. d4 d5 2. Bf4 Nf6 3. e3 Bg4 {Der Läufer fesselt den späteren Springer f3.} 4. Nf3 e6 (4... Nbd7 5. h3 Bh5 6. c4 {Weiß greift sofort das Zentrum an.}) 5. Nbd2 c5 6. c3 Nc6 7. Qb3 {Der Druck auf b7 zwingt Schwarz zu einer Entscheidung. [%cal Rb3b7]} *
+
+[Chapter "Schwarz spielt Bf5 oder Bg4"]
+[Study "Schwarz spielt 3...Bf5"]
+[Orientation "white"]
+
+{Gegen 3...Bf5 öffnet Weiß mit c4 das Spiel am Damenflügel.}
+1. d4 d5 2. Bf4 Nf6 3. e3 Bf5 4. c4 {Weiß greift sofort d5 an.} e6 (4... dxc4 5. Bxc4 e6 6. Nf3 {Weiß ist besser entwickelt und hat das schönere Zentrum.}) 5. Nc3 c6 6. Qb3 {Der Läufer f5 fehlt bei der Verteidigung von b7. [%cal Rb3b7]} Qb6 7. c5 {Mit Tempo gegen die Dame.} Qxb3 8. axb3 {Weiß hat Raum am Damenflügel und spielt b4-b5. [%cal Gb3b4,Gb4b5]} *
+
+[Chapter "Schwarz spielt Bf5 oder Bg4"]
+[Study "Das Spiegel-London"]
+[Orientation "white"]
+
+{Wenn Schwarz die Londoner Aufstellung spiegelt, nutzt Weiß den Moment: c4 und Qb3 greifen b7 an.}
 1. d4 d5 2. Bf4 Bf5 {Schwarz spiegelt die weiße Aufstellung.} 3. c4 {Weiß greift sofort das Zentrum an.} e6 (3... dxc4 4. e3 {Weiß holt den Bauern mit Bxc4 zurück.} e6 5. Bxc4 Nf6 6. Nf3 {Weiß ist besser entwickelt und hat das schönere Zentrum.}) 4. Nc3 c6 5. Qb3 {Der Läufer f5 fehlt bei der Verteidigung von b7. [%cal Rb3b7]} Qb6 6. c5 {Mit Tempo gegen die Dame.} Qxb3 7. axb3 {Weiß hat Raum am Damenflügel und spielt b4-b5. Die a-Linie ist halboffen. [%cal Gb3b4,Gb4b5]} *
 
-[Chapter "Weitere Systeme"]
-[ChapterDescription "Früher Läufertausch auf d6/g3 und die Holländische Verteidigung: Weiß bleibt seinem Aufbau treu."]
-[Study "Früher Läufertausch: 3...Bd6"]
+[Chapter "Schwarz spielt früh Nc6"]
+[ChapterDescription "Der Springer auf c6 blockiert den schwarzen c-Bauern. Weiß nutzt das mit c4 und Druck auf d5 und b7."]
+[Study "Der Anfänger-Aufbau"]
 [Orientation "white"]
 
-{Schwarz bietet sofort den Läufertausch an. Weiß weicht nicht aus – nach hxg3 wird die h-Linie nützlich.}
-1. d4 d5 2. Bf4 e6 3. e3 Bd6 {Schwarz bietet sofort den Läufertausch an.} 4. Bg3 {Weiß weicht nicht aus, aber tauscht auch nicht selbst.} Nf6 (4... Bxg3 5. hxg3 {Gut für Weiß: Die h-Linie ist halb offen, und der Bauer g3 kontrolliert f4. [%cal Gh1h7]}) 5. Nd2 O-O 6. Bd3 c5 7. c3 {Die Pyramide steht – Weiß hat eine bequeme Londoner Stellung.} *
+{Schwarz entwickelt einfach alle Figuren – aber ohne ...c5 fehlt der Druck auf d4. Weiß spielt c4.}
+1. d4 d5 2. Bf4 Nf6 3. e3 Nc6 {Der Springer verstellt den c-Bauern.} 4. Nf3 e6 (4... Bf5 5. c4 e6 6. Qb3 {Wieder der Angriff auf b7. [%cal Rb3b7]}) 5. c4 {Ohne ...c5 kann Schwarz das Zentrum kaum angreifen – Weiß gewinnt Raum.} Be7 6. Nc3 {Weiß steht angenehm: Druck auf d5, Pläne mit c5 oder Rc1.} *
 
-[Chapter "Weitere Systeme"]
-[Study "Holländisch (1...f5)"]
+[Chapter "Schwarz spielt früh Nc6"]
+[Study "Umgekehrtes Jobava-London"]
 [Orientation "white"]
 
-{Auch gegen die Holländische Verteidigung funktioniert der Londoner Aufbau.}
-1. d4 f5 2. Bf4 Nf6 3. e3 e6 4. Nf3 {Weiß entwickelt sich ruhig. Pläne: h3, Bd3 und c4 oder Nbd2.} *
+{Schwarz spielt ...Nc6 und ...Bf5 und droht ...Nb4. Weiß deckt c2 rechtzeitig.}
+1. d4 d5 2. Bf4 Nc6 3. e3 Bf5 4. c4 {Weiß greift d5 an.} e6 (4... Nb4 {Droht ...Nc2+.} 5. Na3 {Deckt c2 – danach vertreibt a3 den Springer.}) 5. Nc3 Nb4 6. Rc1 {Der Turm deckt c2. Danach a3 und der Springer muss zurück.} *
+
+[Chapter "Schwarz spielt früh Nc6"]
+[Study "Schwarz spielt 3...f6"]
+[Orientation "white"]
+
+{Schwarz bereitet ...e5 mit ...f6 vor. Weiß öffnet sofort das Zentrum.}
+1. d4 d5 2. Bf4 Nc6 3. e3 f6 {Schwarz bereitet ...e5 vor.} 4. Nf3 e5 (4... Bf5 5. c4 {Weiß greift d5 an – die Diagonale e8-h5 ist durch ...f6 geschwächt.}) 5. dxe5 fxe5 6. Nxe5 {Der Bauer e5 war nur scheinbar gedeckt.} Nxe5 7. Bxe5 {Weiß hat einen gesunden Mehrbauern.} *
+
+[Chapter "Seltsame zweite Züge von Schwarz"]
+[ChapterDescription "Nach 1...d5 2.Bf4 spielt Schwarz manchmal ungewöhnliche Züge. Weiß bleibt bei der Pyramide und reagiert gezielt."]
+[Study "Seltene Züge nach 1...d5 (2...c6/g6/f6)"]
+[Orientation "white"]
+
+{Ungewöhnliche zweite Züge – Weiß bleibt bei seinem Aufbau und kennt die eine wichtige Antwort.}
+1. d4 d5 2. Bf4 {Der Londoner Läufer.} c6 (2... g6 3. e3 Bg7 4. Nf3 Nf6 5. Be2 O-O 6. h3 {Der Läufer bekommt das Feld h2. [%cal Gf4h2]}) (2... f6 3. e3 e5 4. dxe5 fxe5 5. Bxe5 {Weiß gewinnt einen Bauern.}) 3. e3 Qb6 {Greift b2 an.} 4. Qc1 {Deckt b2 ruhig. Danach Nf3, c3 und Bd3.} *
+
+[Chapter "Nimzo- und Damenindische Aufstellungen"]
+[ChapterDescription "Gegen 1...Nf6 und ...e6 bleibt Weiß beim London. Wichtig ist oft h3, damit der Läufer f4 einen Rückzug nach h2 hat."]
+[Study "Schwarz spielt 4...b6"]
+[Orientation "white"]
+
+{Schwarz fianchettiert den Damenläufer. Weiß sichert den Läufer f4 mit h3.}
+1. d4 Nf6 2. Bf4 e6 3. e3 c5 4. c3 b6 {Der Läufer kommt nach b7.} 5. Nd2 Bb7 6. Ngf3 Be7 7. h3 {Auf ...Nh5 zieht sich der Läufer nach h2 zurück. [%cal Gf4h2]} *
+
+[Chapter "Nimzo- und Damenindische Aufstellungen"]
+[Study "Schwarz spielt 4...Nc6 oder 4...Qb6"]
+[Orientation "white"]
+
+{Nach 4...Nc6 entsteht die Grundaufstellung, gegen 4...Qb6 hilft wieder Qb3.}
+1. d4 Nf6 2. Bf4 e6 3. e3 c5 4. c3 Nc6 (4... Qb6 {Greift b2 an.} 5. Qb3 {Dame gegen Dame.}) 5. Nd2 d5 6. Ngf3 {Übergang in die Grundaufstellung.} *
+
+[Chapter "Nimzo- und Damenindische Aufstellungen"]
+[Study "Schwarz spielt 3...b6"]
+[Orientation "white"]
+
+{Damenindisch ohne ...c5: Weiß spielt h3, Bd3 und c3.}
+1. d4 Nf6 2. Bf4 e6 3. e3 b6 4. Nf3 Bb7 5. h3 {Sichert den Läufer f4.} Be7 (5... Bb4+ 6. c3 Be7 7. Nbd2 {Das Schach hat Schwarz nichts gebracht – c3 gehört ohnehin zur Pyramide.}) 6. Bd3 c5 7. c3 {Die Pyramide steht.} *
+
+[Chapter "Pirc- und Grünfeld-Aufstellungen"]
+[ChapterDescription "Fianchettiert Schwarz den Königsläufer, ist h3 Pflicht – der Läufer f4 braucht das Feld h2."]
+[Study "London gegen Pirc"]
+[Orientation "white"]
+
+{Schwarz fianchettiert den Königsläufer und spielt ...d6. Weiß sichert seinen Läufer mit h3.}
+1. d4 Nf6 2. Bf4 g6 {Schwarz fianchettiert den Königsläufer.} 3. e3 Bg7 4. Nf3 O-O 5. Be2 d6 6. h3 {Wichtig: Der Läufer bekommt das Feld h2, damit ...Nh5 ihn nicht abtauschen kann. [%cal Gf4h2]} Nbd7 (6... c5 7. c3 {Die Pyramide. Auf ...Qb6 folgt wie immer Qb3.}) 7. O-O e5 {Schwarz greift das Zentrum an.} 8. Bh2 {Der Läufer zieht sich zurück und hält den Druck auf e5.} *
+
+[Chapter "Pirc- und Grünfeld-Aufstellungen"]
+[Study "Die Grünfeld-Aufstellung"]
+[Orientation "white"]
+
+{Mit ...g6 und ...d5 baut Schwarz eine Grünfeld-Struktur. Weiß bleibt solide oder greift mit c4 an.}
+1. d4 Nf6 2. Bf4 g6 3. e3 Bg7 4. Nf3 O-O 5. Be2 d5 (5... c5 6. c3 {Die Pyramide hält d4.}) 6. O-O c5 7. c3 {Solide: Weiß spielt Nbd2, h3 und Ne5.} *
+
+[Chapter "Andere Nf6-Linien"]
+[ChapterDescription "Gegen 2...c5 gewinnt Weiß mit d5 Raum, gegen seltene Züge bleibt der Londoner Aufbau."]
+[Study "Schwarz spielt 1...Nf6 und 2...c5"]
+[Orientation "white"]
+
+{Gegen 2...c5 schiebt Weiß den Bauern nach d5 und bekommt eine angenehme Benoni-Struktur.}
+1. d4 Nf6 2. Bf4 c5 3. d5 {Weiß gewinnt Raum – der Läufer f4 steht in dieser Struktur ausgezeichnet.} d6 (3... Qb6 {Greift b2 an.} 4. Nc3 {Nimmt Schwarz auf b2, droht Bd2 und Rb1 mit Damenfang.} Qxb2 5. Bd2 {Die Dame steht gefährlich – Rb1 folgt.}) 4. Nc3 g6 5. e4 Bg7 6. Nf3 O-O 7. Be2 {Einfache Entwicklung, Weiß hat ein angenehmes Zentrum.} *
+
+[Chapter "Andere Nf6-Linien"]
+[Study "Seltene Züge nach 1...Nf6"]
+[Orientation "white"]
+
+{Auf seltene Züge reagiert Weiß mit seinem normalen Aufbau.}
+1. d4 Nf6 2. Bf4 b6 {Der Läufer soll nach b7.} (2... Nh5 {Jagt den Läufer.} 3. Bd2 {Der Läufer weicht aus – der Springer steht am Rand schlecht.}) 3. e3 Bb7 4. Nd2 e6 5. Ngf3 {Weiß spielt h3, Bd3 und c3.} *
+
+[Chapter "Anti-Holländisch mit dem London"]
+[ChapterDescription "Auch gegen die Holländische Verteidigung (1...f5) funktioniert der Londoner Aufbau."]
+[Study "Schwarz spielt 3...e6"]
+[Orientation "white"]
+
+{Gegen den klassischen Holländer entwickelt Weiß sich ruhig: Nf3, Bd3, Nbd2.}
+1. d4 f5 {Die Holländische Verteidigung.} 2. Bf4 Nf6 3. e3 e6 4. Nf3 b6 (4... Be7 5. Bd3 O-O 6. Nbd2 {Weiß plant Qe2 und e4.}) 5. Bd3 Bb7 6. Nbd2 {Pläne: Qe2, O-O und c4 oder e4.} *
+
+[Chapter "Anti-Holländisch mit dem London"]
+[Study "Schwarz spielt 3...g6"]
+[Orientation "white"]
+
+{Gegen den Leningrader Holländer greift Weiß mit h4-h5 die Fianchetto-Stellung an.}
+1. d4 f5 2. Bf4 Nf6 3. e3 g6 {Der Leningrader Aufbau.} 4. Nf3 Bg7 5. h4 {Der h-Bauer marschiert gegen g6.} d6 6. h5 {Weiß öffnet die h-Linie – ein gefährlicher Angriff. [%cal Gh1h8]} *
