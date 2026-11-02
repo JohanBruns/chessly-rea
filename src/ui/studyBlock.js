@@ -10,6 +10,12 @@ export function tileHref(course, tile) {
   return `#/course/${encodeURIComponent(course.id)}/tile/${encodeURIComponent(tile.id)}`;
 }
 
+// Lokale Videos (z. B. "/downloader/downloads/Kurs/01-01 Name.mp4") enthalten Leerzeichen, & usw.
+// und werden deshalb codiert; vollständige URLs bleiben unverändert.
+export function videoHref(video) {
+  return /^[a-z]+:\/\//i.test(video) ? video : encodeURI(video).replace(/#/g, '%23');
+}
+
 export function studyHref(course, study) {
   return `#/course/${encodeURIComponent(course.id)}/study/${encodeURIComponent(study.id)}`;
 }
@@ -22,7 +28,7 @@ export function studyBlock(course, study, { progress, state, currentTileId, onCh
 
   const pathEl = tilePath(entries, {
     current: currentTileId,
-    hrefFor: (tile) => (tile.type === 'video' ? study.video : tileHref(course, tile)),
+    hrefFor: (tile) => (tile.type === 'video' ? videoHref(study.video) : tileHref(course, tile)),
   });
   pathEl.addEventListener('click', (e) => {
     const link = e.target.closest('[data-tile]');
