@@ -1,0 +1,13 @@
+# Virtuelle Umgebung
+.venv/
+
+# Gespeicherter Browser-Login (enthaelt Cookies - niemals hochladen!)
+browser_profile/
+
+# Heruntergeladene Videos
+downloads/
+
+__pycache__/
+*.pyc
+*.part
+*.ytdl
