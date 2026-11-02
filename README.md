@@ -82,7 +82,7 @@ Study**, `[Chapter]` fasst Studies zu Kapiteln zusammen.
 | `[CourseIcon "Bf4"]`, `[CourseHue "355"]` | Figur und Farbton des generierten Kurs-Icons |
 | `[Chapter]`, `[ChapterDescription]` | Kapitel, zu dem die Study gehört |
 | `[Study]` | Titel der Study (sonst Lichess-Kapitelname) |
-| `[Video "https://…"]` | optionale Video-Kachel am Anfang des Pfads |
+| `[Video "https://…"]` oder `[Video "/downloader/downloads/…mp4"]` | optionale Video-Kachel am Anfang des Pfads (Link oder lokales Video aus dem Downloader) |
 | `[Orientation "white"/"black"]` | welche Farbe du spielst |
 | Jede Variante `( … )` | eine eigene **Variante** (jeder Pfad bis zum Ende) |
 | `{Kommentar}` nach einem Zug | Erklärung beim Lernen |
@@ -102,6 +102,10 @@ Browser-Speicher.
 Im Ordner `downloader/` liegt ein kleines Python-Tool, das alle Lektionsvideos eines Chessly-Kurses als MP4
 lädt (mit deinem eigenen Chessly-Login). Einmal `downloader\setup.bat`, danach `downloader\start.bat`.
 Details in [downloader/README.md](downloader/README.md).
+
+Caro-Kann und London-System sind schon verknüpft: Jede Study hat einen `[Video]`-Eintrag auf ihre MP4 in
+`downloader/downloads/`. Ein Klick auf die Video-Kachel öffnet das Video (nur mit `npm run dev` bzw. `start.cmd`,
+weil der Dev-Server die Dateien ausliefert; die Videos selbst sind nicht in Git).
 
 ## Lernstand sichern
 

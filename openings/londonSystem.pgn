@@ -5,6 +5,7 @@
 [Chapter "Die beste Aufstellung von Schwarz (d5, e6, Nf6)"]
 [ChapterDescription "Gegen die solideste schwarze Aufstellung baut Weiß die Pyramide c3-d4-e3, entwickelt den Läufer nach f4 VOR e3 und greift später mit Ne5 und f4 an."]
 [Study "Schwarz spielt Be7"]
+[Video "/downloader/downloads/The London System/01-01 Black's Best Setup (d5, e6, Nf6) - Black Plays Be7.mp4"]
 [Orientation "white"]
 
 {Willkommen zum London-System! Gegen ...Be7 spielt Weiß Bd3, Nbd2 und Ne5 mit Angriff am Königsflügel.}
@@ -12,6 +13,7 @@
 
 [Chapter "Die beste Aufstellung von Schwarz (d5, e6, Nf6)"]
 [Study "Schwarz spielt Bd6"]
+[Video "/downloader/downloads/The London System/01-02 Black's Best Setup (d5, e6, Nf6) - Black Plays Bd6.mp4"]
 [Orientation "white"]
 
 {Schwarz bietet mit ...Bd6 den Läufertausch an. Weiß hält den Läufer mit Bg3 und greift dann an.}
@@ -19,6 +21,7 @@
 
 [Chapter "Die beste Aufstellung von Schwarz (d5, e6, Nf6)"]
 [Study "Schwarz spielt Bd6 früher"]
+[Video "/downloader/downloads/The London System/01-03 Black's Best Setup (d5, e6, Nf6) - Black Plays Bd6 Earlier.mp4"]
 [Orientation "white"]
 
 {Kommt ...Bd6 schon im 4. Zug, weicht Weiß mit Bg3 aus. Nach dem Tausch auf g3 hilft die halboffene h-Linie.}
@@ -26,6 +29,7 @@
 
 [Chapter "Die beste Aufstellung von Schwarz (d5, e6, Nf6)"]
 [Study "Andere Möglichkeiten von Schwarz"]
+[Video "/downloader/downloads/The London System/01-04 Black's Best Setup (d5, e6, Nf6) - Black's Other Options.mp4"]
 [Orientation "white"]
 
 {Damenindisch mit ...b6, der Springer nach d7 oder die frühe Dame nach b6 – Weiß bleibt bei seinem Aufbau.}
@@ -34,6 +38,7 @@
 [Chapter "Die c5-Aufstellung (ohne e6)"]
 [ChapterDescription "Schwarz spielt ...d5, ...c5, ...Nf6 und ...Nc6, lässt den Läufer c8 aber noch frei. Weiß baut ruhig die Pyramide und reagiert auf ...Qb6 mit Qb3."]
 [Study "Schwarz spielt d5, c5, Nf6, Nc6"]
+[Video "/downloader/downloads/The London System/02-01 Black's c5 Setup (without e6) - Black Plays d5, c5, Nf6, Nc6.mp4"]
 [Orientation "white"]
 
 {Gegen die c5-Aufstellung stellt Weiß einfach die Pyramide auf.}
@@ -42,6 +47,7 @@
 [Chapter "Bonuswaffe gegen ...c5"]
 [ChapterDescription "Statt ruhig zu bleiben, kann Weiß gegen ...c5 auch aktiv werden: mit e4!?, mit dxc5 oder mit einem Stonewall-Aufbau."]
 [Study "Der umgekehrte Albin (e4!?)"]
+[Video "/downloader/downloads/The London System/03-01 Bonus Weapon vs ...c5 - The Reverse Albin (e4!).mp4"]
 [Orientation "white"]
 
 {Gegen das frühe ...c5 spielt Weiß sofort e4 – eine scharfe Gambit-Idee.}
@@ -49,6 +55,7 @@
 
 [Chapter "Bonuswaffe gegen ...c5"]
 [Study "Wir spielen 4.dxc5"]
+[Video "/downloader/downloads/The London System/03-02 Bonus Weapon vs ...c5 - We Play 4.dxc5.mp4"]
 [Orientation "white"]
 
 {Weiß nimmt auf c5 und versucht, den Mehrbauern mit b4 zu halten.}
@@ -56,6 +63,7 @@
 
 [Chapter "Bonuswaffe gegen ...c5"]
 [Study "Die Stonewall-Aufstellung (6.Bd3)"]
+[Video "/downloader/downloads/The London System/03-03 Bonus Weapon vs ...c5 - The Stonewall Setup (6. Bd3).mp4"]
 [Orientation "white"]
 
 {Mit Bd3, Bg3 und f4 baut Weiß einen Stonewall auf – der Springer kommt nach e5.}
@@ -64,6 +72,7 @@
 [Chapter "Schwarz spielt Bf5 oder Bg4"]
 [ChapterDescription "Entwickelt Schwarz den Damenläufer, fehlt er bei der Verteidigung von b7. Weiß greift mit Qb3 (oft nach c4) genau dort an."]
 [Study "Schwarz spielt 3...c5 und 5...Bf5 oder 5...Bg4"]
+[Video "/downloader/downloads/The London System/04-01 Black Plays Bf5 or Bg4 - Black Plays 3...c5 and 5...Bf5 or 5...Bg4.mp4"]
 [Orientation "white"]
 
 {Der Läufer hat b7 verlassen – Weiß greift mit Qb3 an.}
@@ -71,6 +80,7 @@
 
 [Chapter "Schwarz spielt Bf5 oder Bg4"]
 [Study "Schwarz spielt 3...Bg4"]
+[Video "/downloader/downloads/The London System/04-02 Black Plays Bf5 or Bg4 - Black Plays 3...Bg4.mp4"]
 [Orientation "white"]
 
 {Nach 3...Bg4 entwickelt Weiß sich normal und nutzt wieder die Schwäche b7.}
@@ -78,6 +88,7 @@
 
 [Chapter "Schwarz spielt Bf5 oder Bg4"]
 [Study "Schwarz spielt 3...Bf5"]
+[Video "/downloader/downloads/The London System/04-03 Black Plays Bf5 or Bg4 - Black Plays 3...Bf5.mp4"]
 [Orientation "white"]
 
 {Gegen 3...Bf5 öffnet Weiß mit c4 das Spiel am Damenflügel.}
@@ -85,6 +96,7 @@
 
 [Chapter "Schwarz spielt Bf5 oder Bg4"]
 [Study "Das Spiegel-London"]
+[Video "/downloader/downloads/The London System/04-04 Black Plays Bf5 or Bg4 - The Copycat London 2...Bf5.mp4"]
 [Orientation "white"]
 
 {Wenn Schwarz die Londoner Aufstellung spiegelt, nutzt Weiß den Moment: c4 und Qb3 greifen b7 an.}
@@ -93,6 +105,7 @@
 [Chapter "Schwarz spielt früh Nc6"]
 [ChapterDescription "Der Springer auf c6 blockiert den schwarzen c-Bauern. Weiß nutzt das mit c4 und Druck auf d5 und b7."]
 [Study "Der Anfänger-Aufbau"]
+[Video "/downloader/downloads/The London System/05-01 Black Plays Nc6 Early - The Noob Setup d5, Nf6, Nc6!.mp4"]
 [Orientation "white"]
 
 {Schwarz entwickelt einfach alle Figuren – aber ohne ...c5 fehlt der Druck auf d4. Weiß spielt c4.}
@@ -100,6 +113,7 @@
 
 [Chapter "Schwarz spielt früh Nc6"]
 [Study "Umgekehrtes Jobava-London"]
+[Video "/downloader/downloads/The London System/05-02 Black Plays Nc6 Early - Reverse Jobava London d5, Nc6, Bf5.mp4"]
 [Orientation "white"]
 
 {Schwarz spielt ...Nc6 und ...Bf5 und droht ...Nb4. Weiß deckt c2 rechtzeitig.}
@@ -107,6 +121,7 @@
 
 [Chapter "Schwarz spielt früh Nc6"]
 [Study "Schwarz spielt 3...f6"]
+[Video "/downloader/downloads/The London System/05-03 Black Plays Nc6 Early - Black Plays 3...f6.mp4"]
 [Orientation "white"]
 
 {Schwarz bereitet ...e5 mit ...f6 vor. Weiß öffnet sofort das Zentrum.}
@@ -115,6 +130,7 @@
 [Chapter "Seltsame zweite Züge von Schwarz"]
 [ChapterDescription "Nach 1...d5 2.Bf4 spielt Schwarz manchmal ungewöhnliche Züge. Weiß bleibt bei der Pyramide und reagiert gezielt."]
 [Study "Seltene Züge nach 1...d5 (2...c6/g6/f6)"]
+[Video "/downloader/downloads/The London System/06-01 Black's Weird 2nd Moves - Random Moves after 1...d5 (2...c6g6f6).mp4"]
 [Orientation "white"]
 
 {Ungewöhnliche zweite Züge – Weiß bleibt bei seinem Aufbau und kennt die eine wichtige Antwort.}
@@ -123,6 +139,7 @@
 [Chapter "Nimzo- und Damenindische Aufstellungen"]
 [ChapterDescription "Gegen 1...Nf6 und ...e6 bleibt Weiß beim London. Wichtig ist oft h3, damit der Läufer f4 einen Rückzug nach h2 hat."]
 [Study "Schwarz spielt 4...b6"]
+[Video "/downloader/downloads/The London System/07-01 The Nimzo & Queen's Indian Setups - Black Plays 4...b6.mp4"]
 [Orientation "white"]
 
 {Schwarz fianchettiert den Damenläufer. Weiß sichert den Läufer f4 mit h3.}
@@ -130,6 +147,7 @@
 
 [Chapter "Nimzo- und Damenindische Aufstellungen"]
 [Study "Schwarz spielt 4...Nc6 oder 4...Qb6"]
+[Video "/downloader/downloads/The London System/07-02 The Nimzo & Queen's Indian Setups - Black Plays 4...Nc6 or 4...Qb6.mp4"]
 [Orientation "white"]
 
 {Nach 4...Nc6 entsteht die Grundaufstellung, gegen 4...Qb6 hilft wieder Qb3.}
@@ -145,6 +163,7 @@
 [Chapter "Pirc- und Grünfeld-Aufstellungen"]
 [ChapterDescription "Fianchettiert Schwarz den Königsläufer, ist h3 Pflicht – der Läufer f4 braucht das Feld h2."]
 [Study "London gegen Pirc"]
+[Video "/downloader/downloads/The London System/08-01 The Pirc & Grunfeld Setups - London - Pirc Defense.mp4"]
 [Orientation "white"]
 
 {Schwarz fianchettiert den Königsläufer und spielt ...d6. Weiß sichert seinen Läufer mit h3.}
@@ -152,6 +171,7 @@
 
 [Chapter "Pirc- und Grünfeld-Aufstellungen"]
 [Study "Die Grünfeld-Aufstellung"]
+[Video "/downloader/downloads/The London System/08-02 The Pirc & Grunfeld Setups - The Grunfeld Setup.mp4"]
 [Orientation "white"]
 
 {Mit ...g6 und ...d5 baut Schwarz eine Grünfeld-Struktur. Weiß bleibt solide oder greift mit c4 an.}
@@ -160,6 +180,7 @@
 [Chapter "Andere Nf6-Linien"]
 [ChapterDescription "Gegen 2...c5 gewinnt Weiß mit d5 Raum, gegen seltene Züge bleibt der Londoner Aufbau."]
 [Study "Schwarz spielt 1...Nf6 und 2...c5"]
+[Video "/downloader/downloads/The London System/09-01 Other Nf6 Lines - Black Plays 1...Nf6 and 2...c5.mp4"]
 [Orientation "white"]
 
 {Gegen 2...c5 schiebt Weiß den Bauern nach d5 und bekommt eine angenehme Benoni-Struktur.}
@@ -167,6 +188,7 @@
 
 [Chapter "Andere Nf6-Linien"]
 [Study "Seltene Züge nach 1...Nf6"]
+[Video "/downloader/downloads/The London System/09-02 Other Nf6 Lines - Random Moves After 1...Nf6.mp4"]
 [Orientation "white"]
 
 {Auf seltene Züge reagiert Weiß mit seinem normalen Aufbau.}
@@ -175,6 +197,7 @@
 [Chapter "Anti-Holländisch mit dem London"]
 [ChapterDescription "Auch gegen die Holländische Verteidigung (1...f5) funktioniert der Londoner Aufbau."]
 [Study "Schwarz spielt 3...e6"]
+[Video "/downloader/downloads/The London System/10-01 The London Anti-Dutch - Black Plays 3...e6.mp4"]
 [Orientation "white"]
 
 {Gegen den klassischen Holländer entwickelt Weiß sich ruhig: Nf3, Bd3, Nbd2.}
@@ -182,6 +205,7 @@
 
 [Chapter "Anti-Holländisch mit dem London"]
 [Study "Schwarz spielt 3...g6"]
+[Video "/downloader/downloads/The London System/10-02 The London Anti-Dutch - Black Plays 3...g6.mp4"]
 [Orientation "white"]
 
 {Gegen den Leningrader Holländer greift Weiß mit h4-h5 die Fianchetto-Stellung an.}
