@@ -31,7 +31,7 @@ def download_video(vimeo_id, target_file, log, should_stop=lambda: False):
         return True
 
     target_file.parent.mkdir(parents=True, exist_ok=True)
-    last_percent = [-1]
+    last_step = [-1]  # zuletzt gemeldeter 25-%-Schritt (Liste, damit progress_hook sie ändern kann)
 
     def progress_hook(status):
         if should_stop():
@@ -40,13 +40,13 @@ def download_video(vimeo_id, target_file, log, should_stop=lambda: False):
         if status["status"] == "downloading":
             total = status.get("total_bytes") or status.get("total_bytes_estimate")
             if total:
-                percent = int(status["downloaded_bytes"] * 100 / total)
+                percent = min(int(status["downloaded_bytes"] * 100 / total), 100)
                 # Nur alle 25 % ins Log schreiben, damit es übersichtlich bleibt.
-                if percent // 25 != last_percent[0] // 25:
-                    last_percent[0] = percent
-                    log(f"    {percent} %")
+                if percent // 25 > last_step[0]:
+                    last_step[0] = percent // 25
+                    log(f"    {last_step[0] * 25} %")
         elif status["status"] == "finished":
-            last_percent[0] = -1
+            last_step[0] = -1
 
     options = {
         # Chessly erlaubt das Vimeo-Video nur, wenn es "von chessly.com" kommt.
