@@ -97,6 +97,12 @@ Tipp: Varianten sollten mit **deinem eigenen Zug** enden; der Kommentar des letz
 Über **Menü → Hinzufügen**: Lichess-Studie per Link, PGN-Datei oder PGN-Text. Importierte Kurse liegen im
 Browser-Speicher.
 
+## Kursvideos herunterladen (`downloader/`)
+
+Im Ordner `downloader/` liegt ein kleines Python-Tool, das alle Lektionsvideos eines Chessly-Kurses als MP4
+lädt (mit deinem eigenen Chessly-Login). Einmal `downloader\setup.bat`, danach `downloader\start.bat`.
+Details in [downloader/README.md](downloader/README.md).
+
 ## Lernstand sichern
 
 Lernstand, XP und Streak liegen im `localStorage` des Browsers. Unter **Einstellungen → Sicherung herunterladen**
@@ -124,6 +130,7 @@ npm run build
 | `src/bot.js`, `src/engine.js` | Repertoire-Züge des Bots, Stockfish als Web Worker |
 | `src/ui/` | Topbar & Menü, Icons & Logo, Kurs-Icons, Kachelpfad (SVG), XP-Diagramm, Toasts |
 | `src/views/` | Home, Kurse, Kursseite, Sitzung, Explorer, Drill Shuffle, Wiederholen, Bot, Profil, Einstellungen, Import |
+| `downloader/` | Python-Tool (tkinter, Playwright, yt-dlp) zum Herunterladen der Chessly-Kursvideos |
 
 Brett: [chessground](https://github.com/lichess-org/chessground) (Lichess, GPL-3.0), Regeln:
 [chess.js](https://github.com/jhlywa/chess.js), Engine: [stockfish.js](https://github.com/nmrugg/stockfish.js) (GPL-3.0).
