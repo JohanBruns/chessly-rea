@@ -16,6 +16,16 @@ export function videoHref(video) {
   return /^[a-z]+:\/\//i.test(video) ? video : encodeURI(video).replace(/#/g, '%23');
 }
 
+// Videodateien spielt die App in einer eigenen Ansicht ab, andere Links (z. B. YouTube) öffnen extern.
+export function isVideoFile(video) {
+  return !/^[a-z]+:\/\//i.test(video) || /\.(mp4|m4v|mov|webm)([?#]|$)/i.test(video);
+}
+
+export function studyVideoHref(course, study) {
+  if (!isVideoFile(study.video)) return videoHref(study.video);
+  return `#/course/${encodeURIComponent(course.id)}/video/${encodeURIComponent(study.id)}`;
+}
+
 export function studyHref(course, study) {
   return `#/course/${encodeURIComponent(course.id)}/study/${encodeURIComponent(study.id)}`;
 }
@@ -28,7 +38,7 @@ export function studyBlock(course, study, { progress, state, currentTileId, onCh
 
   const pathEl = tilePath(entries, {
     current: currentTileId,
-    hrefFor: (tile) => (tile.type === 'video' ? videoHref(study.video) : tileHref(course, tile)),
+    hrefFor: (tile) => (tile.type === 'video' ? studyVideoHref(course, study) : tileHref(course, tile)),
   });
   pathEl.addEventListener('click', (e) => {
     const link = e.target.closest('[data-tile]');

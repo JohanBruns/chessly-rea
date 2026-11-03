@@ -5,7 +5,7 @@ import { findTile, nextTile, tileStates, XP } from '../progress.js';
 import { addXp, loadProgress, loadState, markDrillDone, touchCourse } from '../storage.js';
 import { courseIcon } from '../ui/courseIcon.js';
 import { setSessionHeader } from '../ui/layout.js';
-import { tileHref } from '../ui/studyBlock.js';
+import { studyVideoHref, tileHref } from '../ui/studyBlock.js';
 import { xpToast } from '../ui/toast.js';
 import { runSession } from './sessionCore.js';
 
@@ -62,7 +62,7 @@ export function renderTileSession(root, { courseId, tileId }) {
     xpPerVariation: isDrill ? 0 : XP.variation,
     backHref,
     backLabel: 'Zurück zum Pfad',
-    videoUrl: study.video,
+    videoUrl: study.video ? studyVideoHref(course, study) : null,
     onFinish: () => {
       let xp = 0;
       if (isDrill) {

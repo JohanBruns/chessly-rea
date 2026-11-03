@@ -459,8 +459,9 @@ input:checked + .switch .switch-knob {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  height: 66px;
-  padding: 0 20px;
+  /* In der installierten iPhone-App liegt die Statusleiste über der Seite */
+  height: calc(66px + env(safe-area-inset-top, 0px));
+  padding: env(safe-area-inset-top, 0px) 20px 0;
   background: color-mix(in srgb, var(--bg) 88%, transparent);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--line);
@@ -2268,6 +2269,27 @@ cg-board square.last-move {
   }
 }
 
+/* ---------- Video einer Study ---------- */
+.video-page {
+  max-width: 960px;
+  margin: 0 auto;
+}
+.study-video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.video-error {
+  margin-top: 12px;
+}
+.video-actions {
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
 /* ---------- Responsiv ---------- */
 @media (max-width: 1000px) {
   .course-layout {
@@ -2294,8 +2316,8 @@ cg-board square.last-move {
     padding: 14px 16px 50px;
   }
   .topbar {
-    padding: 0 12px;
-    height: 58px;
+    padding: env(safe-area-inset-top, 0px) 12px 0;
+    height: calc(58px + env(safe-area-inset-top, 0px));
   }
   .brand-word span {
     display: none;

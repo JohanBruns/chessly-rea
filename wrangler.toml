@@ -1,0 +1,13 @@
+# Cloudflare Pages: App aus dist/, Videos über functions/ aus dem privaten R2-Bucket.
+name = "chessly-rea"
+pages_build_output_dir = "dist"
+compatibility_date = "2025-06-01"
+
+[vars]
+# Aus Cloudflare Zero Trust → Access → Applications (siehe README „Aufs iPhone“)
+ACCESS_TEAM_DOMAIN = "johan-chess.cloudflareaccess.com"
+ACCESS_AUD = "b961f7c9b65059cd8c1ddc66961a5d59794b15a45cd71864fe4e4c4feace2bed"
+
+[[r2_buckets]]
+binding = "VIDEOS"
+bucket_name = "chessly-rea-videos"

@@ -262,7 +262,14 @@ export function runSession(root, cfg) {
             'Position analysieren',
           ),
           h('a', { class: 'menu-item', role: 'menuitem', href: cfg.backHref || '#/' }, icon('arrowLeft', { size: 18 }), cfg.backLabel || 'Zurück'),
-          cfg.videoUrl ? h('a', { class: 'menu-item', role: 'menuitem', href: cfg.videoUrl, target: '_blank', rel: 'noopener' }, icon('play', { size: 18 }), 'Video ansehen') : null,
+          cfg.videoUrl
+            ? h(
+                'a',
+                { class: 'menu-item', role: 'menuitem', href: cfg.videoUrl, ...(cfg.videoUrl.startsWith('#') ? {} : { target: '_blank', rel: 'noopener' }) },
+                icon('play', { size: 18 }),
+                'Video ansehen',
+              )
+            : null,
         )
       : null;
     fill(

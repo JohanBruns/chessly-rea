@@ -90,7 +90,7 @@ export function tilePath(entries, { hrefFor, current } = {}) {
         return `<g class="${cls}" data-tile="${tile.id}"><title>${label}</title>${body}</g>`;
       }
       const href = hrefFor(tile);
-      const external = tile.type === 'video' ? ' target="_blank" rel="noopener"' : '';
+      const external = /^[a-z]+:\/\//i.test(href) ? ' target="_blank" rel="noopener"' : '';
       return `<a class="${cls}" data-tile="${tile.id}" href="${href}"${external} aria-label="${label}"><title>${label}</title>${body}</a>`;
     });
 

@@ -11,7 +11,10 @@
     "prebuild": "node scripts/copyStockfish.js",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "vitest run"
+    "test": "vitest run",
+    "upload-videos": "node scripts/uploadVideos.js",
+    "deploy": "npm run build && wrangler pages deploy",
+    "usage": "node scripts/usage.js"
   },
   "dependencies": {
     "@lichess-org/chessground": "^10.5.0",
@@ -20,6 +23,7 @@
   },
   "devDependencies": {
     "vite": "^8.3.4",
-    "vitest": "^5.0.5"
+    "vitest": "^5.0.5",
+    "wrangler": "^4.157.0"
   }
 }

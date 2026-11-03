@@ -17,6 +17,7 @@ import { renderReview } from './views/reviewView.js';
 import { renderSettings } from './views/settingsView.js';
 import { renderStudyExplorer } from './views/studyExplorerView.js';
 import { renderTileSession } from './views/tileView.js';
+import { renderVideo } from './views/videoView.js';
 
 const app = document.getElementById('app');
 let cleanup = null;
@@ -33,6 +34,7 @@ function resolve(parts, params) {
   const [view, id, sub, subId] = parts;
   if (view === 'course' && id && sub === 'tile' && subId) return ['session', () => renderTileSession(app, { courseId: id, tileId: subId })];
   if (view === 'course' && id && sub === 'study' && subId) return ['explorer', () => renderStudyExplorer(app, { courseId: id, studyId: subId })];
+  if (view === 'course' && id && sub === 'video' && subId) return ['video', () => renderVideo(app, { courseId: id, studyId: subId })];
   if (view === 'course' && id) return ['course', () => renderCourse(app, { id, params })];
   if (view === 'courses') return ['courses', () => renderCourses(app, params)];
   if (view === 'review') return ['review', () => renderReview(app, params)];
@@ -66,3 +68,8 @@ function route() {
 initLayout();
 window.addEventListener('hashchange', route);
 route();
+
+// Offline-Fähigkeit nur im fertigen Build; im Dev-Server würde der Cache alte Module ausliefern
+if (import.meta.env.PROD && 'serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch((err) => console.warn('Service Worker nicht registriert:', err));
+}

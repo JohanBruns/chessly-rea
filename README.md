@@ -104,8 +104,91 @@ lädt (mit deinem eigenen Chessly-Login). Einmal `downloader\setup.bat`, danach 
 Details in [downloader/README.md](downloader/README.md).
 
 Caro-Kann und London-System sind schon verknüpft: Jede Study hat einen `[Video]`-Eintrag auf ihre MP4 in
-`downloader/downloads/`. Ein Klick auf die Video-Kachel öffnet das Video (nur mit `npm run dev` bzw. `start.cmd`,
-weil der Dev-Server die Dateien ausliefert; die Videos selbst sind nicht in Git).
+`downloader/downloads/`. Ein Klick auf die Video-Kachel spielt das Video direkt in der App ab. Lokal liefert der
+Dev-Server (`npm run dev` bzw. `start.cmd`) die Dateien aus, in der iPhone-App der private Cloudflare-Speicher
+(siehe unten). Die Videos selbst sind nicht in Git.
+
+## Aufs iPhone (Cloudflare, privat)
+
+Die App läuft auf Cloudflare Pages, die Videos liegen in einem privaten R2-Bucket. Davor sitzt Cloudflare Access:
+Nur deine E-Mail-Adresse kommt durch, für alle anderen ist weder die App noch ein Video erreichbar. Die
+Video-Funktion (`functions/downloader/downloads/[[path]].js`) prüft das Access-Token zusätzlich selbst und
+verweigert ohne gültige Anmeldung jedes Video. Alles läuft im kostenlosen Tarif. R2 enthält 10 GB Speicher
+und berechnet keinen Download-Traffic. Cloudflare verlangt fürs Aktivieren von R2 aber eine hinterlegte
+Zahlungsmethode.
+
+### Einmalig einrichten
+
+1. Kostenloses Konto auf <https://dash.cloudflare.com> anlegen und im Dashboard **R2** aktivieren.
+2. Am PC anmelden (öffnet den Browser):
+
+   ```bash
+   npx wrangler login
+   ```
+
+3. Bucket und Pages-Projekt anlegen:
+
+   ```bash
+   npx wrangler r2 bucket create chessly-rea-videos
+   ```
+
+   ```bash
+   npx wrangler pages project create chessly-rea --production-branch main
+   ```
+
+   Die Ausgabe nennt die Adresse, z. B. `https://chessly-rea.pages.dev`. Ist der Name schon vergeben, hängt
+   Cloudflare etwas an. Dann diese Adresse in den nächsten Schritten verwenden.
+4. **Zugang absichern** – im Dashboard unter **Zero Trust** (beim ersten Mal einen Teamnamen wählen und den
+   kostenlosen Tarif nehmen):
+   - **Access → Applications → Add an application → Self-hosted**
+   - Domains: `chessly-rea.pages.dev` **und** `*.chessly-rea.pages.dev` (sonst wären die Vorschau-Adressen
+     jeder Version offen)
+   - Session Duration: z. B. *1 month*, damit die iPhone-App nicht ständig neu fragt
+   - Policy: *Allow*, Include → *Emails* → deine E-Mail-Adresse
+   - Nach dem Speichern den **Application Audience (AUD) Tag** kopieren. Die Team-Domain (`<team>.cloudflareaccess.com`)
+     steht in den Zero-Trust-**Settings**.
+5. Beide Werte in `wrangler.toml` eintragen:
+
+   ```toml
+   ACCESS_TEAM_DOMAIN = "<team>.cloudflareaccess.com"
+   ACCESS_AUD = "<AUD-Tag>"
+   ```
+
+### Videos hochladen und App veröffentlichen
+
+```bash
+npm run upload-videos
+```
+
+```bash
+npm run deploy
+```
+
+`upload-videos` lädt alle Videos hoch, auf die die PGN-Dateien in `openings/` verweisen. Schon hochgeladene
+überspringt es (Liste in `downloader/downloads/.uploaded.json`). Nach neuen Kursen oder Videos einfach beide
+Befehle erneut ausführen.
+
+### Kosten im Blick
+
+```bash
+npm run usage
+```
+
+zeigt, wie viel der 10 GB belegt sind. `upload-videos` bricht ab, bevor der Bucket größer als 8 GB würde,
+und lädt dann gar nichts hoch. Abrufe kosten nichts extra. Download-Traffic ist bei R2 kostenlos, und Videos
+sind nur über die Pages-Funktion erreichbar. Die ist im Gratis-Tarif auf 100.000 Aufrufe pro Tag begrenzt, das
+sind höchstens rund 3 Mio. Lesezugriffe im Monat (frei: 10 Mio.). Wichtig: Kein **Workers Paid**-Abo
+abschließen und die öffentliche `r2.dev`-Adresse des Buckets ausgeschaltet lassen (Standard).
+
+### Auf dem iPhone installieren
+
+1. In **Safari** die Pages-Adresse öffnen und mit dem Code anmelden, den Cloudflare an deine E-Mail schickt.
+2. **Teilen → Zum Home-Bildschirm**. Die App startet danach im Vollbild und meldet sich beim ersten Start
+   noch einmal an. Safari und Home-Bildschirm-App haben getrennte Speicher.
+3. Die App selbst funktioniert danach auch offline, Videos brauchen eine Internetverbindung.
+
+Der Lernstand liegt pro Gerät. Mit **Einstellungen → Sicherung herunterladen** am PC und dem Import auf dem
+iPhone überträgst du ihn (und umgekehrt).
 
 ## Lernstand sichern
 
@@ -134,6 +217,8 @@ npm run build
 | `src/bot.js`, `src/engine.js` | Repertoire-Züge des Bots, Stockfish als Web Worker |
 | `src/ui/` | Topbar & Menü, Icons & Logo, Kurs-Icons, Kachelpfad (SVG), XP-Diagramm, Toasts |
 | `src/views/` | Home, Kurse, Kursseite, Sitzung, Explorer, Drill Shuffle, Wiederholen, Bot, Profil, Einstellungen, Import |
+| `functions/`, `wrangler.toml` | Cloudflare Pages: Videos aus R2 mit Access-Prüfung und Range-Anfragen |
+| `public/sw.js`, `public/manifest.webmanifest` | Installierbare App (PWA), Offline-Cache für App und Stockfish |
 | `downloader/` | Python-Tool (tkinter, Playwright, yt-dlp) zum Herunterladen der Chessly-Kursvideos |
 
 Brett: [chessground](https://github.com/lichess-org/chessground) (Lichess, GPL-3.0), Regeln:
