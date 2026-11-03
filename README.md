@@ -219,6 +219,27 @@ abschließen und die öffentliche `r2.dev`-Adresse des Buckets ausgeschaltet las
 Der Lernstand liegt pro Gerät. Mit **Einstellungen → Sicherung herunterladen** am PC und dem Import auf dem
 iPhone überträgst du ihn (und umgekehrt).
 
+## Abgleich mit Chessly
+
+Passen deine Studies zu dem, was im Video besprochen wird? `downloader\lines.py` speichert Kapitel, Studies und
+alle Varianten (Züge + Kommentare) eines Chessly-Kurses in `downloader/lines/<Kurs>.json`:
+
+```bash
+downloader\.venv\Scripts\python downloader\lines.py https://chessly.com/courses/d4f3504b-8bbd-4435-ae30-a0b8372c9286
+```
+
+Danach vergleicht `npm run abgleich` jede PGN-Datei mit `[ChesslyCourse "<Kurs-ID>"]`-Header mit diesen Linien und
+schreibt `downloader/lines/<Kurs> - Abgleich.md`: pro Study, welche Chessly-Varianten vollständig enthalten sind,
+wo du einen anderen eigenen Zug spielst, welcher Gegnerzug fehlt und welche Linien nur bei dir stehen.
+Kapitel und Studies werden in ihrer Reihenfolge zugeordnet.
+
+`npm run neuaufbau -- openings/caroKann.pgn` baut die Studies einer PGN-Datei aus den Chessly-Linien neu auf:
+Kopfzeilen (deutsche Titel, Kapitelbeschreibungen, Videos) bleiben, Züge, Kommentare und Pfeile kommen von Chessly –
+in derselben Variantenreihenfolge. Übersetzungen liegen in `downloader/lines/<Kurs>.de.json`
+(englischer Kommentar → deutscher Text, `intro:<Study-ID>` → Einführung); fehlt eine, bleibt der Kommentar englisch.
+Caro-Kann und London-System sind so aufgebaut; der Test in `tests/openings.test.js` prüft, dass jede Chessly-Variante
+vollständig enthalten ist.
+
 ## Lernstand sichern
 
 Lernstand, XP und Streak liegen im `localStorage` des Browsers. Unter **Einstellungen → Sicherung herunterladen**
@@ -243,6 +264,7 @@ npm run build
 | `src/lineSession.js` | Ablauf einer Variante (Lernen/Wiederholen, Hinweis-Stufen, Navigation), ohne DOM |
 | `src/tileSession.js` | Ablauf einer Kachel (Lernen + Wiederholen je Variante, gemischter Drill), ohne DOM |
 | `src/scheduler.js` | Spaced Repetition |
+| `src/courseCompare.js`, `scripts/compareCourse.js` | Abgleich eines Kurses mit den Chessly-Linien (`npm run abgleich`) |
 | `src/bot.js`, `src/engine.js` | Repertoire-Züge des Bots, Stockfish als Web Worker |
 | `src/ui/` | Topbar & Menü, Icons & Logo, Kurs-Icons, Kachelpfad (SVG), XP-Diagramm, Toasts |
 | `src/views/` | Home, Kurse, Kursseite, Sitzung, Explorer, Drill Shuffle, Wiederholen, Bot, Profil, Einstellungen, Import |

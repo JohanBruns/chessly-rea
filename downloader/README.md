@@ -31,6 +31,7 @@ einfach wieder starten – es geht dort weiter, wo es aufgehört hat.
 | `browser.py` | Chromium mit gespeichertem Login-Profil |
 | `chessly.py` | Findet Kapitel/Lektionen eines Kurses und die Vimeo-ID jeder Lektion |
 | `downloader.py` | Lädt ein Vimeo-Video mit yt-dlp und fügt Bild + Ton zu MP4 zusammen |
+| `lines.py` | Speichert alle Varianten (Züge + Kommentare) eines Kurses nach `lines/<Kurs>.json` – für `npm run abgleich` |
 
 Chessly bettet die Videos über Vimeo ein. Vimeo spielt sie nur ab, wenn die Anfrage
 von chessly.com kommt – darum schickt der Downloader `Referer: https://chessly.com/` mit.
