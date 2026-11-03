@@ -121,6 +121,13 @@ schreibt `downloader/lines/<Kurs> - Abgleich.md`: pro Study, welche Chessly-Vari
 wo du einen anderen eigenen Zug spielst, welcher Gegnerzug fehlt und welche Linien nur bei dir stehen.
 Kapitel und Studies werden in ihrer Reihenfolge zugeordnet.
 
+`npm run neuaufbau -- openings/caroKann.pgn` baut die Studies einer PGN-Datei aus den Chessly-Linien neu auf:
+Kopfzeilen (deutsche Titel, Kapitelbeschreibungen, Videos) bleiben, Züge, Kommentare und Pfeile kommen von Chessly –
+in derselben Variantenreihenfolge. Übersetzungen liegen in `downloader/lines/<Kurs>.de.json`
+(englischer Kommentar → deutscher Text, `intro:<Study-ID>` → Einführung); fehlt eine, bleibt der Kommentar englisch.
+Caro-Kann und London-System sind so aufgebaut; der Test in `tests/openings.test.js` prüft, dass jede Chessly-Variante
+vollständig enthalten ist.
+
 ## Lernstand sichern
 
 Lernstand, XP und Streak liegen im `localStorage` des Browsers. Unter **Einstellungen → Sicherung herunterladen**

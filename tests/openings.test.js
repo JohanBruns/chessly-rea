@@ -3,9 +3,15 @@ import { describe, expect, it } from 'vitest';
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { buildCourse } from '../src/courseLoader.js';
+import { compareCourse } from '../src/courseCompare.js';
+import { parsePgn } from '../src/pgnParser.js';
 
 const dir = join(import.meta.dirname, '..', 'openings');
 const files = readdirSync(dir).filter((f) => f.endsWith('.pgn'));
+const linesDir = join(import.meta.dirname, '..', 'downloader', 'lines');
+const chesslyCourses = readdirSync(linesDir)
+  .filter((f) => f.endsWith('.json') && !f.endsWith('.de.json'))
+  .map((f) => JSON.parse(readFileSync(join(linesDir, f), 'utf8')));
 
 describe('mitgelieferte Eröffnungen', () => {
   it('es gibt Repertoire-Dateien', () => {
@@ -31,11 +37,14 @@ describe('mitgelieferte Eröffnungen', () => {
         }
       });
 
-      it('endet jede Variante mit einem eigenen Zug', () => {
-        for (const line of course.lines) {
-          const last = line.moves[line.moves.length - 1];
-          expect(last.color, `${line.studyTitle} – ${line.name}`).toBe(line.userColor);
-        }
+      // Die Varianten stammen von Chessly (scripts/buildFromChessly.js) – einige enden dort mit einem Gegnerzug.
+      it('enthält jede Chessly-Variante vollständig', () => {
+        const chesslyId = parsePgn(readFileSync(join(dir, file), 'utf8'))[0].headers.ChesslyCourse;
+        const chessly = chesslyCourses.find((c) => c.id === chesslyId);
+        if (!chessly) return;
+        const { summary } = compareCourse(course, chessly);
+        expect(summary.studies.own).toBe(summary.studies.chessly);
+        expect(summary.complete).toBe(summary.variations);
       });
 
       it('erklärt jede Variante und jede Study', () => {

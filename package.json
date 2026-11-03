@@ -12,7 +12,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest run",
-    "abgleich": "node scripts/compareCourse.js"
+    "abgleich": "node scripts/compareCourse.js",
+    "neuaufbau": "node scripts/buildFromChessly.js"
   },
   "dependencies": {
     "@lichess-org/chessground": "^10.5.0",

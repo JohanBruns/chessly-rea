@@ -70,7 +70,7 @@ function formatReport(course, chessly, result) {
 
 function loadChesslyCourses() {
   return readdirSync(linesDir)
-    .filter((f) => f.endsWith('.json'))
+    .filter((f) => f.endsWith('.json') && !f.endsWith('.de.json'))
     .map((f) => JSON.parse(readFileSync(join(linesDir, f), 'utf8')));
 }
 
