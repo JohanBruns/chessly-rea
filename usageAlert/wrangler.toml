@@ -1,0 +1,20 @@
+# Täglicher Speicher-Check für den Video-Bucket (siehe README „Kosten im Blick“).
+name = "chessly-rea-usage-alert"
+main = "index.js"
+compatibility_date = "2025-06-01"
+# Keine öffentliche Adresse – der Worker läuft nur per Cron
+workers_dev = false
+preview_urls = false
+
+[triggers]
+crons = ["0 7 * * *"] # täglich 07:00 UTC (8 Uhr Winterzeit)
+
+[vars]
+ALERT_EMAIL = "deine-adresse@example.com"
+# RESEND_API_KEY ist ein Secret: npx wrangler secret put RESEND_API_KEY --config usageAlert/wrangler.toml
+
+[[r2_buckets]]
+binding = "VIDEOS"
+bucket_name = "chessly-rea-videos"
+# Auch beim lokalen Test den echten Bucket zählen
+remote = true

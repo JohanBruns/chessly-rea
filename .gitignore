@@ -3,3 +3,4 @@ dist/
 public/stockfish/
 .playwright-mcp/
 .wrangler/
+.dev.vars

@@ -6,11 +6,10 @@ import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from '
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { videoObjectKey } from '../functions/downloader/downloads/[[path]].js';
-import { BUCKET, bucketUsage, formatGb, STORAGE_LIMIT_BYTES, wrangler } from './r2Usage.js';
+import { BUCKET, bucketUsage, formatGb, loadUploadState, statePath, STORAGE_LIMIT_BYTES, uploadedBytes, wrangler } from './r2Usage.js';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const PREFIX = '/downloader/downloads/';
-const statePath = join(root, 'downloader', 'downloads', '.uploaded.json');
 
 export function referencedVideos(pgnTexts) {
   const keys = new Set();
@@ -25,8 +24,7 @@ export function referencedVideos(pgnTexts) {
 // Bucket-Größe nach dem Upload. wrangler meldet die Größe mit etwas Verzögerung, deshalb zählt auch
 // die eigene Liste der hochgeladenen Dateien – es gilt der größere Wert.
 export function projectedBytes({ remoteBytes, state, pending }) {
-  const known = Object.values(state).reduce((sum, stamp) => sum + Number(String(stamp).split(':')[0]), 0);
-  return Math.max(remoteBytes, known) + pending.reduce((sum, p) => sum + p.size, 0);
+  return Math.max(remoteBytes, uploadedBytes(state)) + pending.reduce((sum, p) => sum + p.size, 0);
 }
 
 async function main() {
@@ -35,7 +33,7 @@ async function main() {
     .filter((f) => f.endsWith('.pgn'))
     .map((f) => readFileSync(join(openings, f), 'utf8'));
   const keys = referencedVideos(pgns);
-  const state = existsSync(statePath) ? JSON.parse(readFileSync(statePath, 'utf8')) : {};
+  const state = loadUploadState();
   const missing = [];
   const pending = [];
   for (const key of keys) {

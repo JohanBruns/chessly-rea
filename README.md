@@ -175,7 +175,36 @@ npm run usage
 ```
 
 zeigt, wie viel der 10 GB belegt sind. `upload-videos` bricht ab, bevor der Bucket größer als 8 GB würde,
-und lädt dann gar nichts hoch. Abrufe kosten nichts extra. Download-Traffic ist bei R2 kostenlos, und Videos
+und lädt dann gar nichts hoch.
+
+**E-Mail-Warnung:** Der Worker in `usageAlert/` zählt jeden Morgen (07:00 UTC) die Videos im Bucket und
+schickt ab **6,8 GB** (85 % der 8-GB-Sperre) eine E-Mail. Solange der Bucket darüber bleibt, kommt sie täglich.
+Versendet wird über [Resend](https://resend.com) (kostenlos, 100 Mails/Tag). Einmalig einrichten:
+
+1. Im Cloudflare-Dashboard einmal **Workers & Pages** öffnen. Dabei legt Cloudflare die
+   workers.dev-Subdomain an, ohne die keine Zeitpläne erlaubt sind.
+2. Bei Resend mit derselben Adresse wie `ALERT_EMAIL` in `usageAlert/wrangler.toml` registrieren. Ohne
+   eigene Domain darf Resend nur an diese Adresse schicken. Dann unter **API Keys** einen Schlüssel mit
+   *Sending access* anlegen.
+3. Den Schlüssel für den Worker hinterlegen (der Befehl fragt danach):
+
+   ```bash
+   npx wrangler secret put RESEND_API_KEY --config usageAlert/wrangler.toml
+   ```
+
+4. Worker veröffentlichen und Probe-Mail schicken:
+
+   ```bash
+   npm run deploy-alert
+   ```
+
+   ```bash
+   npm run test-alert
+   ```
+
+   `test-alert` lässt den veröffentlichten Worker kurz jede Minute mit Probe-Mail laufen, wartet auf den
+   ersten Lauf und schaltet ihn danach wieder auf den täglichen Zeitplan. Cloudflare braucht bis zu 15 Minuten,
+   bis ein geänderter Zeitplan greift. Der Schlüssel bleibt dabei bei Cloudflare. Abrufe kosten nichts extra. Download-Traffic ist bei R2 kostenlos, und Videos
 sind nur über die Pages-Funktion erreichbar. Die ist im Gratis-Tarif auf 100.000 Aufrufe pro Tag begrenzt, das
 sind höchstens rund 3 Mio. Lesezugriffe im Monat (frei: 10 Mio.). Wichtig: Kein **Workers Paid**-Abo
 abschließen und die öffentliche `r2.dev`-Adresse des Buckets ausgeschaltet lassen (Standard).
@@ -218,6 +247,8 @@ npm run build
 | `src/ui/` | Topbar & Menü, Icons & Logo, Kurs-Icons, Kachelpfad (SVG), XP-Diagramm, Toasts |
 | `src/views/` | Home, Kurse, Kursseite, Sitzung, Explorer, Drill Shuffle, Wiederholen, Bot, Profil, Einstellungen, Import |
 | `functions/`, `wrangler.toml` | Cloudflare Pages: Videos aus R2 mit Access-Prüfung und Range-Anfragen |
+| `usageAlert/` | Cloudflare Worker: täglicher Speicher-Check mit E-Mail-Warnung über Resend |
+| `scripts/uploadVideos.js`, `scripts/usage.js`, `scripts/r2Limits.js` | Video-Upload mit 8-GB-Sperre, Verbrauchsanzeige, gemeinsame Grenzen |
 | `public/sw.js`, `public/manifest.webmanifest` | Installierbare App (PWA), Offline-Cache für App und Stockfish |
 | `downloader/` | Python-Tool (tkinter, Playwright, yt-dlp) zum Herunterladen der Chessly-Kursvideos |
 
