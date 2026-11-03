@@ -35,6 +35,12 @@ const MENU = [
   { href: '#/import', label: 'Hinzufügen', icon: 'plus', view: 'import' },
 ];
 
+function goBack() {
+  // Direkt geöffnete Unterseite: kein Verlauf, also zur Startseite
+  if (history.length > 1) history.back();
+  else location.hash = '#/';
+}
+
 function closeAll() {
   menuOpen = false;
   popoverOpen = false;
@@ -123,6 +129,11 @@ export function renderTopbar() {
   clear(topbar);
 
   const left = sessionHeader || h('a', { class: 'brand', href: '#/', 'aria-label': 'Startseite' }, logoMark(32), h('span', { class: 'brand-word' }, h('strong', {}, 'rea'), h('span', {}, 'openings')));
+  // Die installierte iPhone-App hat keinen Browser-Zurück-Button
+  const backBtn =
+    document.body.dataset.view === 'home'
+      ? null
+      : h('button', { class: 'icon-btn topbar-back', 'aria-label': 'Zurück', onclick: goBack }, icon('arrowLeft', { size: 22 }));
 
   const streakBtn = h(
     'button',
@@ -143,7 +154,7 @@ export function renderTopbar() {
 
   add(
     topbar,
-    h('div', { class: 'topbar-left' }, left),
+    h('div', { class: 'topbar-left' }, backBtn, left),
     h(
       'div',
       { class: 'topbar-right' },

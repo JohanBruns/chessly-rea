@@ -470,6 +470,11 @@ input:checked + .switch .switch-knob {
   min-width: 0;
   display: flex;
   align-items: center;
+  gap: 6px;
+}
+.topbar-back {
+  flex-shrink: 0;
+  margin-left: -6px;
 }
 .topbar-right {
   display: flex;
@@ -613,7 +618,8 @@ input:checked + .switch .switch-knob {
   overflow-y: auto;
   background: var(--card);
   border-left: 1px solid var(--line);
-  padding: 18px 14px;
+  /* Dynamic Island/Notch und Home-Indikator der installierten iPhone-App */
+  padding: calc(18px + env(safe-area-inset-top, 0px)) 14px calc(18px + env(safe-area-inset-bottom, 0px));
   display: flex;
   flex-direction: column;
   gap: 2px;
