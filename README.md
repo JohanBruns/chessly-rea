@@ -107,6 +107,20 @@ Caro-Kann und London-System sind schon verknüpft: Jede Study hat einen `[Video]
 `downloader/downloads/`. Ein Klick auf die Video-Kachel öffnet das Video (nur mit `npm run dev` bzw. `start.cmd`,
 weil der Dev-Server die Dateien ausliefert; die Videos selbst sind nicht in Git).
 
+## Abgleich mit Chessly
+
+Passen deine Studies zu dem, was im Video besprochen wird? `downloader\lines.py` speichert Kapitel, Studies und
+alle Varianten (Züge + Kommentare) eines Chessly-Kurses in `downloader/lines/<Kurs>.json`:
+
+```bash
+downloader\.venv\Scripts\python downloader\lines.py https://chessly.com/courses/d4f3504b-8bbd-4435-ae30-a0b8372c9286
+```
+
+Danach vergleicht `npm run abgleich` jede PGN-Datei mit `[ChesslyCourse "<Kurs-ID>"]`-Header mit diesen Linien und
+schreibt `downloader/lines/<Kurs> - Abgleich.md`: pro Study, welche Chessly-Varianten vollständig enthalten sind,
+wo du einen anderen eigenen Zug spielst, welcher Gegnerzug fehlt und welche Linien nur bei dir stehen.
+Kapitel und Studies werden in ihrer Reihenfolge zugeordnet.
+
 ## Lernstand sichern
 
 Lernstand, XP und Streak liegen im `localStorage` des Browsers. Unter **Einstellungen → Sicherung herunterladen**
@@ -131,6 +145,7 @@ npm run build
 | `src/lineSession.js` | Ablauf einer Variante (Lernen/Wiederholen, Hinweis-Stufen, Navigation), ohne DOM |
 | `src/tileSession.js` | Ablauf einer Kachel (Lernen + Wiederholen je Variante, gemischter Drill), ohne DOM |
 | `src/scheduler.js` | Spaced Repetition |
+| `src/courseCompare.js`, `scripts/compareCourse.js` | Abgleich eines Kurses mit den Chessly-Linien (`npm run abgleich`) |
 | `src/bot.js`, `src/engine.js` | Repertoire-Züge des Bots, Stockfish als Web Worker |
 | `src/ui/` | Topbar & Menü, Icons & Logo, Kurs-Icons, Kachelpfad (SVG), XP-Diagramm, Toasts |
 | `src/views/` | Home, Kurse, Kursseite, Sitzung, Explorer, Drill Shuffle, Wiederholen, Bot, Profil, Einstellungen, Import |
