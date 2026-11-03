@@ -11,3 +11,6 @@ __pycache__/
 *.pyc
 *.part
 *.ytdl
+
+# Abgleich-Berichte (npm run abgleich erzeugt sie neu)
+lines/* - Abgleich.md
