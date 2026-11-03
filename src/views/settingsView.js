@@ -1,6 +1,7 @@
 // Einstellungen: Brettfarben, Design, Training, Fortschritt pro Kurs zurücksetzen, Sicherung.
 import { loadAllCourses } from '../courses.js';
-import { add, clear, fill, h } from '../dom.js';
+import { add, clear, fill, h, progressBar } from '../dom.js';
+import { deleteAllVideos, deleteSavedUrl, formatBytes, listSavedVideos, offlineSupported, requestPersistentStorage, storageInfo } from '../offlineVideos.js';
 import { courseProgress } from '../progress.js';
 import { exportBackup, importBackup, loadProgress, loadSettings, loadState, resetCourseProgress, saveSettings } from '../storage.js';
 import { courseIcon } from '../ui/courseIcon.js';
@@ -99,6 +100,9 @@ export function renderSettings(root) {
   };
   renderCourses();
 
+  const offlineEl = h('div', { class: 'offline-overview' }, h('p', { class: 'muted small' }, 'Wird geladen …'));
+  if (offlineSupported()) renderOfflineVideos(offlineEl);
+
   const backupInput = h('input', {
     type: 'file',
     accept: '.json,application/json',
@@ -149,6 +153,7 @@ export function renderSettings(root) {
         h('p', { class: 'muted small' }, 'Setzt Lernpfad und Wiederholungen eines Kurses zurück. XP und Streak bleiben erhalten.'),
         coursesEl,
       ),
+      offlineSupported() ? h('section', { class: 'card' }, h('h2', {}, 'Offline-Videos'), offlineEl) : null,
       h(
         'section',
         { class: 'card' },
@@ -164,4 +169,111 @@ export function renderSettings(root) {
     ),
   );
   return null;
+}
+
+// Übersicht der offline gespeicherten Videos mit Speicherbelegung, einzeln oder alle löschen
+async function renderOfflineVideos(el) {
+  let videos;
+  let info;
+  try {
+    [videos, info] = await Promise.all([listSavedVideos(), storageInfo()]);
+  } catch (err) {
+    fill(el, h('p', { class: 'feedback-msg bad' }, `Gespeicherte Videos konnten nicht gelesen werden: ${err.message}`));
+    return;
+  }
+  const rerender = () => renderOfflineVideos(el);
+  const total = videos.reduce((sum, v) => sum + v.size, 0);
+
+  const usage =
+    info.usage !== null && info.quota
+      ? h(
+          'div',
+          { class: 'storage-usage' },
+          h('div', { class: 'storage-usage-head' }, h('span', {}, 'Speicher der App'), h('span', { class: 'muted small' }, `${formatBytes(info.usage)} von ${formatBytes(info.quota)} belegt`)),
+          progressBar(info.usage, info.quota),
+        )
+      : null;
+
+  const persist =
+    info.persisted === true
+      ? h('p', { class: 'muted small offline-persist' }, icon('lock', { size: 14 }), 'Dauerhafter Speicher aktiv – der Browser löscht die Videos nicht von selbst.')
+      : info.persisted === false && videos.length
+        ? h(
+            'div',
+            { class: 'row offline-persist' },
+            h('span', { class: 'muted small' }, 'Bei Platzmangel darf der Browser die Videos löschen.'),
+            h(
+              'button',
+              {
+                class: 'btn btn-ghost btn-sm',
+                onclick: async () => {
+                  const granted = await requestPersistentStorage();
+                  toast(granted ? 'Speicher ist jetzt dauerhaft.' : 'Der Browser hat dauerhaften Speicher abgelehnt.', { type: granted ? 'good' : 'info' });
+                  rerender();
+                },
+              },
+              'Dauerhaft speichern',
+            ),
+          )
+        : null;
+
+  const list = videos.length
+    ? h(
+        'div',
+        { class: 'reset-list' },
+        ...videos.map((v) =>
+          h(
+            'div',
+            { class: 'reset-row' },
+            h('div', { class: 'reset-info' }, h('strong', {}, v.title), h('span', { class: 'muted small' }, [v.courseName, formatBytes(v.size)].filter(Boolean).join(' · '))),
+            h(
+              'button',
+              {
+                class: 'icon-btn',
+                title: 'Löschen',
+                'aria-label': `„${v.title}“ löschen`,
+                onclick: async () => {
+                  await deleteSavedUrl(v.url);
+                  toast(`„${v.title}“ gelöscht.`);
+                  rerender();
+                },
+              },
+              icon('trash', { size: 18 }),
+            ),
+          ),
+        ),
+      )
+    : h('p', { class: 'muted small' }, 'Noch keine Videos gespeichert. Auf der Videoseite einer Study kannst du ein Video mit „Offline speichern“ aufs Gerät laden.');
+
+  fill(
+    el,
+    h(
+      'p',
+      { class: 'muted small' },
+      videos.length ? `${videos.length} ${videos.length === 1 ? 'Video' : 'Videos'} gespeichert · ${formatBytes(total)}` : 'Gespeicherte Videos laufen auch ohne Internet.',
+    ),
+    usage,
+    persist,
+    list,
+    videos.length
+      ? h(
+          'div',
+          { class: 'row' },
+          h(
+            'button',
+            {
+              class: 'btn btn-danger btn-sm',
+              onclick: async () => {
+                if (!confirm(`Alle ${videos.length} gespeicherten Videos löschen (${formatBytes(total)})?`)) return;
+                await deleteAllVideos();
+                toast('Alle Offline-Videos gelöscht.');
+                rerender();
+              },
+            },
+            icon('trash', { size: 16 }),
+            'Alle löschen',
+          ),
+        )
+      : null,
+  );
 }
