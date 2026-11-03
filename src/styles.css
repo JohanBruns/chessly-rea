@@ -2295,6 +2295,68 @@ cg-board square.last-move {
   justify-content: flex-end;
   margin-top: 16px;
 }
+.offline-box {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  margin-top: 14px;
+}
+.offline-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.offline-progress {
+  flex: none;
+  margin-top: 4px;
+}
+.offline-saved {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--good);
+}
+.offline-error {
+  flex-basis: 100%;
+  margin: 0;
+}
+
+/* ---------- Offline-Videos in den Einstellungen ---------- */
+.offline-overview {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.offline-overview > p {
+  margin: 0;
+}
+.storage-usage {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.storage-usage-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.storage-usage .progress {
+  flex: none;
+}
+.offline-persist {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+}
+.offline-persist.row {
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
 
 /* ---------- Responsiv ---------- */
 @media (max-width: 1000px) {
