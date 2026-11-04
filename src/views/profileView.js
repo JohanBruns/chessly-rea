@@ -1,19 +1,51 @@
-// Profil: Name, XP, Level, Streak mit Wochenleiste, persönliche Wochenliga und Kursfortschritt.
+// Profil: Name, XP, Level, Streak mit Wochenleiste, Rangliste aller Konten und Kursfortschritt.
+import { currentAccount, fetchRanking } from '../account.js';
 import { lineStats, loadAllCourses } from '../courses.js';
-import { add, h } from '../dom.js';
-import { courseProgress, LEAGUES, levelInfo, streakInfo, weeklyLeague, xpLastDays } from '../progress.js';
+import { add, fill, h } from '../dom.js';
+import { courseProgress, levelInfo, streakInfo, xpLastDays } from '../progress.js';
 import { loadProgress, loadSettings, loadState, loadXp, saveSettings } from '../storage.js';
 import { avatar, courseIcon } from '../ui/courseIcon.js';
 import { icon } from '../ui/icons.js';
 import { renderTopbar } from '../ui/layout.js';
 import { xpChart } from '../ui/xpChart.js';
 
+function rankingRow(entry) {
+  return h(
+    'li',
+    { class: ['ranking-row', entry.me ? 'current' : ''] },
+    h('span', { class: 'ranking-place' }, String(entry.rank)),
+    avatar(entry.username, { size: 32 }),
+    h('span', { class: 'ranking-name' }, entry.username),
+    entry.me ? h('span', { class: 'you' }, 'Du') : null,
+    h('span', { class: 'ranking-xp' }, `${entry.xp} XP`),
+  );
+}
+
+function rankingCard() {
+  const message = (text) => h('p', { class: 'muted small' }, text);
+  const body = h('div', {}, message(currentAccount() ? 'Rangliste wird geladen …' : 'Die Rangliste gibt es nur mit Konto.'));
+  if (currentAccount()) {
+    fetchRanking()
+      .then(({ players, entries }) => {
+        fill(
+          body,
+          h('p', { class: 'muted small' }, 'Dein Platz: ', h('strong', {}, String(entries.find((e) => e.me).rank)), ` von ${players} · nach allen jemals gesammelten XP`),
+          h('ol', { class: 'ranking' }, entries.map(rankingRow)),
+        );
+      })
+      .catch((err) => {
+        console.warn('Rangliste nicht geladen:', err);
+        fill(body, message('Die Rangliste ist gerade nicht erreichbar. Dafür braucht die App Internet.'));
+      });
+  }
+  return h('section', { class: 'card' }, h('h2', {}, 'Rangliste'), body);
+}
+
 export function renderProfile(root) {
   const settings = loadSettings();
   const xp = loadXp();
   const level = levelInfo(xp.total);
   const streak = streakInfo(xp.byDay);
-  const league = weeklyLeague(xp.byDay);
   const { courses } = loadAllCourses();
   const progress = loadProgress();
   const state = loadState();
@@ -47,7 +79,10 @@ export function renderProfile(root) {
         'section',
         { class: 'card profile-head' },
         h('div', { class: 'profile-avatar' }, avatar(settings.name, { size: 72 })),
-        h('div', { class: 'profile-name' }, h('label', { class: 'muted small' }, 'Dein Name'), nameInput),
+        // Mit Konto ist der Name der Benutzername und steht fest
+        currentAccount()
+          ? h('div', { class: 'profile-name' }, h('span', { class: 'muted small' }, 'Benutzername'), h('strong', { class: 'profile-username' }, settings.name))
+          : h('div', { class: 'profile-name' }, h('label', { class: 'muted small' }, 'Dein Name'), nameInput),
         h(
           'div',
           { class: 'level-block' },
@@ -67,28 +102,7 @@ export function renderProfile(root) {
       h(
         'div',
         { class: 'profile-grid' },
-        h(
-          'section',
-          { class: 'card' },
-          h('h2', {}, 'Wochenliga'),
-          h('p', { class: 'muted small' }, `Deine XP seit Montag: `, h('strong', {}, String(league.xp)), ` · noch ${league.daysLeft} Tag${league.daysLeft === 1 ? '' : 'e'} bis zum Wochenwechsel`),
-          h(
-            'ol',
-            { class: 'league-ladder' },
-            [...LEAGUES].reverse().map((l) => {
-              const i = LEAGUES.indexOf(l);
-              return h(
-                'li',
-                { class: ['league', i === league.index ? 'current' : '', i < league.index ? 'passed' : ''] },
-                h('span', { class: 'league-icon' }, l.icon),
-                h('span', { class: 'league-name' }, l.name),
-                h('span', { class: 'muted small' }, `ab ${l.min} XP`),
-                i === league.index ? h('span', { class: 'you' }, 'Du') : null,
-              );
-            }),
-          ),
-          league.next ? h('p', { class: 'small' }, `Noch ${league.next.min - league.xp} XP bis zur Liga „${league.next.name}“.`) : h('p', { class: 'small' }, 'Höchste Liga erreicht – Respekt!'),
-        ),
+        rankingCard(),
         h(
           'section',
           { class: 'card' },

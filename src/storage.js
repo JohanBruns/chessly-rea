@@ -223,7 +223,8 @@ export function removeImportedCourse(id) {
 
 // ---------- Einstellungen ----------
 export function loadSettings() {
-  return { ...DEFAULT_SETTINGS, ...(activeAccount ? { name: activeAccount.username } : {}), ...read(KEYS.settings, {}) };
+  // Der Benutzername gewinnt immer: In übernommenen Einstellungen von vor dem Konto steht oft noch der Standardname
+  return { ...DEFAULT_SETTINGS, ...read(KEYS.settings, {}), ...(activeAccount ? { name: activeAccount.username } : {}) };
 }
 
 export function saveSettings(settings) {

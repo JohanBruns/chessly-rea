@@ -23,7 +23,7 @@ Abläufe und Navigation**, keine Kursinhalte, Texte, Grafiken oder Code.
 | **Streak** | Flammen-Zähler oben rechts, Popover mit Wochenleiste | übernommen |
 | **Drill Shuffle** | Kurs wählen → Linien in zufälliger Reihenfolge drillen | übernommen |
 | **Play Levi** | gegen einen Bot die Eröffnung spielen | Bot spielt Repertoire-Züge, danach Stockfish |
-| **Bestenliste / Ligen** | wöchentliche Liga nach XP | persönliche Wochenliga im Profil (allein, ohne Server) |
+| **Bestenliste / Ligen** | wöchentliche Liga nach XP | dauerhafte Rangliste aller Konten nach Gesamt-XP im Profil |
 | **Navigation** | Logo links, Streak + Avatar + Hamburger rechts; Menü: Profil, Home, Kurse, Bestenliste, Drill Shuffle, Bot, Einstellungen, Theme | gleiche Reihenfolge und Logik |
 | **Kursübersicht** | Suche, Filter-Chips nach Kategorie, Kurskarten mit Icon + „Start Course“ | übernommen (Kategorien: Weiß, Schwarz, Importiert) |
 | **Kursseite** | Icon, Titel, Course Explorer, Beschreibung, Fortschritt in %, Seitenleiste „Bot“ + „Drill Shuffle“ | übernommen, zusätzlich „Wiederholen“ (Spaced Repetition) |
@@ -46,7 +46,7 @@ Abläufe und Navigation**, keine Kursinhalte, Texte, Grafiken oder Code.
 - [x] Study-Linien-Explorer, Course Explorer
 - [x] Drill Shuffle
 - [x] Bot (Repertoire + Stockfish)
-- [x] Profil mit Wochenliga, Einstellungen (Brettfarben, Theme, Reset pro Kurs)
+- [x] Profil mit Rangliste, Einstellungen (Brettfarben, Theme, Reset pro Kurs)
 
 Zusätzlich umgesetzt: Spaced-Repetition-Wiederholung (`#/review`) mit fälligen Varianten,
 Kurs-Explorer als Dialog, helles Theme, Brettfarben Braun/Blau/Grün, Fortschritt pro Kurs zurücksetzen.

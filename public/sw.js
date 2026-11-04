@@ -103,7 +103,8 @@ self.addEventListener('fetch', (event) => {
     if (url.searchParams.has(OFFLINE_PARAM)) event.respondWith(savedVideo(request, url));
     return;
   }
-  if (url.pathname.startsWith('/downloader/') || url.pathname.startsWith('/cdn-cgi/') || request.headers.has('range')) return;
+  // Antworten der Schnittstelle gehören zum angemeldeten Konto und müssen aktuell sein: nie zwischenspeichern
+  if (url.pathname.startsWith('/api/') || url.pathname.startsWith('/downloader/') || url.pathname.startsWith('/cdn-cgi/') || request.headers.has('range')) return;
 
   // Seitenaufrufe: erst das Netz (neue Version, Anmeldung), offline die gespeicherte App
   if (request.mode === 'navigate') {

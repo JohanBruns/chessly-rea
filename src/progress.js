@@ -1,5 +1,5 @@
 // Abgeleiteter Fortschritt: Kachel-Status im Lernpfad, Kursfortschritt,
-// Level aus XP, Streak und persönliche Wochenliga. Reine Funktionen – ohne Storage.
+// Level aus XP und Streak. Reine Funktionen – ohne Storage.
 import { dayKey } from './storage.js';
 
 export const XP = { variation: 5, review: 2, drillTile: 10, video: 2 };
@@ -111,24 +111,4 @@ export function xpLastDays(byDay, days = 7, now = Date.now()) {
     out.push({ key: dayKey(t), label: String(new Date(t).getDate()), xp: byDay[dayKey(t)] || 0 });
   }
   return out;
-}
-
-// ---------- Persönliche Wochenliga ----------
-export const LEAGUES = [
-  { name: 'Holzbauer', min: 0, icon: '♙' },
-  { name: 'Bronzespringer', min: 50, icon: '♘' },
-  { name: 'Silberläufer', min: 150, icon: '♗' },
-  { name: 'Goldturm', min: 300, icon: '♖' },
-  { name: 'Platindame', min: 500, icon: '♕' },
-  { name: 'Diamantkönig', min: 800, icon: '♔' },
-];
-
-export function weeklyLeague(byDay, now = Date.now()) {
-  const today = new Date(now);
-  const mondayOffset = (today.getDay() + 6) % 7;
-  let xp = 0;
-  for (let i = 0; i <= mondayOffset; i++) xp += byDay[dayKey(shiftDay(now, -i))] || 0;
-  let index = 0;
-  while (index + 1 < LEAGUES.length && xp >= LEAGUES[index + 1].min) index++;
-  return { xp, index, league: LEAGUES[index], next: LEAGUES[index + 1] || null, daysLeft: 7 - mondayOffset };
 }

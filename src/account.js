@@ -98,6 +98,18 @@ export async function logout() {
   location.reload();
 }
 
+// Rangliste vom Server. Vorher abgleichen, damit gerade gesammelte XP schon mitzählen.
+export async function fetchRanking() {
+  try {
+    await sync.sync();
+  } catch {
+    // Die Rangliste zeigt dann den letzten abgeglichenen Stand
+  }
+  const response = await fetch('/api/ranking', { credentials: 'same-origin' });
+  if (!response.ok) throw new Error(`Rangliste nicht ladbar (${response.status})`);
+  return response.json();
+}
+
 // Hintergrund-Abgleich: nach Änderungen, beim Start, beim Zurückkehren in die App und wenn wieder Netz da ist.
 // onChanged() läuft, wenn neue Daten von einem anderen Gerät angekommen sind.
 export function startAccountSync(onChanged) {
