@@ -1988,6 +1988,12 @@ span.move {
   flex: 1;
   min-width: 200px;
 }
+.profile-username {
+  display: block;
+  font-size: 1.3rem;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
 .name-input {
   font-size: 1.3rem;
   font-weight: 800;
@@ -2037,38 +2043,53 @@ span.move {
   grid-template-columns: 1fr 1fr;
   gap: 18px;
 }
-.league-ladder {
+/* Sonst drückt ein langer Name in der Rangliste die Spalte auf, statt gekürzt zu werden */
+.profile-grid > * {
+  min-width: 0;
+}
+.ranking {
   list-style: none;
   padding: 0;
-  margin: 12px 0;
+  margin: 12px 0 0;
   display: flex;
   flex-direction: column;
   gap: 6px;
+  max-height: 420px;
+  overflow-y: auto;
 }
-.league {
+.ranking-row {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   padding: 8px 12px;
   border-radius: 10px;
   background: var(--card-2);
   border: 1px solid transparent;
 }
-.league-icon {
-  font-size: 1.4rem;
-  width: 28px;
-  text-align: center;
-}
-.league-name {
-  flex: 1;
-  font-weight: 700;
-}
-.league.passed {
-  opacity: 0.6;
-}
-.league.current {
+.ranking-row.current {
   border-color: var(--accent);
   background: var(--accent-soft);
+}
+.ranking-row .avatar {
+  flex: none;
+}
+.ranking-place {
+  flex: none;
+  min-width: 26px;
+  text-align: center;
+  font-weight: 800;
+}
+.ranking-name {
+  flex: 1;
+  min-width: 0;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ranking-xp {
+  flex: none;
+  font-weight: 700;
 }
 .you {
   background: var(--accent);

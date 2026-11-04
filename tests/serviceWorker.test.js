@@ -112,6 +112,14 @@ describe('rangeResponse', () => {
   });
 });
 
+describe('fetch-Handler für die Schnittstelle', () => {
+  it('fasst Antworten der Schnittstelle nicht an', async () => {
+    const API = 'https://app.test/api/ranking';
+    const { listeners } = loadServiceWorker({ cacheContents: { [API]: new Response('veraltet') } });
+    expect(await dispatchFetch(listeners, API)).toBe(null);
+  });
+});
+
 describe('fetch-Handler für Videos', () => {
   const VIDEO = 'https://app.test/downloader/downloads/Kurs/Video%201.mp4';
 

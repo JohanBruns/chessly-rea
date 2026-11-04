@@ -4,13 +4,11 @@ import {
   courseProgress,
   findTile,
   isLineDone,
-  LEAGUES,
   levelInfo,
   levelStart,
   nextTile,
   streakInfo,
   tileStates,
-  weeklyLeague,
   xpLastDays,
 } from '../src/progress.js';
 import { dayKey } from '../src/storage.js';
@@ -144,21 +142,5 @@ describe('xpLastDays', () => {
     expect(days[0]).toEqual({ key: day(-6), label: '14', xp: 4 });
     expect(days[6]).toEqual({ key: day(0), label: '20', xp: 55 });
     expect(days.slice(1, 6).every((d) => d.xp === 0)).toBe(true);
-  });
-});
-
-describe('weeklyLeague', () => {
-  it('summiert nur die XP seit Montag', () => {
-    const w = weeklyLeague({ [day(0)]: 40, [day(-1)]: 20, [day(-2)]: 500 }, NOW);
-    expect(w.xp).toBe(60);
-    expect(w.league).toBe(LEAGUES[1]);
-    expect(w.next).toBe(LEAGUES[2]);
-    expect(w.daysLeft).toBe(6);
-  });
-
-  it('erreicht die höchste Liga ohne nächste Stufe', () => {
-    const w = weeklyLeague({ [day(0)]: 5000 }, NOW);
-    expect(w.league).toBe(LEAGUES.at(-1));
-    expect(w.next).toBe(null);
   });
 });

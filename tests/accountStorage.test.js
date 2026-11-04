@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { addXp, clearLegacyData, legacyData, loadSettings, loadXp, onSyncedWrite, setCollapsed, useAccountStorage } from '../src/storage.js';
+import { addXp, clearLegacyData, legacyData, loadSettings, loadXp, onSyncedWrite, saveSettings, setCollapsed, useAccountStorage } from '../src/storage.js';
 
 const ANNA = { id: 1, username: 'anna' };
 const BEN = { id: 2, username: 'ben' };
@@ -47,10 +47,17 @@ describe('Speicher pro Konto', () => {
     expect(loadXp().total).toBe(1);
   });
 
-  it('nimmt den Benutzernamen als Anzeigenamen, solange kein eigener gesetzt ist', () => {
+  it('nimmt mit Konto den Benutzernamen als Anzeigenamen', () => {
     expect(loadSettings().name).toBe('Schachfreund');
     useAccountStorage(ANNA);
     expect(loadSettings().name).toBe('anna');
+  });
+
+  it('lässt sich vom gespeicherten Namen aus der Zeit vor dem Konto nicht überschreiben', () => {
+    useAccountStorage(ANNA);
+    saveSettings({ ...loadSettings(), name: 'Schachfreund', theme: 'light' });
+    expect(loadSettings().name).toBe('anna');
+    expect(loadSettings().theme).toBe('light');
   });
 
   it('meldet nur Änderungen an synchronisierten Daten', () => {

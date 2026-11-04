@@ -19,7 +19,7 @@ Ein eigener Nachbau der Lernlogik und Navigation von Chessly für die private Nu
 
 Außerdem: **Drill Shuffle** (Kurs wählen, Varianten zufällig), **Gegen den Bot** (Repertoire-Züge, danach
 Stockfish), **Study-Linien-Explorer** (Klick auf den Study-Titel), **Kurs-Explorer** (freies Brett mit Kurszügen),
-**XP, Level, Streak** und eine persönliche **Wochenliga** im Profil.
+**XP, Level, Streak** und eine dauerhafte **Rangliste** aller Konten im Profil.
 
 Enthalten sind ein **Caro-Kann-Repertoire** (Schwarz) und ein **London-System-Repertoire** (Weiß).
 
@@ -274,7 +274,7 @@ npm run build
 |---|---|
 | `src/pgnParser.js` | PGN → Zugbaum (Varianten, Kommentare, NAGs, Lichess-Annotationen) |
 | `src/courseLoader.js` | Zugbaum → Kurs / Kapitel / Study / Varianten / Kacheln, Stellungsindex |
-| `src/progress.js` | Kachel-Freischaltung, Kursfortschritt, Level, Streak, Wochenliga |
+| `src/progress.js` | Kachel-Freischaltung, Kursfortschritt, Level, Streak |
 | `src/lineSession.js` | Ablauf einer Variante (Lernen/Wiederholen, Hinweis-Stufen, Navigation), ohne DOM |
 | `src/tileSession.js` | Ablauf einer Kachel (Lernen + Wiederholen je Variante, gemischter Drill), ohne DOM |
 | `src/scheduler.js` | Spaced Repetition |
@@ -283,7 +283,7 @@ npm run build
 | `src/ui/` | Topbar & Menü, Icons & Logo, Kurs-Icons, Kachelpfad (SVG), XP-Diagramm, Toasts |
 | `src/views/` | Home, Kurse, Kursseite, Sitzung, Explorer, Drill Shuffle, Wiederholen, Bot, Profil, Einstellungen, Import |
 | `src/account.js`, `src/sync.js` | Anmeldung auf dem Gerät, Abgleich des Lernstands mit dem Server, Zusammenführen |
-| `functions/api/`, `functions/_lib/auth.js`, `migrations/` | Registrieren, Anmelden, Abgleich, Passwort-Hash und Sitzungen auf D1 |
+| `functions/api/`, `functions/_lib/auth.js`, `migrations/` | Registrieren, Anmelden, Abgleich, Rangliste, Passwort-Hash und Sitzungen auf D1 |
 | `functions/downloader/`, `wrangler.toml` | Cloudflare Pages: Videos aus R2 mit Anmeldeprüfung und Range-Anfragen |
 | `usageAlert/` | Cloudflare Worker: täglicher Speicher-Check mit E-Mail-Warnung über Resend |
 | `scripts/uploadVideos.js`, `scripts/usage.js`, `scripts/r2Limits.js` | Video-Upload mit 8-GB-Sperre, Verbrauchsanzeige, gemeinsame Grenzen |
