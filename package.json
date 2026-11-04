@@ -8,7 +8,7 @@
     "postinstall": "node scripts/copyStockfish.js",
     "predev": "node scripts/copyStockfish.js",
     "dev": "vite",
-    "prebuild": "node scripts/copyStockfish.js",
+    "prebuild": "node scripts/copyStockfish.js --strict",
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest run",
