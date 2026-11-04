@@ -77,6 +77,9 @@
 
 * {
   box-sizing: border-box;
+  /* Nur Scrollen: kein Doppeltipp-Zoom (etwa bei schnellen Tipps auf die Zug-Buttons), kein Pinch-Zoom.
+     Bewusst auf allen Elementen, weil iOS den Wert an jedem Scroll-Container zurücksetzt. */
+  touch-action: pan-x pan-y;
 }
 
 html,
@@ -2427,6 +2430,43 @@ cg-board square.last-move {
   }
   h1 {
     font-size: 1.4rem;
+  }
+  /* Aktionen immer in eigener Zeile: Sonst bricht das Banner nur um, solange der Hinweis-Button
+     sichtbar ist, und das Brett springt bei jedem Zugwechsel um eine Zeile. */
+  .banner-actions {
+    flex-basis: 100%;
+    justify-content: flex-end;
+    min-height: 40px;
+  }
+}
+/* Hochformat: Brett über die volle Displaybreite, größer geht es hier nicht */
+@media (max-width: 700px) and (orientation: portrait) {
+  .board-col {
+    margin-inline: -16px;
+  }
+  .board-wrap,
+  .explorer-body .board-wrap {
+    max-width: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .explorer-dialog {
+    width: 100vw;
+    max-width: 100vw;
+    border: 0;
+    border-radius: 0;
+  }
+  .explorer-body {
+    padding: 0 16px 16px;
+  }
+  .explorer-body .board-nav {
+    margin-inline: 16px;
+  }
+}
+/* iOS zoomt beim Antippen in jedes Eingabefeld mit weniger als 16px Schrift */
+@media (pointer: coarse) {
+  .input:not(.name-input) {
+    font-size: 16px;
   }
 }
 

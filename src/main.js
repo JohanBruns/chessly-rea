@@ -69,6 +69,9 @@ function route() {
   window.scrollTo(0, 0);
 }
 
+// iOS ignoriert user-scalable=no; ohne das zoomt ein versehentlicher Griff mit zwei Fingern die App
+document.addEventListener('gesturestart', (e) => e.preventDefault());
+
 // Der lokale Dev-Server (start.cmd) hat keine Server-Funktionen: Dort läuft die App ohne Konto wie bisher.
 const accountsEnabled = import.meta.env.PROD;
 const account = accountsEnabled ? currentAccount() : null;
