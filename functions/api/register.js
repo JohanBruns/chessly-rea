@@ -1,8 +1,17 @@
-// Neues Konto anlegen und direkt anmelden. Jeder kann sich selbst registrieren, ohne Bestätigung.
-import { credentialsError, hashPassword, json, readJson, startSession } from '../_lib/auth.js';
+// Neues Konto anlegen und direkt anmelden. Das geht nur mit dem Einladungscode.
+import { blockedResponse, recordFailure } from '../_lib/attempts.js';
+import { credentialsError, hashPassword, inviteCodeValid, json, readJson, startSession } from '../_lib/auth.js';
 
 export async function onRequestPost({ request, env }) {
-  const { username, password } = await readJson(request);
+  const blocked = await blockedResponse(request, env);
+  if (blocked) return blocked;
+
+  const { username, password, inviteCode } = await readJson(request);
+  // Zuerst der Code: Ohne ihn verrät die Antwort nichts darüber, welche Benutzernamen vergeben sind
+  if (!(await inviteCodeValid(inviteCode, env))) {
+    await recordFailure(request, env);
+    return json({ error: 'Der Einladungscode stimmt nicht.' }, 403);
+  }
   const error = credentialsError(username, password);
   if (error) return json({ error }, 400);
 

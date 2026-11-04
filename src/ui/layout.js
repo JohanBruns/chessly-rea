@@ -7,6 +7,9 @@ import { streakInfo } from '../progress.js';
 import { loadProgress, loadSettings, loadXp, saveSettings } from '../storage.js';
 import { avatar } from './courseIcon.js';
 import { icon, logoMark } from './icons.js';
+import { applyTheme } from './theme.js';
+
+export { applyTheme };
 
 const topbar = document.getElementById('topbar');
 // Eigener Container, weil der Blur der Topbar fixierte Kinder auf ihre Höhe begrenzen würde
@@ -14,11 +17,6 @@ const menuRoot = document.body.appendChild(document.createElement('div'));
 let menuOpen = false;
 let popoverOpen = false;
 let sessionHeader = null;
-
-export function applyTheme(settings = loadSettings()) {
-  document.documentElement.dataset.theme = settings.theme === 'light' ? 'light' : 'dark';
-  document.body.dataset.board = settings.boardTheme || 'brown';
-}
 
 function dueCount() {
   const lines = loadAllCourses().courses.flatMap((c) => c.lines);

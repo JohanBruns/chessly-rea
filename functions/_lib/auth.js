@@ -46,7 +46,14 @@ export async function verifyPassword(password, stored) {
   return toHex(await pbkdf2(password, fromHex(salt), Number(iterations))) === expected;
 }
 
-const tokenHash = async (token) => toHex(await crypto.subtle.digest('SHA-256', encoder.encode(token)));
+export const sha256Hex = async (text) => toHex(await crypto.subtle.digest('SHA-256', encoder.encode(text)));
+const tokenHash = sha256Hex;
+
+// Neue Konten gibt es nur mit dem Einladungscode (Secret INVITE_CODE). Ohne hinterlegten Code ist die Registrierung zu.
+export async function inviteCodeValid(code, env) {
+  if (!env.INVITE_CODE || typeof code !== 'string') return false;
+  return (await sha256Hex(code.trim())) === (await sha256Hex(env.INVITE_CODE.trim()));
+}
 
 function sessionCookie(request, value, maxAgeSeconds) {
   const secure = new URL(request.url).protocol === 'https:' ? '; Secure' : '';

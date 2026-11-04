@@ -120,6 +120,26 @@ describe('fetch-Handler für die Schnittstelle', () => {
   });
 });
 
+describe('fetch-Handler für den geschützten App-Teil', () => {
+  const CHUNK = 'https://app.test/app/app-abc.js';
+  const signedOut = async () => new Response('Nicht angemeldet', { status: 401 });
+
+  it('liefert die gespeicherte Datei auch offline und bei abgelaufener Anmeldung', async () => {
+    const offline = async () => {
+      throw new Error('offline');
+    };
+    for (const network of [offline, signedOut]) {
+      const { listeners } = loadServiceWorker({ cacheContents: { [CHUNK]: new Response('app') }, network });
+      expect(await (await dispatchFetch(listeners, CHUNK)).text()).toBe('app');
+    }
+  });
+
+  it('reicht ohne gespeicherte Datei die Ablehnung des Servers durch', async () => {
+    const { listeners } = loadServiceWorker({ network: signedOut });
+    expect((await dispatchFetch(listeners, CHUNK)).status).toBe(401);
+  });
+});
+
 describe('fetch-Handler für Videos', () => {
   const VIDEO = 'https://app.test/downloader/downloads/Kurs/Video%201.mp4';
 
