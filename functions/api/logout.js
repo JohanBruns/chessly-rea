@@ -1,0 +1,6 @@
+// Abmelden: Sitzung löschen und Cookie entfernen.
+import { endSession, json } from '../_lib/auth.js';
+
+export async function onRequestPost({ request, env }) {
+  return json({ ok: true }, 200, { 'Set-Cookie': await endSession(request, env) });
+}

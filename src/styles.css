@@ -2475,3 +2475,44 @@ cg-board square.last-move {
   flex: 1 1 240px;
   width: auto;
 }
+
+/* ---------- Anmeldung ---------- */
+body[data-view='login'] .topbar {
+  display: none;
+}
+.login-page {
+  display: flex;
+  justify-content: center;
+  padding: 48px 16px;
+}
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+.login-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 16px;
+  text-align: left;
+}
+.login-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-weight: 600;
+}
+.login-message[hidden] {
+  display: none;
+}
+.login-submit,
+.login-switch {
+  width: 100%;
+  justify-content: center;
+}

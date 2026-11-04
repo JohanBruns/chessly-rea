@@ -1,5 +1,6 @@
 // Rahmen der App: Topbar (Logo links; Streak-Flamme, Avatar, Hamburger rechts),
 // Menü als Overlay, Streak-Popover mit Wochenleiste, Theme und Brettfarben.
+import { currentAccount, logout } from '../account.js';
 import { lineStats, loadAllCourses } from '../courses.js';
 import { add, clear, fill, h } from '../dom.js';
 import { streakInfo } from '../progress.js';
@@ -118,6 +119,7 @@ function menuOverlay(settings) {
       }),
       h('div', { class: 'menu-sep' }),
       themeSwitch,
+      currentAccount() ? h('button', { class: 'menu-item', onclick: logout }, icon('user', { size: 20 }), h('span', {}, `Abmelden (${currentAccount().username})`)) : null,
     ),
   );
 }

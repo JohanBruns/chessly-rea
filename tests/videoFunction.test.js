@@ -1,28 +1,7 @@
-import { beforeEach, describe, expect, it } from 'vitest';
-import { onRequest, resetCertCache, verifyAccessToken, videoObjectKey } from '../functions/downloader/downloads/[[path]].js';
-
-const TEAM = 'johan.cloudflareaccess.com';
-const AUD = 'aud-123';
-
-const b64url = (bytes) => Buffer.from(bytes).toString('base64url');
-const part = (obj) => b64url(new TextEncoder().encode(JSON.stringify(obj)));
-
-const { privateKey, publicKey } = await crypto.subtle.generateKey(
-  { name: 'RSASSA-PKCS1-v1_5', modulusLength: 2048, publicExponent: new Uint8Array([1, 0, 1]), hash: 'SHA-256' },
-  true,
-  ['sign', 'verify'],
-);
-const jwk = { ...(await crypto.subtle.exportKey('jwk', publicKey)), kid: 'k1' };
-const certFetch = async () => new Response(JSON.stringify({ keys: [jwk] }));
-globalThis.fetch = certFetch;
-
-async function token(payload, header = { alg: 'RS256', kid: 'k1' }) {
-  const data = `${part(header)}.${part(payload)}`;
-  const sig = await crypto.subtle.sign('RSASSA-PKCS1-v1_5', privateKey, new TextEncoder().encode(data));
-  return `${data}.${b64url(new Uint8Array(sig))}`;
-}
-
-const valid = () => ({ iss: `https://${TEAM}`, aud: [AUD], exp: Math.floor(Date.now() / 1000) + 3600 });
+import { beforeAll, describe, expect, it } from 'vitest';
+import { startSession } from '../functions/_lib/auth.js';
+import { onRequest, videoObjectKey } from '../functions/downloader/downloads/[[path]].js';
+import { fakeD1 } from './helpers/fakeD1.js';
 
 // Minimaler Nachbau des R2-Buckets
 function fakeBucket(files) {
@@ -49,10 +28,14 @@ function fakeBucket(files) {
   };
 }
 
-const env = { ACCESS_TEAM_DOMAIN: TEAM, ACCESS_AUD: AUD, VIDEOS: fakeBucket({ [await videoObjectKey('The London System/01 A & B.mp4')]: new Uint8Array(1000) }) };
 const url = 'https://chessly-rea.pages.dev/downloader/downloads/The%20London%20System/01%20A%20&%20B.mp4';
+const env = { DB: fakeD1(), VIDEOS: fakeBucket({ [await videoObjectKey('The London System/01 A & B.mp4')]: new Uint8Array(1000) }) };
+let cookie;
 
-beforeEach(() => resetCertCache());
+beforeAll(async () => {
+  await env.DB.prepare('INSERT INTO users (id, username, password_hash, created_at) VALUES (1, ?, ?, 0)').bind('johan', 'x').run();
+  cookie = (await startSession(new Request(url), env, 1)).split(';')[0];
+});
 
 describe('videoObjectKey', () => {
   it('macht aus dem Videopfad einen festen, API-tauglichen Objektnamen', async () => {
@@ -63,36 +46,13 @@ describe('videoObjectKey', () => {
   });
 });
 
-describe('verifyAccessToken', () => {
-  it('akzeptiert ein gültiges Token', async () => {
-    expect(await verifyAccessToken(await token(valid()), { teamDomain: TEAM, aud: AUD, fetchImpl: certFetch })).toBe(true);
-  });
-
-  it('lehnt abgelaufene, fremde und manipulierte Tokens ab', async () => {
-    const opts = { teamDomain: TEAM, aud: AUD, fetchImpl: certFetch };
-    expect(await verifyAccessToken(await token({ ...valid(), exp: 1 }), opts)).toBe(false);
-    expect(await verifyAccessToken(await token({ ...valid(), aud: ['andere-app'] }), opts)).toBe(false);
-    expect(await verifyAccessToken(await token({ ...valid(), iss: 'https://evil.cloudflareaccess.com' }), opts)).toBe(false);
-    const [h, , s] = (await token(valid())).split('.');
-    expect(await verifyAccessToken(`${h}.${part({ ...valid(), exp: 9999999999 })}.${s}`, opts)).toBe(false);
-    expect(await verifyAccessToken(await token(valid(), { alg: 'none', kid: 'k1' }), opts)).toBe(false);
-    expect(await verifyAccessToken('kein-token', opts)).toBe(false);
-  });
-});
-
 describe('Video-Function', () => {
-  const request = async (headers = {}, method = 'GET') =>
-    onRequest({ request: new Request(url, { method, headers: { 'Cf-Access-Jwt-Assertion': await token(valid()), ...headers } }), env });
+  const request = async (headers = {}, method = 'GET') => onRequest({ request: new Request(url, { method, headers: { Cookie: cookie, ...headers } }), env });
 
-  it('verweigert Videos ohne Anmeldung oder ohne Konfiguration', async () => {
-    expect((await onRequest({ request: new Request(url), env })).status).toBe(403);
-    const res = await onRequest({ request: new Request(url, { headers: { 'Cf-Access-Jwt-Assertion': await token(valid()) } }), env: { ...env, ACCESS_AUD: '' } });
-    expect(res.status).toBe(403);
-  });
-
-  it('nimmt das Token auch aus dem Access-Cookie', async () => {
-    const res = await onRequest({ request: new Request(url, { headers: { Cookie: `foo=1; CF_Authorization=${await token(valid())}` } }), env });
-    expect(res.status).toBe(200);
+  it('verweigert Videos ohne oder mit ungültiger Anmeldung', async () => {
+    expect((await onRequest({ request: new Request(url), env })).status).toBe(401);
+    expect((await onRequest({ request: new Request(url, { headers: { Cookie: 'rea_session=erfunden' } }), env })).status).toBe(401);
+    expect((await onRequest({ request: new Request(url, { headers: { Cookie: cookie } }), env: { VIDEOS: env.VIDEOS } })).status).toBe(401);
   });
 
   it('liefert das ganze Video mit Länge und Accept-Ranges', async () => {
@@ -115,10 +75,7 @@ describe('Video-Function', () => {
     const res = await request({ Range: 'bytes=5000-' });
     expect(res.status).toBe(416);
     expect(res.headers.get('Content-Range')).toBe('bytes */1000');
-    const missing = await onRequest({
-      request: new Request(url.replace('01%20A', '99'), { headers: { 'Cf-Access-Jwt-Assertion': await token(valid()) } }),
-      env,
-    });
+    const missing = await onRequest({ request: new Request(url.replace('01%20A', '99'), { headers: { Cookie: cookie } }), env });
     expect(missing.status).toBe(404);
   });
 

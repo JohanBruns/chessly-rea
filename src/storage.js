@@ -1,14 +1,36 @@
 // Persistenz im localStorage: Lernstand, XP, Pfad-Status, importierte Kurse, Einstellungen.
 // Alle Zugriffe sind abgesichert – ohne Storage läuft die App im Speicher weiter.
+// Mit Konto liegt alles unter einem eigenen Schlüssel pro Konto, Konten mischen sich auf einem Gerät also nicht.
 
 const KEYS = {
-  progress: 'chesslyRea.progress.v1',
-  imported: 'chesslyRea.imported.v1',
-  settings: 'chesslyRea.settings.v1',
-  xp: 'chesslyRea.xp.v1',
-  state: 'chesslyRea.state.v1',
-  ui: 'chesslyRea.ui.v1',
+  progress: 'progress',
+  imported: 'imported',
+  settings: 'settings',
+  xp: 'xp',
+  state: 'state',
+  ui: 'ui',
+  sync: 'sync',
 };
+
+// Diese Daten folgen dem Konto auf jedes Gerät; ui (eingeklappte Kapitel) und sync bleiben auf dem Gerät.
+export const SYNCED_DATA = [KEYS.progress, KEYS.imported, KEYS.settings, KEYS.xp, KEYS.state];
+// Stände von vor den Konten: progress, imported, settings, xp, state, ui
+const LEGACY_DATA = [...SYNCED_DATA, KEYS.ui];
+
+let activeAccount = null;
+let writeListener = null;
+
+const storageKey = (name, account = activeAccount) => (account ? `chesslyRea.user.${account.id}.${name}.v1` : `chesslyRea.${name}.v1`);
+
+// Ab jetzt die Daten dieses Kontos lesen und schreiben (null: Daten ohne Konto, z. B. im Dev-Server)
+export function useAccountStorage(account) {
+  activeAccount = account;
+}
+
+// Wird bei jeder lokalen Änderung an synchronisierten Daten aufgerufen
+export function onSyncedWrite(listener) {
+  writeListener = listener;
+}
 
 export const DEFAULT_SETTINGS = {
   name: 'Schachfreund',
@@ -24,7 +46,7 @@ export const DEFAULT_SETTINGS = {
 
 const memory = {};
 
-function read(key, fallback) {
+function readKey(key, fallback) {
   try {
     const raw = localStorage.getItem(key);
     return raw ? JSON.parse(raw) : fallback;
@@ -33,13 +55,49 @@ function read(key, fallback) {
   }
 }
 
-function write(key, value) {
+function writeKey(key, value) {
   memory[key] = value;
   try {
     localStorage.setItem(key, JSON.stringify(value));
     return true;
   } catch {
     return false;
+  }
+}
+
+const read = (name, fallback) => readKey(storageKey(name), fallback);
+
+function write(name, value) {
+  const saved = writeKey(storageKey(name), value);
+  if (writeListener && SYNCED_DATA.includes(name)) writeListener(name);
+  return saved;
+}
+
+// ---------- Zugriff für den Abgleich mit dem Server (löst keinen neuen Abgleich aus) ----------
+export const readData = (name) => read(name, undefined);
+export const writeDataSilently = (name, value) => writeKey(storageKey(name), value);
+export const loadSyncMeta = () => ({ versions: {}, dirty: {}, seq: 0, ...read(KEYS.sync, {}) });
+export const saveSyncMeta = (meta) => writeKey(storageKey(KEYS.sync), meta);
+
+// ---------- Stände von vor den Konten ----------
+export function legacyData() {
+  const data = {};
+  for (const name of LEGACY_DATA) {
+    const value = readKey(storageKey(name, null), undefined);
+    if (value !== undefined) data[name] = value;
+  }
+  return data;
+}
+
+export function clearLegacyData() {
+  for (const name of LEGACY_DATA) {
+    const key = storageKey(name, null);
+    delete memory[key];
+    try {
+      localStorage.removeItem(key);
+    } catch {
+      // Ohne Storage gibt es nichts zu löschen
+    }
   }
 }
 
@@ -165,7 +223,7 @@ export function removeImportedCourse(id) {
 
 // ---------- Einstellungen ----------
 export function loadSettings() {
-  return { ...DEFAULT_SETTINGS, ...read(KEYS.settings, {}) };
+  return { ...DEFAULT_SETTINGS, ...(activeAccount ? { name: activeAccount.username } : {}), ...read(KEYS.settings, {}) };
 }
 
 export function saveSettings(settings) {

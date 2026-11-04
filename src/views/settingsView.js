@@ -1,4 +1,5 @@
 // Einstellungen: Brettfarben, Design, Training, Fortschritt pro Kurs zurücksetzen, Sicherung.
+import { currentAccount } from '../account.js';
 import { loadAllCourses } from '../courses.js';
 import { add, clear, fill, h, progressBar } from '../dom.js';
 import { deleteAllVideos, deleteSavedUrl, formatBytes, listSavedVideos, offlineSupported, requestPersistentStorage, storageInfo } from '../offlineVideos.js';
@@ -158,7 +159,13 @@ export function renderSettings(root) {
         'section',
         { class: 'card' },
         h('h2', {}, 'Sicherung'),
-        h('p', { class: 'muted small' }, 'Lernstand, XP und importierte Kurse liegen nur in diesem Browser. Exportiere regelmäßig eine Sicherung, um sie zu übertragen oder nicht zu verlieren.'),
+        h(
+          'p',
+          { class: 'muted small' },
+          currentAccount()
+            ? `Lernstand, XP und importierte Kurse gehören zum Konto „${currentAccount().username}“ und folgen dir auf jedes Gerät. Zusätzlich kannst du sie hier als Datei sichern.`
+            : 'Lernstand, XP und importierte Kurse liegen nur in diesem Browser. Exportiere regelmäßig eine Sicherung, um sie zu übertragen oder nicht zu verlieren.',
+        ),
         h(
           'div',
           { class: 'row' },

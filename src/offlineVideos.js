@@ -122,7 +122,7 @@ export function saveVideo(video, meta = {}) {
     const response = await fetch(videoHref(video), { signal: controller.signal, cache: 'no-store', credentials: 'same-origin' });
     if (!response.ok) throw codedError('status', `Status ${response.status}`, { status: response.status });
     const type = response.headers.get('Content-Type') || 'video/mp4';
-    // Läuft die Anmeldung ab, schickt Cloudflare Access eine HTML-Seite statt des Videos
+    // Eine HTML-Seite statt des Videos (z. B. von einer Anmeldeseite davor) nicht als Video speichern
     if (type.startsWith('text/')) throw codedError('status', 'Keine Videodatei', { status: 403 });
     entry.total = Number(response.headers.get('Content-Length')) || 0;
     await ensureSpace(entry.total);
