@@ -67,6 +67,12 @@ export function createBoard(el, { orientation = 'w', coordinates = true, onMove 
   });
   let destroyed = false;
 
+  // chessground merkt sich die Brettposition und erneuert sie nur beim Scrollen oder bei einer
+  // Größenänderung. Rutscht das Brett, weil sich der Inhalt darüber ändert, träfe jeder Tipp ein
+  // falsches Feld. Darum vor jeder Berührung neu messen (Capture läuft vor dem Handler am Brett).
+  const remeasure = () => cg.state.dom.bounds.clear();
+  for (const type of ['touchstart', 'mousedown']) el.addEventListener(type, remeasure, { capture: true, passive: true });
+
   return {
     // Stellung zeigen; `interactive` gibt dem Lernenden die Züge seiner Farbe frei ('both' = beide)
     show(fen, { lastMove, interactive = false, userColor, shapes = [], dests } = {}) {
