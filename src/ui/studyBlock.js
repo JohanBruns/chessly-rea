@@ -1,12 +1,17 @@
 // Study im Lernpfad: Kopfleiste „STUDY n Titel“ (öffnet den Linien-Explorer, −/+ klappt ein)
 // und darunter der Kachelpfad.
 import { h } from '../dom.js';
-import { tileStates, XP } from '../progress.js';
+import { countsTile, tileStates, XP } from '../progress.js';
 import { addXp, isCollapsed, loadState, markVideoWatched, setCollapsed } from '../storage.js';
 import { icon } from './icons.js';
 import { tilePath } from './tilePath.js';
 
+// Video-Kacheln öffnen das Video (in Video-Kursen ist das die „nächste Kachel“), alle anderen die Übung.
 export function tileHref(course, tile) {
+  if (tile.type === 'video') {
+    const study = course.studies.find((s) => s.id === tile.studyId);
+    if (study?.video) return studyVideoHref(course, study);
+  }
   return `#/course/${encodeURIComponent(course.id)}/tile/${encodeURIComponent(tile.id)}`;
 }
 
@@ -32,8 +37,8 @@ export function studyHref(course, study) {
 
 export function studyBlock(course, study, { progress, state, currentTileId, onChange } = {}) {
   const entries = tileStates(study, progress, state);
-  const doneCount = entries.filter((e) => e.tile.type !== 'video' && e.status === 'completed').length;
-  const total = entries.filter((e) => e.tile.type !== 'video').length;
+  const doneCount = entries.filter((e) => countsTile(course, e.tile) && e.status === 'completed').length;
+  const total = entries.filter((e) => countsTile(course, e.tile)).length;
   let collapsed = isCollapsed(study.id);
 
   const pathEl = tilePath(entries, {
@@ -59,8 +64,11 @@ export function studyBlock(course, study, { progress, state, currentTileId, onCh
     h(
       'header',
       { class: 'study-head' },
-      h('span', { class: 'study-badge' }, icon('book', { size: 13 }), `STUDY ${study.index + 1}`),
-      h('a', { class: 'study-title', href: studyHref(course, study), title: 'Linien-Explorer öffnen' }, study.title),
+      h('span', { class: 'study-badge' }, icon(course.videoOnly ? 'play' : 'book', { size: 13 }), `${course.videoOnly ? 'VIDEO' : 'STUDY'} ${study.index + 1}`),
+      // Im Video-Kurs gibt es keine Linien zu erkunden – der Titel öffnet das Video.
+      course.videoOnly
+        ? h('a', { class: 'study-title', href: studyVideoHref(course, study), title: 'Video ansehen' }, study.title)
+        : h('a', { class: 'study-title', href: studyHref(course, study), title: 'Linien-Explorer öffnen' }, study.title),
       h('span', { class: ['study-count', doneCount === total ? 'done' : ''] }, `${doneCount}/${total}`),
       toggleBtn,
     ),

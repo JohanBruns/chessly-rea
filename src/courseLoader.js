@@ -180,6 +180,8 @@ export function buildCourse({ pgn, id, name, color, source = 'builtin', fileName
   }
   const studies = chapters.flatMap((c) => c.studies);
   const colors = new Set(studies.map((s) => s.userColor));
+  // Reiner Video-Kurs (Skill-Kurs): keine Linien, nur Videos. Er hat keine Farbe, Drill oder Bot.
+  const videoOnly = !studies.some((s) => s.lines.length) && studies.some((s) => s.video);
   return {
     id: courseId,
     name: courseName,
@@ -187,7 +189,8 @@ export function buildCourse({ pgn, id, name, color, source = 'builtin', fileName
     description: first.CourseDescription || '',
     icon: first.CourseIcon || null,
     hue: Number.isFinite(Number(first.CourseHue)) && first.CourseHue ? Number(first.CourseHue) : Number.parseInt(hashString(courseName), 36) % 360,
-    color: colors.size === 1 ? [...colors][0] : 'both',
+    color: videoOnly ? 'video' : colors.size === 1 ? [...colors][0] : 'both',
+    videoOnly,
     source,
     chapters,
     studies,

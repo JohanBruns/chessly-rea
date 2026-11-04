@@ -21,8 +21,11 @@ export function tileLabel(tile) {
 export function tileLayout(entries) {
   const out = [];
   let i = 0;
+  // Study nur mit Video (Skill-Kurs): die Kachel steht allein in der Mitte
+  const videoOnly = entries.length > 0 && entries.every((e) => e.tile.type === 'video');
   for (const entry of entries) {
-    if (entry.tile.type === 'video') out.push({ ...entry, col: -1, row: 1 });
+    if (videoOnly) out.push({ ...entry, col: 0, row: 0 });
+    else if (entry.tile.type === 'video') out.push({ ...entry, col: -1, row: 1 });
     else {
       out.push({ ...entry, col: ZIGZAG[i % ZIGZAG.length], row: i });
       i++;
@@ -42,7 +45,7 @@ const pts = (list) => list.map(([x, y]) => `${x},${y}`).join(' ');
 
 export function tilePath(entries, { hrefFor, current } = {}) {
   const placed = tileLayout(entries);
-  const rows = Math.max(2, ...placed.map((p) => p.row + 1));
+  const rows = Math.max(placed.every((p) => p.tile.type === 'video') ? 1 : 2, ...placed.map((p) => p.row + 1));
   const width = 2 * SX + W + 2 * PAD;
   const height = (rows - 1) * SY + H + D + 2 * PAD;
   const cx0 = width / 2;

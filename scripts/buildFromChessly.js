@@ -143,6 +143,8 @@ export function slugify(text) {
  */
 export function buildNewPgn(chessly, { translations = {} } = {}) {
   const color = chessly.color === 'b' ? 'black' : 'white';
+  // Skill-Kurse ("kind": "skill") bestehen nur aus Videos und haben keine Farbe.
+  const skill = chessly.kind === 'skill';
   const games = [];
   let firstGame = true;
 
@@ -158,14 +160,14 @@ export function buildNewPgn(chessly, { translations = {} } = {}) {
       if (firstGame) {
         headers.Course = chessly.name;
         headers.ChesslyCourse = chessly.id;
-        headers.CourseColor = color;
+        if (!skill) headers.CourseColor = color;
         if (chessly.description) headers.CourseDescription = chessly.description;
       }
       headers.Chapter = chapter.name;
       if (firstOfChapter && chapter.description) headers.ChapterDescription = chapter.description;
       headers.Study = study.name;
       if (study.videos?.length) headers.Video = study.videos[0];
-      headers.Orientation = color;
+      if (!skill) headers.Orientation = color;
       if (startFen !== START_FEN) {
         headers.FEN = startFen;
         headers.SetUp = '1';
@@ -248,7 +250,7 @@ function main() {
     writeFileSync(target, buildNewPgn(chessly, { translations }));
     const studies = chessly.chapters.reduce((sum, chapter) => sum + chapter.studies.length, 0);
     console.log(`PGN gespeichert: ${target} (${chessly.chapters.length} Kapitel, ${studies} Studies)`);
-    if (chessly.color !== 'w' && chessly.color !== 'b') {
+    if (chessly.kind !== 'skill' && chessly.color !== 'w' && chessly.color !== 'b') {
       console.log('Hinweis: Farbe unbekannt – "Orientation" steht auf white. Bitte ggf. in der PGN anpassen.');
     }
     return;

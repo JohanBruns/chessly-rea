@@ -19,8 +19,25 @@ einzigen Link-Eintrag bereit zum Committen und Pushen.
 1. `start.bat` doppelklicken.
 2. Einmalig **Login** klicken → im Browserfenster bei Chessly einloggen → Fenster schließen.
    Der Login wird im Ordner `browser_profile` gespeichert.
-3. Kurs-Link einfügen, z.B. `https://chessly.com/courses/0897f49e-d26d-42f5-82e9-ce37307b760a`
+3. Kurs-Link einfügen, z.B. `https://chessly.com/courses/0897f49e-d26d-42f5-82e9-ce37307b760a`.
+   Es dürfen **mehrere Links untereinander** stehen (siehe „Mehrere Kurse auf einmal“).
 4. **Download starten**.
+
+### Mehrere Kurse auf einmal
+
+Ein Link pro Zeile reicht; Eröffnungs- und Skill-Kurse (`/courses/`, `/skill-courses/`,
+`/non-opening-courses/`) dürfen gemischt sein. Doppelte Links werden entfernt, alles, was kein
+Kurs-Link ist, wird im Log ignoriert.
+
+- Die Kurse werden **nacheinander** in einem Browser gelesen. Ein gemeinsamer Login-Ordner verträgt nur
+  einen Browser gleichzeitig, deshalb gibt es hier keine Parallelität.
+- Die Videos aller Kurse laden danach **gleichzeitig**, standardmäßig 3 (im Feld „Videos gleichzeitig
+  laden“ einstellbar, 1 bis 6). Im Log steht vor den Fortschrittszeilen, zu welchem Video sie gehören.
+- Ein Kurs, der sich nicht lesen lässt, stoppt die anderen nicht; er steht am Ende in der Zusammenfassung.
+- Hochladen und Veröffentlichen laufen **einmal am Ende** für alle Kurse zusammen. Gibt es bei einem
+  Video einen Fehler, wird nichts veröffentlicht. Einfach nochmal starten, fertige Videos werden übersprungen.
+- Passen alle Videos zusammen nicht mehr in den R2-Bucket, lädt `upload-videos` gar nichts hoch (siehe
+  „Aufs iPhone“ in der Haupt-README). Dann die Kurse in kleineren Gruppen hinzufügen.
 
 Ergebnis bei „Kompletter Kurs“:
 
@@ -33,11 +50,11 @@ Ergebnis bei „Kompletter Kurs“:
 Mit dem zweiten Häkchen **„Danach automatisch hochladen und veröffentlichen“** (standardmäßig an)
 macht der Downloader danach selbst weiter, was man sonst von Hand eintippt:
 
-1. `npm run upload-videos` – Videos in den R2-Bucket (stoppt vor der 8-GB-Grenze).
+1. `npm run upload-videos` – Videos in den R2-Bucket (stoppt vor der 9,5-GB-Grenze).
 2. `npm run deploy` – App bauen und auf Cloudflare Pages hochladen.
 
-Schlägt der Upload fehl, wird nicht deployt. Bei fehlerhaften Videos oder Skill-Kursen
-(ohne PGN) wird das Veröffentlichen übersprungen. Einmalig vorher im Projektordner
+Schlägt der Upload fehl, wird nicht deployt. Bei fehlerhaften Videos wird das
+Veröffentlichen übersprungen. Einmalig vorher im Projektordner
 `npx wrangler login` ausführen, sonst meldet das Log „nicht angemeldet“.
 Zum Sichern im Repository zeigt das Log am Ende noch `git add` und `git commit`
 (das macht der Downloader nicht selbst).
@@ -56,8 +73,12 @@ einfach wieder starten – es geht dort weiter, wo es aufgehört hat. Eine vorha
 PGN wird nicht überschrieben; für ein Update der Linien danach
 `npm run neuaufbau -- openings/<datei>.pgn` verwenden.
 
-**Hinweis:** Linien und PGN gibt es nur für Eröffnungskurse (`/courses/...`).
-Skill-Kurse haben bei Chessly keine Studien-Linien; dort werden nur die Videos geladen.
+**Skill-Kurse** (`/skill-courses/...`) haben bei Chessly keine Studien-Linien. Der Downloader
+macht daraus einen **Videokurs**: jede Lektion wird eine Study mit genau einem Video, in
+`lines/<Kursname>.json` (mit `"kind": "skill"`) und `openings/<kursname>.pgn` (Partien ohne Züge, nur
+mit `[Video]`). Die App zeigt ihn mit dem Tag „Videokurs“ und dem Fortschritt aus den angesehenen
+Videos, ohne Drill, Bot und Kurs-Explorer. Die Kursdatei entsteht erst, wenn alle Videos geladen sind;
+Lektionen ohne Video bei Chessly fehlen im Kurs.
 
 ## Wie es funktioniert
 
@@ -67,7 +88,7 @@ Skill-Kurse haben bei Chessly keine Studien-Linien; dort werden nur die Videos g
 | `browser.py` | Chromium mit gespeichertem Login-Profil |
 | `chessly.py` | Findet Kapitel/Lektionen eines Kurses und die Vimeo-ID jeder Lektion |
 | `downloader.py` | Lädt ein Vimeo-Video mit yt-dlp und fügt Bild + Ton zu MP4 zusammen |
-| `exporter.py` | Der komplette Ablauf: Videos + `lines/<Kurs>.json` + PGN in `openings/` |
+| `exporter.py` | Der komplette Ablauf für einen oder mehrere Kurse: lesen → Videos (parallel) → `lines/<Kurs>.json` + PGN in `openings/` |
 | `publisher.py` | Danach `npm run upload-videos` und `npm run deploy` (Tests: `tests/python/`) |
 | `lines.py` | Speichert alle Varianten (Züge + Kommentare) eines Kurses nach `lines/<Kurs>.json` – für `npm run abgleich` |
 | `catalog.py` | Liest alle Kurse deines Kontos nach `catalog.json` – für die Seite „Chessly-Katalog“ (`npm run catalog`) |

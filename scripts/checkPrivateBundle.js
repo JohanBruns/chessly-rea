@@ -6,8 +6,9 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const TEXT_FILE = /\.(js|css|html|json|webmanifest)$/;
 
-// Anfang der Zugfolge jeder PGN-Datei: lang genug, um eindeutig zu sein, und beim Bündeln unverändert
-const markerOf = (pgn) => pgn.match(/^1\. .{30}/m)?.[0] ?? null;
+// Anfang der Zugfolge jeder PGN-Datei: lang genug, um eindeutig zu sein, und beim Bündeln unverändert.
+// Videokurse (Skill-Kurse) haben keine Züge; bei ihnen gilt der erste Videopfad, der ebenfalls nur in der PGN steht.
+const markerOf = (pgn) => pgn.match(/^1\. .{30}/m)?.[0] ?? pgn.match(/^\[Video "([^"\\]{20,})"\]/m)?.[1] ?? null;
 
 // Liefert die gefundenen Probleme als Texte; leer heißt: alles in Ordnung
 export function checkPrivateBundle({ distDir, openingsDir }) {

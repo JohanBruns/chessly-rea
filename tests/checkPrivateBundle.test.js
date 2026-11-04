@@ -51,6 +51,32 @@ describe('checkPrivateBundle', () => {
     expect(check()[0]).toMatch(/fehlt im geschützten Teil/);
   });
 
+  describe('Videokurs ohne Züge', () => {
+    const VIDEO_PGN = '[Course "Videos"]\n[Study "Gabeln"]\n[Video "/downloader/downloads/Videos/01-01 Gabeln - Doppelangriff.mp4"]\n\n*\n';
+    const VIDEO_BUNDLED = `export default ${JSON.stringify(VIDEO_PGN)}`;
+
+    beforeEach(() => {
+      writeFileSync(join(openingsDir, 'videos.pgn'), VIDEO_PGN);
+      write('app/app-abc.js', `${BUNDLED};${VIDEO_BUNDLED}`);
+    });
+
+    it('erkennt ihn am ersten Videopfad und ist zufrieden, wenn er nur im geschützten Teil liegt', () => {
+      expect(check()).toEqual([]);
+    });
+
+    it('meldet ihn in einer öffentlichen Datei', () => {
+      write('assets/index-abc.js', VIDEO_BUNDLED);
+      const problems = check();
+      expect(problems).toHaveLength(1);
+      expect(problems[0]).toMatch(/videos\.pgn steckt in der öffentlichen Datei/);
+    });
+
+    it('meldet ihn, wenn er im geschützten Teil fehlt', () => {
+      write('app/app-abc.js', BUNDLED);
+      expect(check()[0]).toMatch(/videos\.pgn fehlt im geschützten Teil/);
+    });
+  });
+
   it('meldet PGN-Dateien, die sie nicht erkennen kann', () => {
     write('app/app-abc.js', BUNDLED);
     writeFileSync(join(openingsDir, 'leer.pgn'), '[Course "Ohne Züge"]\n');

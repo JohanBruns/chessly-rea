@@ -20,7 +20,8 @@ export function shufflePool(course, progress) {
 }
 
 function picker(root) {
-  const { courses } = loadAllCourses();
+  // Video-Kurse haben keine Varianten zum Abfragen
+  const courses = loadAllCourses().courses.filter((course) => !course.videoOnly);
   const progress = loadProgress();
   let size = 10;
   const sizeChips = h('div', { class: 'chips' });

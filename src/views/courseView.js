@@ -2,19 +2,19 @@
 // mit Studies und Lernpfaden, Seitenleiste mit Bot, Drill Shuffle und Wiederholen.
 import { findCourse, lineStats, loadAllCourses } from '../courses.js';
 import { add, clear, colorLabel, fill, h } from '../dom.js';
-import { courseProgress, nextTile, tileStates } from '../progress.js';
+import { countsTile, courseProgress, courseStarted, nextTile, tileStates } from '../progress.js';
 import { isChapterOpen, loadProgress, loadState, removeImportedCourse, setChapterOpen } from '../storage.js';
 import { courseIcon } from '../ui/courseIcon.js';
 import { icon } from '../ui/icons.js';
 import { studyBlock, tileHref } from '../ui/studyBlock.js';
 import { openCourseExplorer } from './courseExplorer.js';
 
-function chapterStats(chapter, progress, state) {
+function chapterStats(course, chapter, progress, state) {
   let total = 0;
   let done = 0;
   for (const study of chapter.studies) {
     for (const { tile, status } of tileStates(study, progress, state)) {
-      if (tile.type === 'video') continue;
+      if (!countsTile(course, tile)) continue;
       total++;
       if (status === 'completed') done++;
     }
@@ -56,25 +56,28 @@ export function renderCourse(root, { id, params = {} }) {
             { class: 'tags' },
             h('span', { class: ['tag', `tag-${course.color}`] }, colorLabel(course.color)),
             h('span', { class: 'tag' }, `${course.chapters.length} Kapitel`),
-            h('span', { class: 'tag' }, `${course.lines.length} Varianten`),
+            h('span', { class: 'tag' }, course.videoOnly ? `${course.studies.length} Videos` : `${course.lines.length} Varianten`),
           ),
         ),
-        h('button', { class: 'btn btn-ghost explorer-btn', onclick: () => openCourseExplorer(course) }, icon('compass', { size: 18 }), 'Kurs-Explorer'),
+        // Ohne Linien gibt es im Video-Kurs nichts zu erkunden
+        course.videoOnly ? null : h('button', { class: 'btn btn-ghost explorer-btn', onclick: () => openCourseExplorer(course) }, icon('compass', { size: 18 }), 'Kurs-Explorer'),
       ),
       course.description ? h('p', { class: 'muted' }, course.description) : null,
       h(
         'div',
         { class: 'hero-progress' },
         h('div', { class: 'progress big' }, h('div', { class: 'progress-fill', style: { width: `${pct.percent}%` } })),
-        h('span', {}, h('strong', {}, `${pct.percent}%`), h('span', { class: 'muted' }, ` · ${pct.done} / ${pct.total} Kacheln`)),
-        next ? h('a', { class: 'btn btn-primary', href: tileHref(course, next.tile) }, icon('play', { size: 16 }), loadState().started[course.id] ? 'Weiter lernen' : 'Kurs starten') : null,
+        h('span', {}, h('strong', {}, `${pct.percent}%`), h('span', { class: 'muted' }, ` · ${pct.done} / ${pct.total} ${course.videoOnly ? 'Videos' : 'Kacheln'}`)),
+        next
+          ? h('a', { class: 'btn btn-primary', href: tileHref(course, next.tile) }, icon('play', { size: 16 }), courseStarted(course, progress, loadState()) ? (course.videoOnly ? 'Weiter ansehen' : 'Weiter lernen') : course.videoOnly ? 'Kurs ansehen' : 'Kurs starten')
+          : null,
       ),
     );
 
     fill(
       chaptersEl,
       ...course.chapters.map((chapter) => {
-        const cs = chapterStats(chapter, progress, state);
+        const cs = chapterStats(course, chapter, progress, state);
         const open = isChapterOpen(chapter.id, chapter.id === focusChapterId);
         const details = h(
           'details',
@@ -144,7 +147,8 @@ export function renderCourse(root, { id, params = {} }) {
     );
   }
 
-  add(root, h('div', { class: 'course-layout' }, h('div', { class: 'course-main' }, headEl, chaptersEl), sideEl));
+  // Bot, Drill und Wiederholen brauchen Linien – im Video-Kurs fällt die Seitenleiste weg
+  add(root, h('div', { class: ['course-layout', course.videoOnly ? 'video-only' : ''] }, h('div', { class: 'course-main' }, headEl, chaptersEl), course.videoOnly ? null : sideEl));
   render();
 
   if (params.study) {

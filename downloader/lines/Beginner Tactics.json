@@ -1,0 +1,159 @@
+{
+ "id": "b881640e-8421-40e4-8bab-57e255447c7b",
+ "name": "Beginner Tactics",
+ "description": "Learn how all the pieces interact and important types of tactics, such as forks, pins, and discovered attacks.",
+ "color": "",
+ "kind": "skill",
+ "url": "https://chessly.com/skill-courses/b881640e-8421-40e4-8bab-57e255447c7b",
+ "chapters": [
+  {
+   "id": "763641c4-afa4-41d7-914a-913d3f05e485",
+   "name": "Piece Interactions",
+   "description": "",
+   "studies": [
+    {
+     "id": "aaee2585-9c26-4a60-9789-dd3d93ada386",
+     "name": "Attacks",
+     "url": "https://chessly.com/skill-courses/b881640e-8421-40e4-8bab-57e255447c7b/chapters/763641c4-afa4-41d7-914a-913d3f05e485/lessons/aaee2585-9c26-4a60-9789-dd3d93ada386",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Beginner Tactics/01-01 Piece Interactions - Attacks.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "0b76487a-f93e-4d13-83eb-6a5d3115a665",
+     "name": "Defense",
+     "url": "https://chessly.com/skill-courses/b881640e-8421-40e4-8bab-57e255447c7b/chapters/763641c4-afa4-41d7-914a-913d3f05e485/lessons/0b76487a-f93e-4d13-83eb-6a5d3115a665",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Beginner Tactics/01-02 Piece Interactions - Defense.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "6c5727e0-a663-4a96-92d5-f7a3afd9e758",
+     "name": "Captures",
+     "url": "https://chessly.com/skill-courses/b881640e-8421-40e4-8bab-57e255447c7b/chapters/763641c4-afa4-41d7-914a-913d3f05e485/lessons/6c5727e0-a663-4a96-92d5-f7a3afd9e758",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Beginner Tactics/01-03 Piece Interactions - Captures.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    }
+   ]
+  },
+  {
+   "id": "5b865c3c-6986-409b-8e7e-891eec74127b",
+   "name": "Check & Checkmate",
+   "description": "",
+   "studies": [
+    {
+     "id": "07fd8c53-36a8-469b-b036-b150f22ee952",
+     "name": "Check",
+     "url": "https://chessly.com/skill-courses/b881640e-8421-40e4-8bab-57e255447c7b/chapters/5b865c3c-6986-409b-8e7e-891eec74127b/lessons/07fd8c53-36a8-469b-b036-b150f22ee952",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Beginner Tactics/02-01 Check & Checkmate - Check.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "57919170-953e-4c90-8746-0f911cd470f5",
+     "name": "Checkmate in One",
+     "url": "https://chessly.com/skill-courses/b881640e-8421-40e4-8bab-57e255447c7b/chapters/5b865c3c-6986-409b-8e7e-891eec74127b/lessons/57919170-953e-4c90-8746-0f911cd470f5",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Beginner Tactics/02-02 Check & Checkmate - Checkmate in One.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "6b558e6b-9360-4731-aafc-d716b48954f8",
+     "name": "Checkmate in Two",
+     "url": "https://chessly.com/skill-courses/b881640e-8421-40e4-8bab-57e255447c7b/chapters/5b865c3c-6986-409b-8e7e-891eec74127b/lessons/6b558e6b-9360-4731-aafc-d716b48954f8",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Beginner Tactics/02-03 Check & Checkmate - Checkmate in Two.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    }
+   ]
+  },
+  {
+   "id": "35eac7e7-f48d-4f43-bc2d-a1151b331c09",
+   "name": "Tactics",
+   "description": "",
+   "studies": [
+    {
+     "id": "24d2ef92-642a-4f32-86fc-5c1aaf87ce20",
+     "name": "Forks/Double Attacks",
+     "url": "https://chessly.com/skill-courses/b881640e-8421-40e4-8bab-57e255447c7b/chapters/35eac7e7-f48d-4f43-bc2d-a1151b331c09/lessons/24d2ef92-642a-4f32-86fc-5c1aaf87ce20",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Beginner Tactics/03-01 Tactics - ForksDouble Attacks.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "3b3de843-225f-402f-8910-27b9499f49e1",
+     "name": "Pins & Skewers",
+     "url": "https://chessly.com/skill-courses/b881640e-8421-40e4-8bab-57e255447c7b/chapters/35eac7e7-f48d-4f43-bc2d-a1151b331c09/lessons/3b3de843-225f-402f-8910-27b9499f49e1",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Beginner Tactics/03-02 Tactics - Pins & Skewers.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "687f1aa3-02d8-4be1-b2fd-653da8a47b44",
+     "name": "Discovered Attacks",
+     "url": "https://chessly.com/skill-courses/b881640e-8421-40e4-8bab-57e255447c7b/chapters/35eac7e7-f48d-4f43-bc2d-a1151b331c09/lessons/687f1aa3-02d8-4be1-b2fd-653da8a47b44",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Beginner Tactics/03-03 Tactics - Discovered Attacks.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    }
+   ]
+  },
+  {
+   "id": "3a60ca57-ec69-4d87-b690-fb333b12e608",
+   "name": "Puzzle Solving",
+   "description": "",
+   "studies": [
+    {
+     "id": "9919d8ee-2f26-492f-9e78-270dd9293053",
+     "name": "Video: Puzzle Solving 1",
+     "url": "https://chessly.com/skill-courses/b881640e-8421-40e4-8bab-57e255447c7b/chapters/3a60ca57-ec69-4d87-b690-fb333b12e608/lessons/9919d8ee-2f26-492f-9e78-270dd9293053",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Beginner Tactics/04-01 Puzzle Solving - Video Puzzle Solving 1.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "488a3c2b-caa5-487f-badf-9c06f29aec8a",
+     "name": "Puzzle Solving 2",
+     "url": "https://chessly.com/skill-courses/b881640e-8421-40e4-8bab-57e255447c7b/chapters/3a60ca57-ec69-4d87-b690-fb333b12e608/lessons/488a3c2b-caa5-487f-badf-9c06f29aec8a",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Beginner Tactics/04-02 Puzzle Solving - Puzzle Solving 2.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    }
+   ]
+  }
+ ]
+}

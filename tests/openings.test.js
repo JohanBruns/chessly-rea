@@ -22,11 +22,15 @@ describe('mitgelieferte Eröffnungen', () => {
     describe(file, () => {
       const course = buildCourse({ pgn: readFileSync(join(dir, file), 'utf8'), fileName: file });
 
-      it('hat Kapitel, Studies und Varianten', () => {
+      // Video-Kurse (Skill-Kurse) haben keine Varianten – dort muss jede Study ein Video haben.
+      it('hat Kapitel, Studies und Varianten (Video-Kurse: Videos)', () => {
         expect(course.chapters.length).toBeGreaterThan(1);
         for (const chapter of course.chapters) {
           expect(chapter.studies.length, chapter.title).toBeGreaterThan(0);
-          for (const study of chapter.studies) expect(study.lines.length, study.title).toBeGreaterThan(0);
+          for (const study of chapter.studies) {
+            if (course.videoOnly) expect(study.video, study.title).toBeTruthy();
+            else expect(study.lines.length, study.title).toBeGreaterThan(0);
+          }
         }
       });
 
@@ -49,7 +53,8 @@ describe('mitgelieferte Eröffnungen', () => {
 
       it('erklärt jede Variante und jede Study', () => {
         for (const line of course.lines) expect(line.moves.some((n) => n.comment), line.name).toBe(true);
-        for (const study of course.studies) expect(study.description, study.title).not.toBe('');
+        // Lektionen eines Video-Kurses haben bei Chessly keinen Beschreibungstext
+        if (!course.videoOnly) for (const study of course.studies) expect(study.description, study.title).not.toBe('');
       });
     });
   }

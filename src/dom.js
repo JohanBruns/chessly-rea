@@ -53,6 +53,7 @@ export function add(el, ...children) {
 export function colorLabel(color) {
   if (color === 'w') return 'Weiß';
   if (color === 'b') return 'Schwarz';
+  if (color === 'video') return 'Videokurs';
   return 'Beide Farben';
 }
 

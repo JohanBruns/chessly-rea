@@ -2,7 +2,7 @@
 import { loadAllCourses } from '../courses.js';
 import { missingChesslyCourses } from '../chesslyCatalog.js';
 import { add, clear, colorLabel, fill, h } from '../dom.js';
-import { courseProgress, nextTile } from '../progress.js';
+import { courseProgress, courseStarted, nextTile } from '../progress.js';
 import { loadProgress, loadState } from '../storage.js';
 import { courseIcon } from '../ui/courseIcon.js';
 import { icon } from '../ui/icons.js';
@@ -12,6 +12,7 @@ const FILTERS = [
   { id: 'all', label: 'Alle', test: () => true },
   { id: 'w', label: 'Weiß', test: (c) => c.color === 'w' || c.color === 'both' },
   { id: 'b', label: 'Schwarz', test: (c) => c.color === 'b' || c.color === 'both' },
+  { id: 'video', label: 'Videokurse', test: (c) => c.videoOnly },
   { id: 'imported', label: 'Importiert', test: (c) => c.source === 'imported' },
 ];
 
@@ -56,7 +57,7 @@ export function renderCourses(root, params) {
   function card(course) {
     const pct = courseProgress(course, progress, state).percent;
     const next = nextTile(course, progress, state);
-    const started = !!state.started[course.id];
+    const started = courseStarted(course, progress, state);
     const href = `#/course/${encodeURIComponent(course.id)}`;
     return h(
       'article',
@@ -73,7 +74,13 @@ export function renderCourses(root, params) {
         ),
       ),
       course.description ? h('p', { class: 'muted course-desc' }, course.description) : null,
-      h('div', { class: 'muted small' }, `${course.chapters.length} Kapitel · ${course.studies.length} Studies · ${course.lines.length} Varianten`),
+      h(
+        'div',
+        { class: 'muted small' },
+        course.videoOnly
+          ? `${course.chapters.length} Kapitel · ${course.studies.length} Videos`
+          : `${course.chapters.length} Kapitel · ${course.studies.length} Studies · ${course.lines.length} Varianten`,
+      ),
       h('div', { class: 'mini-progress' }, h('div', { class: 'progress' }, h('div', { class: 'progress-fill', style: { width: `${pct}%` } })), h('span', { class: 'small' }, `${pct}%`)),
       h(
         'div',

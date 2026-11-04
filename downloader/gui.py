@@ -1,4 +1,4 @@
-"""Kleine Oberfläche: Kurs-Link eingeben, Login, Download starten."""
+"""Kleine Oberfläche: Kurs-Links eingeben (einer oder mehrere), Login, Download starten."""
 
 import queue
 import threading
@@ -6,9 +6,9 @@ import tkinter as tk
 from tkinter import filedialog, scrolledtext
 
 from browser import PROJECT_DIR, login_window
-from chessly import NotLoggedIn
+from chessly import NotLoggedIn, parse_course_links
 from downloader import Stopped
-from exporter import export_course
+from exporter import DEFAULT_WORKERS, export_courses
 
 DEFAULT_TARGET = PROJECT_DIR / "downloads"
 
@@ -20,37 +20,44 @@ class App:
         self.stop_requested = False
 
         root.title("Chessly Downloader")
-        root.geometry("760x520")
+        root.geometry("760x640")
 
         frame = tk.Frame(root, padx=10, pady=10)
         frame.pack(fill="both", expand=True)
         frame.columnconfigure(1, weight=1)
 
-        tk.Label(frame, text="Kurs-Link:").grid(row=0, column=0, sticky="w")
-        self.url_entry = tk.Entry(frame)
-        self.url_entry.grid(row=0, column=1, columnspan=2, sticky="ew", pady=2)
+        tk.Label(frame, text="Kurs-Links:", anchor="nw").grid(row=0, column=0, sticky="nw")
+        self.url_box = tk.Text(frame, height=6, wrap="none")
+        self.url_box.grid(row=0, column=1, columnspan=2, sticky="ew", pady=2)
+        tk.Label(frame, text="(ein Link pro Zeile)", fg="gray").grid(row=1, column=1, sticky="w")
 
-        tk.Label(frame, text="Zielordner:").grid(row=1, column=0, sticky="w")
+        tk.Label(frame, text="Zielordner:").grid(row=2, column=0, sticky="w")
         self.target_var = tk.StringVar(value=str(DEFAULT_TARGET))
-        tk.Entry(frame, textvariable=self.target_var).grid(row=1, column=1, sticky="ew", pady=2)
-        tk.Button(frame, text="...", command=self.choose_folder).grid(row=1, column=2, padx=(5, 0))
+        tk.Entry(frame, textvariable=self.target_var).grid(row=2, column=1, sticky="ew", pady=2)
+        tk.Button(frame, text="...", command=self.choose_folder).grid(row=2, column=2, padx=(5, 0))
 
         self.full_export = tk.BooleanVar(value=True)
         tk.Checkbutton(
             frame,
             text="Kompletter Kurs: Videos + Linien + PGN für openings/",
             variable=self.full_export,
-        ).grid(row=2, column=0, columnspan=3, sticky="w")
+        ).grid(row=3, column=0, columnspan=3, sticky="w")
 
         self.publish = tk.BooleanVar(value=True)
         tk.Checkbutton(
             frame,
             text="Danach automatisch hochladen und veröffentlichen (R2 + Cloudflare Pages)",
             variable=self.publish,
-        ).grid(row=3, column=0, columnspan=3, sticky="w")
+        ).grid(row=4, column=0, columnspan=3, sticky="w")
+
+        workers_row = tk.Frame(frame)
+        workers_row.grid(row=5, column=0, columnspan=3, sticky="w")
+        tk.Label(workers_row, text="Videos gleichzeitig laden:").pack(side="left")
+        self.workers_var = tk.StringVar(value=str(DEFAULT_WORKERS))
+        tk.Spinbox(workers_row, from_=1, to=6, width=3, textvariable=self.workers_var).pack(side="left", padx=5)
 
         buttons = tk.Frame(frame)
-        buttons.grid(row=4, column=0, columnspan=3, sticky="w", pady=8)
+        buttons.grid(row=6, column=0, columnspan=3, sticky="w", pady=8)
         self.login_button = tk.Button(buttons, text="Login", width=12, command=self.login)
         self.login_button.pack(side="left")
         self.start_button = tk.Button(buttons, text="Download starten", width=16, command=self.start)
@@ -60,13 +67,15 @@ class App:
         self.stop_button.pack(side="left")
 
         self.log_box = scrolledtext.ScrolledText(frame, height=18, state="disabled")
-        self.log_box.grid(row=5, column=0, columnspan=3, sticky="nsew")
-        frame.rowconfigure(5, weight=1)
+        self.log_box.grid(row=7, column=0, columnspan=3, sticky="nsew")
+        frame.rowconfigure(7, weight=1)
 
         self.log("1. Einmal auf \"Login\" klicken, bei Chessly einloggen, Browserfenster schließen.")
-        self.log("2. Kurs-Link einfügen und \"Download starten\" klicken.")
+        self.log("2. Kurs-Links einfügen (auch mehrere untereinander) und \"Download starten\" klicken.")
+        self.log("   Doppelte Links werden entfernt. Die Kurse werden nacheinander gelesen, die Videos")
+        self.log("   laden mehrere gleichzeitig, und am Ende gibt es nur einen Upload und ein Deploy.")
         self.log("   Mit Häkchen: Videos + Kapitel/Linien + fertige PGN in openings/.")
-        self.log("   Mit dem zweiten Häkchen geht der Kurs danach auch gleich online")
+        self.log("   Mit dem zweiten Häkchen geht alles danach auch gleich online")
         self.log("   (einmalig vorher: `npx wrangler login` im Projektordner).")
         self.root.after(100, self.show_messages)
 
@@ -106,17 +115,30 @@ class App:
         self.log("Browser geöffnet. Einloggen und danach das Fenster schließen.")
         self.run_in_background(login_window, "Login gespeichert.")
 
+    def workers(self):
+        try:
+            return max(1, min(6, int(self.workers_var.get())))
+        except ValueError:
+            return DEFAULT_WORKERS
+
     def start(self):
-        url = self.url_entry.get().strip()
-        if not url:
-            self.log("Bitte zuerst einen Kurs-Link einfügen.")
+        links, ignored, duplicates = parse_course_links(self.url_box.get("1.0", "end"))
+        for part in ignored:
+            self.log(f"Ignoriert (kein Kurs-Link): {part}")
+        if duplicates:
+            self.log(f"{duplicates} doppelte(r) Link(s) entfernt.")
+        if not links:
+            self.log("Bitte zuerst mindestens einen Kurs-Link einfügen.")
             return
+        if len(links) > 1:
+            self.log(f"{len(links)} Kurse in der Warteschlange.")
         self.stop_requested = False
         full = self.full_export.get()
         publish = self.publish.get()
+        workers = self.workers()
         self.run_in_background(
-            lambda: export_course(url, self.target_var.get(), self.log,
-                                  lambda: self.stop_requested, full, publish))
+            lambda: export_courses(links, self.target_var.get(), self.log,
+                                   lambda: self.stop_requested, full, publish, workers))
 
     def stop(self):
         self.stop_requested = True

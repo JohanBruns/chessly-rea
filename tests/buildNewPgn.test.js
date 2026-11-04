@@ -2,6 +2,7 @@
 import { describe, expect, it } from 'vitest';
 import { Chess } from 'chess.js';
 import { buildNewPgn, buildPgn, slugify } from '../scripts/buildFromChessly.js';
+import { buildCourse } from '../src/courseLoader.js';
 import { parsePgn } from '../src/pgnParser.js';
 
 const START = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
@@ -218,6 +219,43 @@ describe('Einführung am ersten Zug', () => {
     const pgn = buildNewPgn(chessly);
 
     expect(buildPgn(pgn, chessly)).toBe(pgn);
+  });
+});
+
+// Skill-Kurse haben bei Chessly keine Linien: jede Lektion wird eine Study mit einem Video.
+describe('Skill-Kurs (nur Videos)', () => {
+  const lesson = (id, name, file) => ({
+    id,
+    name,
+    hasVideo: true,
+    videos: [`/downloader/downloads/Skills/${file}`],
+    variations: [],
+    comments: {},
+  });
+  const skill = course({
+    kind: 'skill',
+    color: '',
+    chapters: [
+      { id: 'c1', name: 'Gabeln', description: '', studies: [lesson('l1', 'Doppelangriff', '01-01 Gabeln - Doppelangriff.mp4'), lesson('l2', 'Fesselung', '01-02 Gabeln - Fesselung.mp4')] },
+      { id: 'c2', name: 'Matt', description: '', studies: [lesson('l3', 'Matt in 1', '02-01 Matt - Matt in 1.mp4')] },
+    ],
+  });
+
+  it('schreibt jede Lektion als Partie ohne Züge mit Video, aber ohne Farbe', () => {
+    const pgn = buildNewPgn(skill);
+    const games = parsePgn(pgn);
+
+    expect(games.map((g) => g.headers.Study)).toEqual(['Doppelangriff', 'Fesselung', 'Matt in 1']);
+    expect(games[0].headers.Video).toBe('/downloader/downloads/Skills/01-01 Gabeln - Doppelangriff.mp4');
+    expect(pgn).not.toMatch(/CourseColor|Orientation/);
+  });
+
+  it('wird in der App zu einem Video-Kurs', () => {
+    const built = buildCourse({ pgn: buildNewPgn(skill) });
+
+    expect(built.videoOnly).toBe(true);
+    expect(built.chapters.map((c) => c.studies.length)).toEqual([2, 1]);
+    expect(built.chesslyId).toBe(skill.id);
   });
 });
 

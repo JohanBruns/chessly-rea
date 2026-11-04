@@ -31,6 +31,25 @@ def parse_course_url(url):
     return kind, match.group(2)
 
 
+def parse_course_links(text):
+    """Liest beliebig viele Kurs-Links aus einem Text (einer pro Zeile, oder getrennt durch Leerzeichen,
+    Komma, Semikolon). Gibt (links, ignoriert, doppelt) zurück: die Links ohne Wiederholungen in der
+    Reihenfolge der Eingabe, die Teile, die kein Kurs-Link sind, und die Anzahl der doppelten Links."""
+    links, ignored, seen, duplicates = [], [], set(), 0
+    for token in re.split(r"[\s,;]+", text.strip()):
+        if not token:
+            continue
+        match = COURSE_RE.search(token)
+        if not match:
+            ignored.append(token)
+        elif match.group(2) in seen:
+            duplicates += 1
+        else:
+            seen.add(match.group(2))
+            links.append(f"{BASE}/{match.group(1)}/{match.group(2)}")
+    return links, ignored, duplicates
+
+
 def clean_name(name):
     """Macht aus "Chapter 1: Black Plays 2...Nf6" einfach "Black Plays 2...Nf6"."""
     return re.sub(r"^(Chapter|Study|Video|Lesson)\s*\d+\s*[:.\-]\s*", "", name).strip()
@@ -41,12 +60,24 @@ def by_index(items):
 
 
 def load_course_page(page, url, api_matches):
-    """Öffnet die Kursseite und gibt die JSON-Antwort zurück, für die api_matches(url) True ist."""
-    with page.expect_response(lambda r: api_matches(r.url) and r.ok, timeout=45000) as response_info:
-        page.goto(url)
-    if "/login" in page.url:
-        raise NotLoggedIn()
-    return response_info.value.json()
+    """Öffnet die Kursseite und gibt die JSON-Antwort zurück, für die api_matches(url) True ist.
+
+    Geladen wird immer von einer leeren Seite aus. Steht der Browser schon auf dieser Seite (zweiter Kurs
+    hintereinander, oder die Kursseite wird noch einmal gelesen), ist die Antwort sonst manchmal schon weg,
+    wenn wir sie lesen („Response body is not available“). Klappt es trotzdem nicht, gibt es einen zweiten Versuch."""
+    for attempt in (1, 2):
+        page.goto("about:blank")
+        try:
+            with page.expect_response(lambda r: api_matches(r.url) and r.ok, timeout=45000) as response_info:
+                page.goto(url)
+            if "/login" in page.url:
+                raise NotLoggedIn()
+            return response_info.value.json()
+        except NotLoggedIn:
+            raise
+        except Exception:
+            if attempt == 2:
+                raise
 
 
 def collect_lessons(page, course_url, log):

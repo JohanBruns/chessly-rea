@@ -271,7 +271,8 @@ export function parsePgn(text) {
     }
   }
   flush();
-  return games.filter((g) => g.root.children.length > 0);
+  // Partien ohne Züge fallen weg – außer sie haben ein Video (Skill-Kurse bestehen nur aus Videos).
+  return games.filter((g) => g.root.children.length > 0 || g.headers.Video);
 }
 
 // Formatiert einen Knoten als "5.Nf3" bzw. "5...Nf6".

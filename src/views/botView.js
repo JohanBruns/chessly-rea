@@ -28,7 +28,8 @@ function picker(root) {
       h(
         'div',
         { class: 'pick-grid' },
-        loadAllCourses().courses.map((course) =>
+        // Video-Kurse haben keine Züge, gegen die der Bot spielen könnte
+        loadAllCourses().courses.filter((course) => !course.videoOnly).map((course) =>
           h(
             'a',
             { class: 'card pick-card', href: `#/bot?course=${encodeURIComponent(course.id)}` },

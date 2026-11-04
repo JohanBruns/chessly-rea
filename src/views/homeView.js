@@ -2,7 +2,7 @@
 // der nächsten Kachel und dessen Lernpfad, Karten für Wiederholen und Drill Shuffle.
 import { findCourse, lineStats, loadAllCourses } from '../courses.js';
 import { add, clear, fill, h } from '../dom.js';
-import { courseProgress, levelInfo, nextTile, xpLastDays } from '../progress.js';
+import { courseProgress, courseStarted, levelInfo, nextTile, xpLastDays } from '../progress.js';
 import { loadProgress, loadSettings, loadState, loadXp } from '../storage.js';
 import { courseIcon } from '../ui/courseIcon.js';
 import { icon } from '../ui/icons.js';
@@ -21,8 +21,9 @@ export function levelPill(totalXp) {
   );
 }
 
+// Ohne gemerkten Kurs startet die App mit einem Lernkurs, nicht mit einem reinen Video-Kurs.
 export function currentCourse(courses, state) {
-  return (state.lastCourse && findCourse(state.lastCourse)) || courses[0] || null;
+  return (state.lastCourse && findCourse(state.lastCourse)) || courses.find((c) => !c.videoOnly) || courses[0] || null;
 }
 
 function courseCard(course, progress, state) {
@@ -63,7 +64,7 @@ function courseCard(course, progress, state) {
         h('div', { class: 'mini-progress' }, h('div', { class: 'progress' }, h('div', { class: 'progress-fill', style: { width: `${pct}%` } })), h('span', { class: 'muted small' }, `${pct}%`)),
       ),
       next
-        ? h('a', { class: 'btn btn-primary', href: tileHref(course, next.tile) }, icon('play', { size: 16 }), state.started[course.id] ? 'Weiter lernen' : 'Kurs starten')
+        ? h('a', { class: 'btn btn-primary', href: tileHref(course, next.tile) }, icon('play', { size: 16 }), courseStarted(course, progress, state) ? 'Weiter lernen' : 'Kurs starten')
         : h('span', { class: 'done-pill' }, icon('check', { size: 16, strokeWidth: 3 }), 'Kurs abgeschlossen'),
     ),
     h('div', { class: 'chapter-carousel' }, prevBtn, chapterEl, nextBtn),

@@ -30,12 +30,18 @@ export function tileStates(study, progress, state) {
   });
 }
 
+// Was zum Fortschritt zählt: Lern- und Drill-Kacheln. Videos nur in reinen Video-Kursen,
+// denn dort gibt es nichts anderes.
+export function countsTile(course, tile) {
+  return course.videoOnly || tile.type !== 'video';
+}
+
 export function courseProgress(course, progress, state) {
   let total = 0;
   let done = 0;
   for (const study of course.studies) {
     for (const { tile, status } of tileStates(study, progress, state)) {
-      if (tile.type === 'video') continue;
+      if (!countsTile(course, tile)) continue;
       total++;
       if (status === 'completed') done++;
     }
@@ -47,11 +53,16 @@ export function courseProgress(course, progress, state) {
 export function nextTile(course, progress, state) {
   for (const chapter of course.chapters) {
     for (const study of chapter.studies) {
-      const entry = tileStates(study, progress, state).find((t) => t.tile.type !== 'video' && t.status === 'available');
+      const entry = tileStates(study, progress, state).find((t) => countsTile(course, t.tile) && t.status === 'available');
       if (entry) return { chapter, study, tile: entry.tile };
     }
   }
   return null;
+}
+
+// „Kurs starten“ oder „Weiter“: Lernkurse gelten ab der ersten Übung als begonnen, Video-Kurse ab dem ersten Video.
+export function courseStarted(course, progress, state) {
+  return !!state.started[course.id] || (course.videoOnly && courseProgress(course, progress, state).done > 0);
 }
 
 export function findTile(course, tileId) {

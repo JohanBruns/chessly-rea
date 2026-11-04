@@ -103,8 +103,10 @@ Browser-Speicher und folgen dem Konto auf andere Geräte.
 Im Ordner `downloader/` liegt ein kleines Python-Tool, das einen kompletten Chessly-Kurs auf den PC holt
 (mit deinem eigenen Chessly-Login): alle Lektionsvideos als MP4, alle Kapitel/Studies mit Linien und daraus
 eine fertige PGN in `openings/`. Einmal `downloader\setup.bat`, danach `downloader\start.bat`, Kurs-Link
-einfügen und **Download starten**. Mit dem Standard-Häkchen lädt der Downloader die Videos danach selbst nach R2
+einfügen (auch mehrere untereinander) und **Download starten**. Mit dem Standard-Häkchen lädt der Downloader die Videos danach selbst nach R2
 und veröffentlicht die App (`npm run upload-videos`, `npm run deploy`). Nur das Committen bleibt für dich.
+Skill-Kurse ohne Linien (z. B. Beginner Tactics) erscheinen als **Videokurs**: eine Study pro Lektion, Fortschritt
+aus den angesehenen Videos, ohne Drill, Bot und Kurs-Explorer.
 Details in [downloader/README.md](downloader/README.md).
 
 Caro-Kann und London-System sind schon verknüpft: Jede Study hat einen `[Video]`-Eintrag auf ihre MP4 in
@@ -224,11 +226,11 @@ Befehle erneut ausführen.
 npm run usage
 ```
 
-zeigt, wie viel der 10 GB belegt sind. `upload-videos` bricht ab, bevor der Bucket größer als 8 GB würde,
+zeigt, wie viel der 10 GB belegt sind. `upload-videos` bricht ab, bevor der Bucket größer als 9,5 GB würde,
 und lädt dann gar nichts hoch.
 
 **E-Mail-Warnung:** Der Worker in `usageAlert/` zählt jeden Morgen (07:00 UTC) die Videos im Bucket und
-schickt ab **6,8 GB** (85 % der 8-GB-Sperre) eine E-Mail. Solange der Bucket darüber bleibt, kommt sie täglich.
+schickt ab **8,075 GB** (85 % der 9,5-GB-Sperre) eine E-Mail. Solange der Bucket darüber bleibt, kommt sie täglich.
 Versendet wird über [Resend](https://resend.com) (kostenlos, 100 Mails/Tag). Einmalig einrichten:
 
 1. Im Cloudflare-Dashboard einmal **Workers & Pages** öffnen. Dabei legt Cloudflare die
@@ -342,7 +344,7 @@ npm run build
 | `functions/app/`, `scripts/checkPrivateBundle.js` | App samt Kursinhalten nur mit Anmeldung; der Build bricht ab, wenn Kursinhalte im öffentlichen Teil landen |
 | `functions/downloader/`, `wrangler.toml` | Cloudflare Pages: Videos aus R2 mit Anmeldeprüfung und Range-Anfragen |
 | `usageAlert/` | Cloudflare Worker: täglicher Speicher-Check mit E-Mail-Warnung über Resend |
-| `scripts/uploadVideos.js`, `scripts/usage.js`, `scripts/r2Limits.js` | Video-Upload mit 8-GB-Sperre, Verbrauchsanzeige, gemeinsame Grenzen |
+| `scripts/uploadVideos.js`, `scripts/usage.js`, `scripts/r2Limits.js` | Video-Upload mit 9,5-GB-Sperre, Verbrauchsanzeige, gemeinsame Grenzen |
 | `public/sw.js`, `public/manifest.webmanifest` | Installierbare App (PWA), Offline-Cache für App und Stockfish |
 | `downloader/` | Python-Tool (tkinter, Playwright, yt-dlp) zum Herunterladen der Chessly-Kursvideos |
 

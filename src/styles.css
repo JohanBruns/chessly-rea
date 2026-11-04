@@ -367,6 +367,11 @@ a:focus-visible {
   color: #e2e8f0;
   border: 1px solid var(--line);
 }
+.tag-video {
+  background: var(--card-3);
+  color: var(--text);
+  border: 1px solid var(--line);
+}
 
 .switch {
   position: relative;
@@ -1424,6 +1429,10 @@ a.tile:focus-visible .tile-top {
   grid-template-columns: 1fr 300px;
   gap: 20px;
   align-items: start;
+}
+/* Video-Kurs: keine Seitenleiste */
+.course-layout.video-only {
+  grid-template-columns: 1fr;
 }
 .course-main {
   display: flex;
