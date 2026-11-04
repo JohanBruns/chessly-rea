@@ -65,6 +65,9 @@ function route() {
   window.scrollTo(0, 0);
 }
 
+// iOS ignoriert user-scalable=no; ohne das zoomt ein versehentlicher Griff mit zwei Fingern die App
+document.addEventListener('gesturestart', (e) => e.preventDefault());
+
 initLayout();
 window.addEventListener('hashchange', route);
 route();
