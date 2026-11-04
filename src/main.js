@@ -4,14 +4,18 @@ import '@lichess-org/chessground/assets/chessground.brown.css';
 import '@lichess-org/chessground/assets/chessground.cburnett.css';
 import './styles.css';
 
+import { currentAccount, startAccountSync } from './account.js';
+import { loadAllCourses } from './courses.js';
 import { clear } from './dom.js';
-import { initLayout, renderTopbar, setSessionHeader } from './ui/layout.js';
+import { useAccountStorage } from './storage.js';
+import { applyTheme, initLayout, renderTopbar, setSessionHeader } from './ui/layout.js';
 import { renderBot } from './views/botView.js';
 import { renderCourse } from './views/courseView.js';
 import { renderCourses } from './views/coursesView.js';
 import { renderDrillShuffle } from './views/drillShuffleView.js';
 import { renderHome } from './views/homeView.js';
 import { renderImport } from './views/importView.js';
+import { renderLogin } from './views/loginView.js';
 import { renderProfile } from './views/profileView.js';
 import { renderReview } from './views/reviewView.js';
 import { renderSettings } from './views/settingsView.js';
@@ -65,9 +69,29 @@ function route() {
   window.scrollTo(0, 0);
 }
 
-initLayout();
-window.addEventListener('hashchange', route);
-route();
+// Der lokale Dev-Server (start.cmd) hat keine Server-Funktionen: Dort läuft die App ohne Konto wie bisher.
+const accountsEnabled = import.meta.env.PROD;
+const account = accountsEnabled ? currentAccount() : null;
+
+if (accountsEnabled && !account) {
+  document.body.dataset.view = 'login';
+  applyTheme();
+  renderLogin(app);
+} else {
+  useAccountStorage(account);
+  initLayout();
+  window.addEventListener('hashchange', route);
+  route();
+  if (account) {
+    startAccountSync(() => {
+      loadAllCourses({ refresh: true });
+      // Nur Übersichten neu aufbauen: Eine laufende Variante, Bot-Partie oder ein Video darf nicht abbrechen
+      if (!['home', 'courses', 'course', 'profile'].includes(document.body.dataset.view)) return;
+      applyTheme();
+      route();
+    });
+  }
+}
 
 // Offline-Fähigkeit nur im fertigen Build; im Dev-Server würde der Cache alte Module ausliefern
 if (import.meta.env.PROD && 'serviceWorker' in navigator) {

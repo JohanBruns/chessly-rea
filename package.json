@@ -14,6 +14,8 @@
     "test": "vitest run",
     "upload-videos": "node scripts/uploadVideos.js",
     "deploy": "npm run build && wrangler pages deploy",
+    "db:migrate": "wrangler d1 migrations apply chessly-rea --remote",
+    "db:migrate:local": "wrangler d1 migrations apply chessly-rea --local",
     "usage": "node scripts/usage.js",
     "deploy-alert": "wrangler deploy --config usageAlert/wrangler.toml",
     "test-alert": "node scripts/testAlert.js",

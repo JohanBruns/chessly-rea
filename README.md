@@ -95,7 +95,7 @@ Tipp: Varianten sollten mit **deinem eigenen Zug** enden; der Kommentar des letz
 ### Variante B: Im Browser importieren
 
 Über **Menü → Hinzufügen**: Lichess-Studie per Link, PGN-Datei oder PGN-Text. Importierte Kurse liegen im
-Browser-Speicher.
+Browser-Speicher und folgen dem Konto auf andere Geräte.
 
 ## Kursvideos herunterladen (`downloader/`)
 
@@ -110,12 +110,12 @@ Dev-Server (`npm run dev` bzw. `start.cmd`) die Dateien aus, in der iPhone-App d
 
 ## Aufs iPhone (Cloudflare, privat)
 
-Die App läuft auf Cloudflare Pages, die Videos liegen in einem privaten R2-Bucket. Davor sitzt Cloudflare Access:
-Nur deine E-Mail-Adresse kommt durch, für alle anderen ist weder die App noch ein Video erreichbar. Die
-Video-Funktion (`functions/downloader/downloads/[[path]].js`) prüft das Access-Token zusätzlich selbst und
-verweigert ohne gültige Anmeldung jedes Video. Alles läuft im kostenlosen Tarif. R2 enthält 10 GB Speicher
-und berechnet keinen Download-Traffic. Cloudflare verlangt fürs Aktivieren von R2 aber eine hinterlegte
-Zahlungsmethode.
+Die App läuft auf Cloudflare Pages, die Videos liegen in einem privaten R2-Bucket, Konten und Lernstand in einer
+D1-Datenbank. Jeder kann sich in der App selbst ein Konto mit Benutzername und Passwort anlegen, ohne Bestätigung.
+Die Video-Funktion (`functions/downloader/downloads/[[path]].js`) liefert Videos nur mit gültiger Anmeldung aus.
+Die Seite selbst samt Kursinhalten im JavaScript ist öffentlich abrufbar. Alles läuft im kostenlosen Tarif. R2
+enthält 10 GB Speicher und berechnet keinen Download-Traffic. Cloudflare verlangt fürs Aktivieren von R2 aber eine
+hinterlegte Zahlungsmethode.
 
 ### Einmalig einrichten
 
@@ -138,21 +138,21 @@ Zahlungsmethode.
 
    Die Ausgabe nennt die Adresse, z. B. `https://chessly-rea.pages.dev`. Ist der Name schon vergeben, hängt
    Cloudflare etwas an. Dann diese Adresse in den nächsten Schritten verwenden.
-4. **Zugang absichern** – im Dashboard unter **Zero Trust** (beim ersten Mal einen Teamnamen wählen und den
-   kostenlosen Tarif nehmen):
-   - **Access → Applications → Add an application → Self-hosted**
-   - Domains: `chessly-rea.pages.dev` **und** `*.chessly-rea.pages.dev` (sonst wären die Vorschau-Adressen
-     jeder Version offen)
-   - Session Duration: z. B. *1 month*, damit die iPhone-App nicht ständig neu fragt
-   - Policy: *Allow*, Include → *Emails* → deine E-Mail-Adresse
-   - Nach dem Speichern den **Application Audience (AUD) Tag** kopieren. Die Team-Domain (`<team>.cloudflareaccess.com`)
-     steht in den Zero-Trust-**Settings**.
-5. Beide Werte in `wrangler.toml` eintragen:
+4. Datenbank für die Konten anlegen und die ausgegebene `database_id` in `wrangler.toml` eintragen:
 
-   ```toml
-   ACCESS_TEAM_DOMAIN = "<team>.cloudflareaccess.com"
-   ACCESS_AUD = "<AUD-Tag>"
+   ```bash
+   npx wrangler d1 create chessly-rea
    ```
+
+5. Tabellen anlegen:
+
+   ```bash
+   npm run db:migrate
+   ```
+
+6. Pages-Projekt mit der Datenbank verbinden: `npm run deploy` liest die Bindungen aus `wrangler.toml`.
+7. Falls vor der Seite noch eine Cloudflare-Access-Anwendung liegt: im Dashboard unter **Zero Trust → Access →
+   Applications** löschen, sonst kommen neue Nutzer nicht bis zur Anmeldeseite.
 
 ### Videos hochladen und App veröffentlichen
 
@@ -211,13 +211,27 @@ abschließen und die öffentliche `r2.dev`-Adresse des Buckets ausgeschaltet las
 
 ### Auf dem iPhone installieren
 
-1. In **Safari** die Pages-Adresse öffnen und mit dem Code anmelden, den Cloudflare an deine E-Mail schickt.
-2. **Teilen → Zum Home-Bildschirm**. Die App startet danach im Vollbild und meldet sich beim ersten Start
-   noch einmal an. Safari und Home-Bildschirm-App haben getrennte Speicher.
-3. Die App selbst funktioniert danach auch offline, Videos brauchen eine Internetverbindung.
+1. In **Safari** die Pages-Adresse öffnen.
+2. **Teilen → Zum Home-Bildschirm**. Die App startet danach im Vollbild und fragt beim ersten Start nach der
+   Anmeldung. Safari und Home-Bildschirm-App haben getrennte Speicher.
+3. Konto erstellen oder anmelden. Die App selbst funktioniert danach auch offline, Videos brauchen eine
+   Internetverbindung, außer sie sind offline gespeichert.
 
-Der Lernstand liegt pro Gerät. Mit **Einstellungen → Sicherung herunterladen** am PC und dem Import auf dem
-iPhone überträgst du ihn (und umgekehrt).
+## Konten
+
+Jedes Konto hat eigenen Lernstand, XP, Streak, eigene importierte Kurse und Einstellungen. Das Konto folgt dir auf
+jedes Gerät: anmelden, und der Stand ist da. Ein zweites Gerät mit einem anderen Konto hat einen eigenen Fortschritt.
+
+- **Offline:** Die App arbeitet immer auf dem Gerätespeicher und gleicht ihn im Hintergrund ab, sobald Netz da ist.
+  Haben zwei Geräte offline am selben Konto gelernt, werden beide Stände zusammengeführt (pro Variante gewinnt die
+  neuere Wiederholung). Nur für die Anmeldung selbst braucht die App Internet.
+- **Alter Lernstand:** Gibt es auf dem Gerät Fortschritt von vor den Konten, fragt die App bei der ersten Anmeldung,
+  ob er ins Konto übernommen werden soll.
+- **Offline-Videos** liegen pro Gerät, alle Konten auf dem Gerät teilen sie sich.
+- **Passwort vergessen:** Es gibt keine E-Mail und daher keinen automatischen Weg. Das Konto lässt sich nur direkt
+  in der D1-Datenbank löschen, danach ist der Name wieder frei.
+- **Lokal mit `npm run dev`:** Ohne Server-Funktionen gibt es keine Anmeldung, die App läuft ohne Konto wie bisher.
+  Zum Testen mit Konten: `npm run build`, `npm run db:migrate:local`, dann `npx wrangler pages dev`.
 
 ## Abgleich mit Chessly
 
@@ -242,9 +256,9 @@ vollständig enthalten ist.
 
 ## Lernstand sichern
 
-Lernstand, XP und Streak liegen im `localStorage` des Browsers. Unter **Einstellungen → Sicherung herunterladen**
-exportierst du alles als JSON und kannst es in einem anderen Browser wiederherstellen. Dort lässt sich auch der
-Fortschritt einzelner Kurse zurücksetzen.
+Lernstand, XP und Streak liegen im `localStorage` des Browsers und mit Konto zusätzlich in D1. Unter **Einstellungen →
+Sicherung herunterladen** exportierst du alles als JSON und kannst es in einem anderen Browser wiederherstellen. Dort
+lässt sich auch der Fortschritt einzelner Kurse zurücksetzen.
 
 ## Entwicklung
 
@@ -268,7 +282,9 @@ npm run build
 | `src/bot.js`, `src/engine.js` | Repertoire-Züge des Bots, Stockfish als Web Worker |
 | `src/ui/` | Topbar & Menü, Icons & Logo, Kurs-Icons, Kachelpfad (SVG), XP-Diagramm, Toasts |
 | `src/views/` | Home, Kurse, Kursseite, Sitzung, Explorer, Drill Shuffle, Wiederholen, Bot, Profil, Einstellungen, Import |
-| `functions/`, `wrangler.toml` | Cloudflare Pages: Videos aus R2 mit Access-Prüfung und Range-Anfragen |
+| `src/account.js`, `src/sync.js` | Anmeldung auf dem Gerät, Abgleich des Lernstands mit dem Server, Zusammenführen |
+| `functions/api/`, `functions/_lib/auth.js`, `migrations/` | Registrieren, Anmelden, Abgleich, Passwort-Hash und Sitzungen auf D1 |
+| `functions/downloader/`, `wrangler.toml` | Cloudflare Pages: Videos aus R2 mit Anmeldeprüfung und Range-Anfragen |
 | `usageAlert/` | Cloudflare Worker: täglicher Speicher-Check mit E-Mail-Warnung über Resend |
 | `scripts/uploadVideos.js`, `scripts/usage.js`, `scripts/r2Limits.js` | Video-Upload mit 8-GB-Sperre, Verbrauchsanzeige, gemeinsame Grenzen |
 | `public/sw.js`, `public/manifest.webmanifest` | Installierbare App (PWA), Offline-Cache für App und Stockfish |

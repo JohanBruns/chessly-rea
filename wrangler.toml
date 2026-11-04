@@ -1,13 +1,15 @@
-# Cloudflare Pages: App aus dist/, Videos über functions/ aus dem privaten R2-Bucket.
+# Cloudflare Pages: App aus dist/, Konten und Lernstand in D1, Videos über functions/ aus dem privaten R2-Bucket.
 name = "chessly-rea"
 pages_build_output_dir = "dist"
 compatibility_date = "2025-06-01"
 
-[vars]
-# Aus Cloudflare Zero Trust → Access → Applications (siehe README „Aufs iPhone“)
-ACCESS_TEAM_DOMAIN = "johan-chess.cloudflareaccess.com"
-ACCESS_AUD = "b961f7c9b65059cd8c1ddc66961a5d59794b15a45cd71864fe4e4c4feace2bed"
-
 [[r2_buckets]]
 binding = "VIDEOS"
 bucket_name = "chessly-rea-videos"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "chessly-rea"
+# Ausgabe von „npx wrangler d1 create chessly-rea“ (siehe README „Aufs iPhone“)
+database_id = "00000000-0000-0000-0000-000000000000"
+migrations_dir = "migrations"
