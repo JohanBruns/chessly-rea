@@ -4,6 +4,9 @@
 # Gespeicherter Browser-Login (enthaelt Cookies - niemals hochladen!)
 browser_profile/
 
+# Exportierte Session fuer andere Tools (Cookies - niemals hochladen!)
+session/
+
 # Heruntergeladene Videos
 downloads/
 
