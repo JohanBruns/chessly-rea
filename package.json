@@ -10,6 +10,7 @@
     "dev": "vite",
     "prebuild": "node scripts/copyStockfish.js --strict",
     "build": "vite build",
+    "postbuild": "node scripts/checkPrivateBundle.js",
     "preview": "vite preview",
     "test": "vitest run",
     "upload-videos": "node scripts/uploadVideos.js",

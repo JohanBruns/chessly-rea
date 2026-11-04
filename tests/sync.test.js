@@ -40,10 +40,10 @@ function device() {
 }
 
 beforeEach(async () => {
-  env = { DB: fakeD1() };
+  env = { DB: fakeD1(), INVITE_CODE: 'code' };
   const response = await register({
     env,
-    request: new Request(`${ORIGIN}/api/register`, { method: 'POST', body: JSON.stringify({ username: 'johan', password: 'geheim' }) }),
+    request: new Request(`${ORIGIN}/api/register`, { method: 'POST', body: JSON.stringify({ username: 'johan', password: 'geheim', inviteCode: 'code' }) }),
   });
   cookie = response.headers.get('Set-Cookie').split(';')[0];
 });

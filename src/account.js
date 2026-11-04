@@ -77,9 +77,21 @@ export async function login(username, password, askAdopt) {
   await signedIn(user, askAdopt);
 }
 
-export async function register(username, password, askAdopt) {
-  const { user } = await postJson('/api/register', { username, password });
+export async function register(username, password, inviteCode, askAdopt) {
+  const { user } = await postJson('/api/register', { username, password, inviteCode });
   await signedIn(user, askAdopt);
+}
+
+// true, wenn der Server die Anmeldung nicht mehr kennt; dann fragt die Anmeldeseite neu. Offline bleibt alles, wie es ist.
+export async function sessionLost() {
+  try {
+    const response = await fetch('/api/session', { credentials: 'same-origin' });
+    if (response.status !== 401) return false;
+    rememberAccount(null);
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 export async function logout() {

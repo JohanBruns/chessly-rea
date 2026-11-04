@@ -111,11 +111,12 @@ Dev-Server (`npm run dev` bzw. `start.cmd`) die Dateien aus, in der iPhone-App d
 ## Aufs iPhone (Cloudflare, privat)
 
 Die App läuft auf Cloudflare Pages, die Videos liegen in einem privaten R2-Bucket, Konten und Lernstand in einer
-D1-Datenbank. Jeder kann sich in der App selbst ein Konto mit Benutzername und Passwort anlegen, ohne Bestätigung.
-Die Video-Funktion (`functions/downloader/downloads/[[path]].js`) liefert Videos nur mit gültiger Anmeldung aus.
-Die Seite selbst samt Kursinhalten im JavaScript ist öffentlich abrufbar. Alles läuft im kostenlosen Tarif. R2
-enthält 10 GB Speicher und berechnet keinen Download-Traffic. Cloudflare verlangt fürs Aktivieren von R2 aber eine
-hinterlegte Zahlungsmethode.
+D1-Datenbank. Ein neues Konto lässt sich nur mit dem Einladungscode anlegen. Öffentlich ist nur die Anmeldeseite:
+Die App samt Kursinhalten (`dist/app/`) und die Videos liefert der Server nur mit gültiger Anmeldung aus
+(`functions/app/[[path]].js`, `functions/downloader/downloads/[[path]].js`). Nach zehn Fehlversuchen beim Anmelden
+oder beim Code ist der Absender für 15 Minuten gesperrt. Alles läuft im kostenlosen Tarif. R2 enthält 10 GB Speicher
+und berechnet keinen Download-Traffic. Cloudflare verlangt fürs Aktivieren von R2 aber eine hinterlegte
+Zahlungsmethode.
 
 ### Einmalig einrichten
 
@@ -150,9 +151,27 @@ hinterlegte Zahlungsmethode.
    npm run db:migrate
    ```
 
-6. Pages-Projekt mit der Datenbank verbinden: `npm run deploy` liest die Bindungen aus `wrangler.toml`.
-7. Falls vor der Seite noch eine Cloudflare-Access-Anwendung liegt: im Dashboard unter **Zero Trust → Access →
+6. Einladungscode festlegen. Der Befehl fragt den Code ab, er landet also weder im Repository noch im Verlauf. Ohne
+   hinterlegten Code lässt sich kein neues Konto anlegen:
+
+   ```bash
+   npx wrangler pages secret put INVITE_CODE --project-name chessly-rea
+   ```
+
+7. Pages-Projekt mit der Datenbank verbinden: `npm run deploy` liest die Bindungen aus `wrangler.toml`.
+8. Falls vor der Seite noch eine Cloudflare-Access-Anwendung liegt: im Dashboard unter **Zero Trust → Access →
    Applications** löschen, sonst kommen neue Nutzer nicht bis zur Anmeldeseite.
+
+### Einladungscode ändern
+
+Den Befehl aus Schritt 6 erneut ausführen, danach `npm run deploy`: Ein neues Secret gilt erst ab der nächsten
+Veröffentlichung. Bestehende Konten bleiben gültig, der alte Code legt aber keine neuen mehr an.
+
+Vorhandene Konten anzeigen:
+
+```bash
+npx wrangler d1 execute chessly-rea --remote --command "SELECT username, datetime(created_at / 1000, 'unixepoch') AS erstellt FROM users"
+```
 
 ### Videos hochladen und App veröffentlichen
 
@@ -283,7 +302,8 @@ npm run build
 | `src/ui/` | Topbar & Menü, Icons & Logo, Kurs-Icons, Kachelpfad (SVG), XP-Diagramm, Toasts |
 | `src/views/` | Home, Kurse, Kursseite, Sitzung, Explorer, Drill Shuffle, Wiederholen, Bot, Profil, Einstellungen, Import |
 | `src/account.js`, `src/sync.js` | Anmeldung auf dem Gerät, Abgleich des Lernstands mit dem Server, Zusammenführen |
-| `functions/api/`, `functions/_lib/auth.js`, `migrations/` | Registrieren, Anmelden, Abgleich, Rangliste, Passwort-Hash und Sitzungen auf D1 |
+| `functions/api/`, `functions/_lib/`, `migrations/` | Registrieren mit Einladungscode, Anmelden, Abgleich, Rangliste, Passwort-Hash, Sitzungen und Fehlversuche auf D1 |
+| `functions/app/`, `scripts/checkPrivateBundle.js` | App samt Kursinhalten nur mit Anmeldung; der Build bricht ab, wenn Kursinhalte im öffentlichen Teil landen |
 | `functions/downloader/`, `wrangler.toml` | Cloudflare Pages: Videos aus R2 mit Anmeldeprüfung und Range-Anfragen |
 | `usageAlert/` | Cloudflare Worker: täglicher Speicher-Check mit E-Mail-Warnung über Resend |
 | `scripts/uploadVideos.js`, `scripts/usage.js`, `scripts/r2Limits.js` | Video-Upload mit 8-GB-Sperre, Verbrauchsanzeige, gemeinsame Grenzen |

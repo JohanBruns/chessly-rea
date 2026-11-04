@@ -18,7 +18,7 @@ const post = (handler, path, body, cookie) =>
   });
 
 async function signUp(username) {
-  const response = await post(register, '/api/register', { username, password: 'geheim' });
+  const response = await post(register, '/api/register', { username, password: 'geheim', inviteCode: 'code' });
   return response.headers.get('Set-Cookie').split(';')[0];
 }
 
@@ -32,7 +32,7 @@ const get = (cookie) => ranking({ env, request: new Request(`${ORIGIN}/api/ranki
 const fetchRanking = async (cookie) => (await get(cookie)).json();
 
 beforeEach(() => {
-  env = { DB: fakeD1() };
+  env = { DB: fakeD1(), INVITE_CODE: 'code' };
 });
 
 describe('Rangliste', () => {

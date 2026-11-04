@@ -1,4 +1,4 @@
-// Anmeldeseite: Benutzername und Passwort, wahlweise neues Konto anlegen.
+// Anmeldeseite: Benutzername und Passwort, wahlweise neues Konto mit Einladungscode anlegen.
 import { login, register } from '../account.js';
 import { add, fill, h } from '../dom.js';
 import { logoMark } from '../ui/icons.js';
@@ -10,7 +10,8 @@ export function renderLogin(root) {
   const form = h('form', { class: 'login-form', novalidate: true });
 
   function render() {
-    const username = h('input', { class: 'input', name: 'username', autocomplete: 'username', autocapitalize: 'none', spellcheck: 'false', required: true });
+    const inviteCode = creating ? h('input', { class: 'input', name: 'inviteCode', autocomplete: 'off', autocapitalize: 'none', spellcheck: 'false', required: true }) : null;
+    const username =h('input', { class: 'input', name: 'username', autocomplete: 'username', autocapitalize: 'none', spellcheck: 'false', required: true });
     const password = h('input', { class: 'input', name: 'password', type: 'password', autocomplete: creating ? 'new-password' : 'current-password', required: true });
     const repeat = creating ? h('input', { class: 'input', name: 'repeat', type: 'password', autocomplete: 'new-password', required: true }) : null;
     const message = h('p', { class: 'feedback-msg bad login-message', role: 'alert', hidden: true });
@@ -30,7 +31,8 @@ export function renderLogin(root) {
       }
       submit.disabled = true;
       try {
-        await (creating ? register : login)(username.value.trim(), password.value, askAdopt);
+        if (creating) await register(username.value.trim(), password.value, inviteCode.value, askAdopt);
+        else await login(username.value.trim(), password.value, askAdopt);
         location.reload();
       } catch (err) {
         fail(err instanceof TypeError ? 'Keine Verbindung zum Server. Für die Anmeldung braucht die App Internet.' : err.message);
@@ -40,6 +42,7 @@ export function renderLogin(root) {
 
     fill(
       form,
+      inviteCode ? h('label', { class: 'login-field' }, h('span', {}, 'Einladungscode'), inviteCode) : null,
       h('label', { class: 'login-field' }, h('span', {}, 'Benutzername'), username),
       h('label', { class: 'login-field' }, h('span', {}, 'Passwort'), password),
       repeat ? h('label', { class: 'login-field' }, h('span', {}, 'Passwort wiederholen'), repeat) : null,
