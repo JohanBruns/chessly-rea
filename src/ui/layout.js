@@ -27,6 +27,7 @@ const MENU = [
   { href: '#/profile', label: 'Profil', icon: 'user', view: 'profile' },
   { href: '#/', label: 'Home', icon: 'home', view: 'home' },
   { href: '#/courses', label: 'Alle Kurse', icon: 'grid', view: 'courses' },
+  { href: '#/chessly', label: 'Chessly-Katalog', icon: 'bell', view: 'chessly' },
   { href: '#/review', label: 'Wiederholen', icon: 'repeat', view: 'review', badge: dueCount },
   { href: '#/drill', label: 'Drill Shuffle', icon: 'shuffle', view: 'drill' },
   { href: '#/bot', label: 'Gegen den Bot', icon: 'bot', view: 'bot' },

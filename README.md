@@ -46,6 +46,7 @@ Dann <http://localhost:5173> öffnen. `npm install` kopiert die Stockfish-Engine
 |---|---|
 | Home („Hallo, Name“, Level, XP-Diagramm, aktueller Kurs) | `#/` |
 | Alle Kurse (Suche, Filter Weiß/Schwarz/Importiert) | `#/courses` |
+| Chessly-Katalog (fehlende Kurse, Vormerken) | `#/chessly` |
 | Kursseite (Kapitel, Studies, Lernpfade, Bot/Drill/Wiederholen) | `#/course/<kurs>` |
 | Kachel-Sitzung | `#/course/<kurs>/tile/<kachel>` |
 | Study-Linien-Explorer | `#/course/<kurs>/study/<study>` |
@@ -107,6 +108,33 @@ Caro-Kann und London-System sind schon verknüpft: Jede Study hat einen `[Video]
 `downloader/downloads/`. Ein Klick auf die Video-Kachel spielt das Video direkt in der App ab. Lokal liefert der
 Dev-Server (`npm run dev` bzw. `start.cmd`) die Dateien aus, in der iPhone-App der private Cloudflare-Speicher
 (siehe unten). Die Videos selbst sind nicht in Git.
+
+## Fehlende Chessly-Kurse und Benachrichtigungen
+
+Unter **Menü → Chessly-Katalog** (`#/chessly`) stehen alle Kurse aus deinem Chessly-Konto, die noch nicht in
+`openings/` liegen – mit Suche und Filtern (Eröffnung, Skill-Kurs, Weiß/Schwarz, vorgemerkt). Kurse mit dem Tag
+„Bald verfügbar“ sind bei Chessly noch nicht erschienen; „Videos geladen“ heißt, dass schon MP4-Dateien in
+`downloader/downloads/` liegen.
+
+Die Liste kommt nicht live aus dem Browser, sondern aus `downloader/catalog.json`. Sie wird mit deinem
+gespeicherten Chessly-Login erzeugt:
+
+```bash
+npm run catalog
+```
+
+Danach die Seite neu laden (im Dev-Server reicht das, für die veröffentlichte App `npm run deploy`). Ob ein Kurs
+schon vorhanden ist, erkennt die App am `[ChesslyCourse "<Kurs-ID>"]`-Header der PGN-Datei, sonst am Kursnamen.
+
+**Vormerken:** Der Knopf mit der Glocke merkt einen Kurs auf diesem Gerät vor. Beim nächsten Öffnen der App prüft
+sie, ob ein vorgemerkter Kurs
+
+- jetzt in der App auftaucht,
+- bei Chessly nicht mehr „Coming soon“ ist, oder
+- als Video heruntergeladen wurde (neuer Katalog-Abgleich).
+
+Dann erscheint ein Hinweis in der App und – wenn erlaubt – eine Browser-Benachrichtigung. Die Merkliste hängt am
+Konto, bleibt aber bewusst auf dem Gerät und wird nicht synchronisiert.
 
 ## Aufs iPhone (Cloudflare, privat)
 
@@ -298,6 +326,8 @@ npm run build
 | `src/tileSession.js` | Ablauf einer Kachel (Lernen + Wiederholen je Variante, gemischter Drill), ohne DOM |
 | `src/scheduler.js` | Spaced Repetition |
 | `src/courseCompare.js`, `scripts/compareCourse.js` | Abgleich eines Kurses mit den Chessly-Linien (`npm run abgleich`) |
+| `src/chesslyCatalog.js`, `src/views/chesslyView.js`, `downloader/catalog.py`, `scripts/chesslyCatalog.js` | Chessly-Katalog der fehlenden Kurse (`npm run catalog`) und die Seite `#/chessly` |
+| `src/watchlist.js` | Vorgemerkte Kurse, Benachrichtigungen und Prüfung beim Öffnen der App |
 | `src/bot.js`, `src/engine.js` | Repertoire-Züge des Bots, Stockfish als Web Worker |
 | `src/ui/` | Topbar & Menü, Icons & Logo, Kurs-Icons, Kachelpfad (SVG), XP-Diagramm, Toasts |
 | `src/views/` | Home, Kurse, Kursseite, Sitzung, Explorer, Drill Shuffle, Wiederholen, Bot, Profil, Einstellungen, Import |

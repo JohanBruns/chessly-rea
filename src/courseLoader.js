@@ -183,6 +183,7 @@ export function buildCourse({ pgn, id, name, color, source = 'builtin', fileName
   return {
     id: courseId,
     name: courseName,
+    chesslyId: first.ChesslyCourse || null,
     description: first.CourseDescription || '',
     icon: first.CourseIcon || null,
     hue: Number.isFinite(Number(first.CourseHue)) && first.CourseHue ? Number(first.CourseHue) : Number.parseInt(hashString(courseName), 36) % 360,

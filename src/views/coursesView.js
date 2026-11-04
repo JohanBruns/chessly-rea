@@ -1,5 +1,6 @@
 // Kursübersicht: Suche, Filter-Chips (Alle/Weiß/Schwarz/Importiert), Kurskarten mit Icon und Fortschritt.
 import { loadAllCourses } from '../courses.js';
+import { missingChesslyCourses } from '../chesslyCatalog.js';
 import { add, clear, colorLabel, fill, h } from '../dom.js';
 import { courseProgress, nextTile } from '../progress.js';
 import { loadProgress, loadState } from '../storage.js';
@@ -22,6 +23,7 @@ export function filterCourses(courses, { filter = 'all', query = '' } = {}) {
 
 export function renderCourses(root, params) {
   const { courses } = loadAllCourses();
+  const missing = missingChesslyCourses(courses);
   const progress = loadProgress();
   const state = loadState();
   let filter = FILTERS.some((f) => f.id === params.filter) ? params.filter : 'all';
@@ -110,6 +112,20 @@ export function renderCourses(root, params) {
         h('div', {}, h('h1', {}, 'Alle Kurse'), h('p', { class: 'muted' }, 'Wähle ein Repertoire und arbeite dich Kachel für Kachel durch den Lernpfad.')),
       ),
       h('div', { class: 'toolbar' }, h('label', { class: 'search' }, icon('search', { size: 18 }), search), chipsEl),
+      missing.length
+        ? h(
+            'a',
+            { class: 'card catalog-banner', href: '#/chessly' },
+            h('span', { class: 'catalog-banner-icon' }, icon('bell', { size: 22 })),
+            h(
+              'div',
+              {},
+              h('strong', {}, `${missing.length} Chessly-Kurse fehlen noch`),
+              h('span', { class: 'muted small' }, 'Alle ansehen, vormerken und benachrichtigt werden, sobald sie da sind.'),
+            ),
+            icon('chevronRight', { size: 20, cls: 'muted' }),
+          )
+        : null,
       gridEl,
     ),
   );

@@ -5,6 +5,7 @@ import { loadAllCourses } from './courses.js';
 import { clear } from './dom.js';
 import { applyTheme, initLayout, renderTopbar, setSessionHeader } from './ui/layout.js';
 import { renderBot } from './views/botView.js';
+import { renderChessly } from './views/chesslyView.js';
 import { renderCourse } from './views/courseView.js';
 import { renderCourses } from './views/coursesView.js';
 import { renderDrillShuffle } from './views/drillShuffleView.js';
@@ -16,6 +17,7 @@ import { renderSettings } from './views/settingsView.js';
 import { renderStudyExplorer } from './views/studyExplorerView.js';
 import { renderTileSession } from './views/tileView.js';
 import { renderVideo } from './views/videoView.js';
+import { checkWatchedCourses } from './watchlist.js';
 
 const app = document.getElementById('app');
 let cleanup = null;
@@ -35,6 +37,7 @@ function resolve(parts, params) {
   if (view === 'course' && id && sub === 'video' && subId) return ['video', () => renderVideo(app, { courseId: id, studyId: subId })];
   if (view === 'course' && id) return ['course', () => renderCourse(app, { id, params })];
   if (view === 'courses') return ['courses', () => renderCourses(app, params)];
+  if (view === 'chessly') return ['chessly', () => renderChessly(app, params)];
   if (view === 'review') return ['review', () => renderReview(app, params)];
   if (view === 'drill') return ['drill', () => renderDrillShuffle(app, params)];
   if (view === 'bot') return ['bot', () => renderBot(app, params)];
@@ -53,6 +56,12 @@ function route() {
   const [name, render] = resolve(parts, params);
   document.body.dataset.view = name;
   renderTopbar();
+
+  try {
+    checkWatchedCourses(loadAllCourses().courses);
+  } catch (err) {
+    console.warn('Vorgemerkte Kurse konnten nicht geprüft werden:', err);
+  }
 
   try {
     cleanup = render() || null;

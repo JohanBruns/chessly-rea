@@ -1,0 +1,1283 @@
+{
+ "fetchedAt": "2026-11-04T21:55:55+00:00",
+ "source": "https://chessly.com/courses",
+ "courses": [
+  {
+   "id": "775a4eea-5a50-47da-b7dd-5790ef829fbe",
+   "name": "1.e4 Gotham Style Part 1: The Vienna",
+   "shortName": "1.e4 Part 1: The Vienna",
+   "description": "In Part 1, we focus on 1.e4 e5 by Black, and Levy's main recommendation: the wonderful Vienna. Pair this course with the \"Dark Vienna\" to really skyrocket your Vienna power.",
+   "type": "OPENING",
+   "color": "w",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1732992248/ytr84jbxoxqowrbtbwjo.png",
+   "tags": [
+    "White Openings"
+   ],
+   "createdAt": 1732989969,
+   "url": "https://chessly.com/courses/775a4eea-5a50-47da-b7dd-5790ef829fbe",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "8d12cef8-ec7a-421e-b7f5-19798e4255fc",
+   "name": "1.e4 Gotham Style Part 2: The Sicilian",
+   "shortName": "1.e4 Part 2: Sicilian",
+   "description": "In Part 2 of the e4 course, the focus is on the Sicilian Defense. Levy's main recommendation is 2.a3, the Mengarini. Of course, we have many other weapons vs the Sicilian Defense here on Chessly as well.",
+   "type": "OPENING",
+   "color": "w",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1732992277/b0g049eouphb3caw6i4c.png",
+   "tags": [
+    "White Openings"
+   ],
+   "createdAt": 1732990051,
+   "url": "https://chessly.com/courses/8d12cef8-ec7a-421e-b7f5-19798e4255fc",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "1c85b58c-c773-42a3-ac19-b4e4afff3aa2",
+   "name": "1.e4 Gotham Style Part 3: Other Openings",
+   "shortName": "1.e4 Part 3: Caro etc",
+   "description": "In Part 3 of the e4 course, we address the Caro-Kann, French, Pirc, Modern, Philidor, Scandinavian, and other random defenses.",
+   "type": "OPENING",
+   "color": "w",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1732992294/dk3f2yu2wxam9p4ll9qh.png",
+   "tags": [
+    "White Openings"
+   ],
+   "createdAt": 1732990418,
+   "url": "https://chessly.com/courses/1c85b58c-c773-42a3-ac19-b4e4afff3aa2",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "a2e04788-9eb5-4f28-b39c-e1e40824fb2f",
+   "name": "10 Most Common Checkmates",
+   "shortName": "10 Most Common Checkmates",
+   "description": "A mini course about 10 of the most common checkmate patterns that occur in games, including the Greek Gift!",
+   "type": "LEGACY",
+   "color": null,
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1734102420/mchlgchb8gfuhb8fdcji.png",
+   "tags": [
+    "Coming soon"
+   ],
+   "createdAt": 1734102438,
+   "url": "https://chessly.com/skill-courses/a2e04788-9eb5-4f28-b39c-e1e40824fb2f",
+   "comingSoon": true,
+   "videosDownloaded": false
+  },
+  {
+   "id": "063af611-2444-4a60-9b9c-88823aa08b3f",
+   "name": "Aggressive Italian Game",
+   "shortName": "Aggressive Italian Game",
+   "description": "A powerful opening repertoire in 1.e4 e5, based on many central gambits such as the Max Lange, Deutz, and Double Knight. Better for intermediate and advanced players as there is more memorization, but available to all levels.",
+   "type": "OPENING",
+   "color": "w",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1733069259/pamc208crdwm4fvmy7if.png",
+   "tags": [
+    "White Openings"
+   ],
+   "createdAt": 1733069235,
+   "url": "https://chessly.com/courses/063af611-2444-4a60-9b9c-88823aa08b3f",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "8dc7622e-f87f-4937-86ad-c77f29584b69",
+   "name": "Aggressive Ruy Lopez",
+   "shortName": "Aggressive Ruy Lopez",
+   "description": "The Ruy Lopez, or Spanish, is one of the most famous chess openings. In this course we play a quick d4 push.",
+   "type": "OPENING",
+   "color": "w",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1734101559/lsmcdmdkmc53ayz9cs2g.png",
+   "tags": [
+    "White Openings"
+   ],
+   "createdAt": 1750404269,
+   "url": "https://chessly.com/courses/8dc7622e-f87f-4937-86ad-c77f29584b69",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "4e6fc3ef-26b7-49e1-b2c5-4413220ebeea",
+   "name": "Alekhine's Defense",
+   "shortName": "Alekhine's Defense",
+   "description": "A wild approach to White's most popular move, 1.e4. This opening will surprise your opponent and provoke them into a massive battle. A bit tricky to handle for beginners due to the nature of the positions, but great beyond that.",
+   "type": "OPENING",
+   "color": "b",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1733133414/g8qy6lahx8aeuvqrlaig.png",
+   "tags": [
+    "Black Openings"
+   ],
+   "createdAt": 1733070535,
+   "url": "https://chessly.com/courses/4e6fc3ef-26b7-49e1-b2c5-4413220ebeea",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "fede3b0d-19b9-4c92-b09d-e9d8e110c3a8",
+   "name": "Anti-Sicilian For White",
+   "shortName": "Anti-Sicilian For White",
+   "description": "A sneaky variation against the Najdorf and Dragon Sicilians (2...d6). We play 3.Nc3 and trick Black into our system with a central strike.",
+   "type": "OPENING",
+   "color": "w",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1733080243/miidt2ijhiyv76b4nyj6.png",
+   "tags": [
+    "White Openings"
+   ],
+   "createdAt": 1734713821,
+   "url": "https://chessly.com/courses/fede3b0d-19b9-4c92-b09d-e9d8e110c3a8",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "cd529bb4-aede-4d66-ab29-82380831acf7",
+   "name": "Anti-Sicilians For Black",
+   "shortName": "Anti-Sicilians For Black",
+   "description": "A supplementary course to learning the Sicilian Defense. Learn to beat the Alapin, Smith-Morra, Rossolimo, and more.",
+   "type": "OPENING",
+   "color": "b",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1734101264/bqt2ymebe1zcclcg4hjo.png",
+   "tags": [
+    "Black Openings"
+   ],
+   "createdAt": 1740646027,
+   "url": "https://chessly.com/courses/cd529bb4-aede-4d66-ab29-82380831acf7",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "94698d1b-42c5-4782-9f85-7aba5359373c",
+   "name": "Beginner Endgames",
+   "shortName": "Beginner Endgames",
+   "description": "A foundation for playing with few pieces on the board. The ideal course to learn the endgame for the first time.",
+   "type": "LEGACY",
+   "color": null,
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1734102400/zwiqyd1c6nndvy7mpygr.png",
+   "tags": [
+    "Beginners",
+    "Endgame"
+   ],
+   "createdAt": 1737585421,
+   "url": "https://chessly.com/skill-courses/94698d1b-42c5-4782-9f85-7aba5359373c",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "237b3f02-cf07-4c70-a72c-52d701ec542a",
+   "name": "Beginner Openings",
+   "shortName": "Beginner Openings",
+   "description": "A general overview of openings, perfect for newcomers to the game.",
+   "type": "LEGACY",
+   "color": null,
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1735476801/cpavbn40chhtqzxurihe.png",
+   "tags": [
+    "Beginners"
+   ],
+   "createdAt": 1735476995,
+   "url": "https://chessly.com/skill-courses/237b3f02-cf07-4c70-a72c-52d701ec542a",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "89ed8a7c-a6f9-4a4a-b93a-5ab15db9be87",
+   "name": "Beginner Strategy",
+   "shortName": "Beginner Strategy",
+   "description": "In this course, you will learn how to come up with plans and think like a chess player.",
+   "type": "LEGACY",
+   "color": null,
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1734102316/svxlrqh6fsntgfpagoj9.png",
+   "tags": [
+    "Beginners"
+   ],
+   "createdAt": 1736812468,
+   "url": "https://chessly.com/skill-courses/89ed8a7c-a6f9-4a4a-b93a-5ab15db9be87",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "b881640e-8421-40e4-8bab-57e255447c7b",
+   "name": "Beginner Tactics",
+   "shortName": "Beginner Tactics",
+   "description": "Learn how all the pieces interact and important types of tactics, such as forks, pins, and discovered attacks.",
+   "type": "LEGACY",
+   "color": null,
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1734102341/ef8l4tdjyirdsk63tzwv.png",
+   "tags": [
+    "Beginners"
+   ],
+   "createdAt": 1736812806,
+   "url": "https://chessly.com/skill-courses/b881640e-8421-40e4-8bab-57e255447c7b",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "5a2a0988-2a87-4d59-8360-7228ded553de",
+   "name": "d4 Sidelines For Black",
+   "shortName": "d4 Sidelines For Black",
+   "description": "Learn to play against the London, Trompowsky, and other White sidelines after d4 Nf6. Combine with another main course.",
+   "type": "OPENING",
+   "color": "b",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1734101519/ckwtzrncv3c7tuem6prb.png",
+   "tags": [
+    "Black Openings"
+   ],
+   "createdAt": 1738774729,
+   "url": "https://chessly.com/courses/5a2a0988-2a87-4d59-8360-7228ded553de",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "ca013bce-73db-47f5-afbf-3f889a25eef1",
+   "name": "Dutch Defense Sidelines",
+   "shortName": "Dutch Defense Sidelines",
+   "description": "A mini course focusing on White's aggressive sidelines in the Dutch Defense, like the Staunton Gambit and more. This course should be paired with any other Chessly Dutch to complete your repertoire.",
+   "type": "OPENING",
+   "color": "b",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1732997314/y8vhklftn1gsqemvy2jz.png",
+   "tags": [
+    "Black Openings"
+   ],
+   "createdAt": 1732997330,
+   "url": "https://chessly.com/courses/ca013bce-73db-47f5-afbf-3f889a25eef1",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "f79c9680-3816-490e-aace-85e7bacea964",
+   "name": "Endgame Masterclass",
+   "shortName": "Endgame Masterclass",
+   "description": "Levy will teach you theoretical endgames, practical examples, and even the most common endgame mistakes.",
+   "type": "LEGACY",
+   "color": null,
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1732998163/frobjeqkwlkoh5m0zx8e.png",
+   "tags": [
+    "Endgame"
+   ],
+   "createdAt": 1732998182,
+   "url": "https://chessly.com/skill-courses/f79c9680-3816-490e-aace-85e7bacea964",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "ffd627ba-b8e0-4abd-81d5-6d6cf98206a3",
+   "name": "Fide Candidates 2026",
+   "shortName": "Fide Candidates 2026",
+   "description": "Boost your chess skills by learning from the Candidates 2026, both from the Open Cycle and Women's Cycle.",
+   "type": "LEGACY",
+   "color": null,
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1774824316/yjblxeoaxwwpz3aopzaf.png",
+   "tags": [],
+   "createdAt": 1774824334,
+   "url": "https://chessly.com/skill-courses/ffd627ba-b8e0-4abd-81d5-6d6cf98206a3",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "f748b447-64b2-47c7-9a9e-728304499ee8",
+   "name": "Four Knights Sicilian",
+   "shortName": "Four Knights Sicilian",
+   "description": "A dynamic and fun Sicilian variation. Pair this course with an Anti-Sicilian repertoire to be ready in e4 c5.",
+   "type": "OPENING",
+   "color": "b",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1734101296/kchlvmi5kh4pjaommzjs.png",
+   "tags": [
+    "Black Openings"
+   ],
+   "createdAt": 1740347909,
+   "url": "https://chessly.com/courses/f748b447-64b2-47c7-9a9e-728304499ee8",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "54d902b6-334e-4dbd-9800-33007398cf82",
+   "name": "How To Attack",
+   "shortName": "How To Attack",
+   "description": "This course will help you understand how to properly attack in chess, as well as how to convert winning positions and when to sacrifice your pieces (or not!)",
+   "type": "LEGACY",
+   "color": null,
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1732998350/bklpeznnaly2xkzavvll.png",
+   "tags": [
+    "Middlegame"
+   ],
+   "createdAt": 1733005647,
+   "url": "https://chessly.com/skill-courses/54d902b6-334e-4dbd-9800-33007398cf82",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "fc024bcd-33d7-435e-858a-02f624bc750b",
+   "name": "How To Defend",
+   "shortName": "How To Defend",
+   "description": "The BEST way to stop making mistakes, improve your middlegame with White & Black, and gain hundreds of elo points in chess.",
+   "type": "LEGACY",
+   "color": null,
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1732998455/hat3d2k8bhhhmttegtbr.png",
+   "tags": [
+    "Middlegame"
+   ],
+   "createdAt": 1733005735,
+   "url": "https://chessly.com/skill-courses/fc024bcd-33d7-435e-858a-02f624bc750b",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "9e6005e0-3bd6-4012-8c7f-b5c5494abed2",
+   "name": "How To Make A Plan",
+   "shortName": "How To Make A Plan",
+   "description": "Ever look at a chess position and wonder: \"what do I do now?\" Well, that's what this course is for. You will learn chess strategy: how to make a plan, evaluate, create weaknesses, and avoid the most common bad habits in the middlegame.",
+   "type": "LEGACY",
+   "color": null,
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1732998707/xtxjuifwaexguxqza1x8.png",
+   "tags": [
+    "Middlegame"
+   ],
+   "createdAt": 1733005837,
+   "url": "https://chessly.com/skill-courses/9e6005e0-3bd6-4012-8c7f-b5c5494abed2",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "eface829-f03b-425b-af77-bf9c4064c56d",
+   "name": "How To Use Your Pieces",
+   "shortName": "How To Use Your Pieces",
+   "description": "Levy will teach you the most effective way to use your pawns, knights, bishops, rooks, queen, and even king in a game.",
+   "type": "LEGACY",
+   "color": null,
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1732998831/vvgxkse60ynzgjjaefot.png",
+   "tags": [
+    "Middlegame"
+   ],
+   "createdAt": 1733005925,
+   "url": "https://chessly.com/skill-courses/eface829-f03b-425b-af77-bf9c4064c56d",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "6cdd46e2-7bff-4f8b-bfcf-aeddd9745e6c",
+   "name": "Italian Center Attack",
+   "shortName": "Italian Center Attack",
+   "description": "An excellent opening for beginners and intermediates, relying on an early central attack. Pair with the Fried Liver course.",
+   "type": "OPENING",
+   "color": "w",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1734098592/vj2rcn6qnfeeluwuclom.png",
+   "tags": [
+    "White Openings"
+   ],
+   "createdAt": 1734098552,
+   "url": "https://chessly.com/courses/6cdd46e2-7bff-4f8b-bfcf-aeddd9745e6c",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "5e4b53ee-38ae-40f1-b9b8-1c7166e2211d",
+   "name": "Kalashnikov Sicilian",
+   "shortName": "Kalashnikov Sicilian",
+   "description": "Levy's favorite Sicilian, the cousin of the Sveshnikov. Pair with an \"Anti Sicilian\" course to finish your repertoire.",
+   "type": "OPENING",
+   "color": "b",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1734101496/zuigywicqfhqqm8zaory.png",
+   "tags": [
+    "Coming soon"
+   ],
+   "createdAt": 1734101764,
+   "url": "https://chessly.com/courses/5e4b53ee-38ae-40f1-b9b8-1c7166e2211d",
+   "comingSoon": true,
+   "videosDownloaded": false
+  },
+  {
+   "id": "5ce335b2-22e1-434e-a2f4-de67b83d4807",
+   "name": "King's Indian Defense",
+   "shortName": "King's Indian Defense",
+   "description": "The famous system opening for Black which can be played against every single White opening besides e4.",
+   "type": "OPENING",
+   "color": "b",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1751550221/p3dmksa7xvomlshodbnf.png",
+   "tags": [
+    "Black Openings"
+   ],
+   "createdAt": 1751550390,
+   "url": "https://chessly.com/courses/5ce335b2-22e1-434e-a2f4-de67b83d4807",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "bdd25532-960a-4849-aa41-76284546610a",
+   "name": "King's Knight Opening",
+   "shortName": "King's Knight Opening",
+   "description": "Beat the Petrov, Philidor, and other lines. Pair this course with Italian, Scotch, Ponziani, or another opening.",
+   "type": "OPENING",
+   "color": "w",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1736450779/dq3byrrvrzygsqhrt3pq.png",
+   "tags": [
+    "White Openings"
+   ],
+   "createdAt": 1736450634,
+   "url": "https://chessly.com/courses/bdd25532-960a-4849-aa41-76284546610a",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "249988bd-dfa2-4f97-a434-c49f15b92448",
+   "name": "Larsen's Opening: 1.b3",
+   "shortName": "Larsen's Opening: 1.b3",
+   "description": "A fun, offbeat opening best suited for players who like crazy positions. Better beyond the beginner level.",
+   "type": "OPENING",
+   "color": "w",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1765410560/zqzm9hrkn4aba1empvje.png",
+   "tags": [
+    "White Openings"
+   ],
+   "createdAt": 1765410775,
+   "url": "https://chessly.com/courses/249988bd-dfa2-4f97-a434-c49f15b92448",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "defdb150-788a-4b44-8104-4e9ab7dede15",
+   "name": "Latvian Gambit",
+   "shortName": "Latvian Gambit",
+   "description": "A risky gambit against White's most common opening moves. Best for intermediate and beyond as you weaken your king.",
+   "type": "OPENING",
+   "color": "b",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1734101425/gnotkphvctbqorcs3tku.png",
+   "tags": [
+    "Coming soon"
+   ],
+   "createdAt": 1734101764,
+   "url": "https://chessly.com/courses/defdb150-788a-4b44-8104-4e9ab7dede15",
+   "comingSoon": true,
+   "videosDownloaded": false
+  },
+  {
+   "id": "b094bf9e-a914-4a41-a3b1-d0c921636166",
+   "name": "Owen's Defense (e6 b6)",
+   "shortName": "Owen's Defense (e6 b6)",
+   "description": "A setup which is possible against EVERY White opening. Quite tricky and often results in winning a central pawn early.",
+   "type": "OPENING",
+   "color": "b",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1732992397/zjmwbdvk5csvl39zpdzk.png",
+   "tags": [
+    "Black Openings"
+   ],
+   "createdAt": 1732992106,
+   "url": "https://chessly.com/courses/b094bf9e-a914-4a41-a3b1-d0c921636166",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "f3b9f2ba-2215-4e45-9b05-e9727fcc7da1",
+   "name": "Pawn Endgame Masterclass",
+   "shortName": "Pawn Endgame Masterclass",
+   "description": "Learn basics of pawn endgames from the games of chess masters.",
+   "type": "LEGACY",
+   "color": null,
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1732999756/orjiiv1ryiq2z5fhkjju.png",
+   "tags": [
+    "Endgame"
+   ],
+   "createdAt": 1732999609,
+   "url": "https://chessly.com/skill-courses/f3b9f2ba-2215-4e45-9b05-e9727fcc7da1",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "db18500e-a28b-4db0-a821-5ea2d5161380",
+   "name": "Queen vs Pieces: A Guide to Chess Imbalances",
+   "shortName": "Queen vs Pieces: A Guide to Chess Imbalances",
+   "description": "The queen may go up against many pieces, sometimes emerging victorious, and others losing. The principles of this imbalance are taught from practical examples.",
+   "type": "LEGACY",
+   "color": null,
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1732999721/gtnsdgdzovwvgn0in1dt.png",
+   "tags": [
+    "Middlegame"
+   ],
+   "createdAt": 1732999020,
+   "url": "https://chessly.com/skill-courses/db18500e-a28b-4db0-a821-5ea2d5161380",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "43d1eef6-783d-4a92-82f4-cffa73e21354",
+   "name": "Queen's Gambit Accepted",
+   "shortName": "Queen's Gambit Accepted",
+   "description": "One of Levy's favorite openings, the \"QGA\" is an easy opening that leads to great positions for Black below master level. Simply capture White's c4 pawn and let the fun begin.",
+   "type": "OPENING",
+   "color": "b",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1733080340/douvxlufhcvcalkpzke4.png",
+   "tags": [
+    "Black Openings"
+   ],
+   "createdAt": 1734713344,
+   "url": "https://chessly.com/courses/43d1eef6-783d-4a92-82f4-cffa73e21354",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "68814342-f681-4b82-bb08-acf239720df8",
+   "name": "Queen's Gambit Declined",
+   "shortName": "Queen's Gambit Declined",
+   "description": "The \"QGD\" is a solid repertoire against 3/4 major White openings: d4, c4, and Nf3. This repertoire is based on 3...a6, the Janowski Variation.",
+   "type": "OPENING",
+   "color": "b",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1734099197/gaufd74m9l7y2ueh8p7c.png",
+   "tags": [
+    "Black Openings"
+   ],
+   "createdAt": 1734099172,
+   "url": "https://chessly.com/courses/68814342-f681-4b82-bb08-acf239720df8",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "9ba75052-7376-4ef0-b6e2-b8f429345535",
+   "name": "Tactics Level One",
+   "shortName": "Tactics Level One",
+   "description": "The first level of tactics: hanging pieces, forks, pins and skewers.",
+   "type": "LEGACY",
+   "color": null,
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1764788948/eg8pqx0vuexa87vcaqbe.png",
+   "tags": [
+    "Middlegame"
+   ],
+   "createdAt": 1764772654,
+   "url": "https://chessly.com/skill-courses/9ba75052-7376-4ef0-b6e2-b8f429345535",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "8b18364f-fddf-415c-953a-69ba86d271fb",
+   "name": "Tactics Level Three",
+   "shortName": "Tactics Level Three",
+   "description": "Clearance sacrifices, In-between moves, sacrifices and checkmate tactics: these are some of the more sophisticated tactics you'll learn in your chess journey.",
+   "type": "LEGACY",
+   "color": null,
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1765409177/d9y34ansbr3djtvt2wzw.png",
+   "tags": [
+    "Middlegame"
+   ],
+   "createdAt": 1765409588,
+   "url": "https://chessly.com/skill-courses/8b18364f-fddf-415c-953a-69ba86d271fb",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "8e16e954-60a1-4361-bd30-fd5eabad119d",
+   "name": "Tactics Level Two",
+   "shortName": "Tactics Level Two",
+   "description": "The next level of tactics: removing the defender, trapping pieces, discovered attacks and deflections.",
+   "type": "LEGACY",
+   "color": null,
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1764788987/uccnmmhgouktaiuryzpt.png",
+   "tags": [
+    "Middlegame"
+   ],
+   "createdAt": 1764788100,
+   "url": "https://chessly.com/skill-courses/8e16e954-60a1-4361-bd30-fd5eabad119d",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "fd553528-dcac-4f4f-a735-774502af7612",
+   "name": "Tactics Masterclass",
+   "shortName": "Tactics Masterclass",
+   "description": "Since chess is 99% tactics, this is the must-have of Chessly courses. The Tactics Masterclass takes you on a journey of chess patterns—from the building blocks of chess tactics to what some would call complex combinations.",
+   "type": "LEGACY",
+   "color": null,
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1732997958/des1bwbiu67zfwr5ig0p.png",
+   "tags": [
+    "Middlegame"
+   ],
+   "createdAt": 1732997927,
+   "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "3af40081-374e-4a1d-bc24-eaab86295502",
+   "name": "The Alapin Sicilian",
+   "shortName": "The Alapin Sicilian",
+   "description": "An easy setup against the Sicilian Defense. Played even at Grandmaster level, but especially effective under 1800 elo.",
+   "type": "OPENING",
+   "color": "w",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1734098257/civaj2kotusypfgikpvw.png",
+   "tags": [
+    "White Openings"
+   ],
+   "createdAt": 1734098232,
+   "url": "https://chessly.com/courses/3af40081-374e-4a1d-bc24-eaab86295502",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "1a186efb-82c1-4d71-82de-874f3644c474",
+   "name": "The Albin Countergambit",
+   "shortName": "The Albin Countergambit",
+   "description": "A tricky response to the Queen's Gambit by White based on the central strike e5!?, leading to very fun positions. Sometimes, your opponent will lose in just 8 moves!",
+   "type": "OPENING",
+   "color": "b",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1734099037/dyacjsju6t1i6qpkv8ak.png",
+   "tags": [
+    "Black Openings"
+   ],
+   "createdAt": 1734099002,
+   "url": "https://chessly.com/courses/1a186efb-82c1-4d71-82de-874f3644c474",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "d673407c-79dc-497c-9bb8-a2a709bf6df9",
+   "name": "The b3 French",
+   "shortName": "The b3 French",
+   "description": "Fight the French with the Papa-Ticulat Gambit. This opening pairs best with the b3 Sicilian.",
+   "type": "OPENING",
+   "color": "w",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1734115496/qzxzt3bnvbkeb7s3xr99.png",
+   "tags": [
+    "White Openings"
+   ],
+   "createdAt": 1734115455,
+   "url": "https://chessly.com/courses/d673407c-79dc-497c-9bb8-a2a709bf6df9",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "fb973fb9-8cb3-4ac4-9ed0-42f882cf9a2b",
+   "name": "The b3 Sicilian",
+   "shortName": "The b3 Sicilian",
+   "description": "A powerful offbeat weapon against the Sicilian Defense, ideal to pair with the b3 French.",
+   "type": "OPENING",
+   "color": "w",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1734115713/qoealnaqtihyxek0axjd.png",
+   "tags": [
+    "White Openings"
+   ],
+   "createdAt": 1734115687,
+   "url": "https://chessly.com/courses/fb973fb9-8cb3-4ac4-9ed0-42f882cf9a2b",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "f0ef04f1-bb5a-4840-85c4-a87e8f30c8cd",
+   "name": "The Basics For Beginners",
+   "shortName": "The Basics For Beginners",
+   "description": "Learn the rules of chess in this short, introductory course to the game.",
+   "type": "LEGACY",
+   "color": null,
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1734096549/sa8zecjhfhqxifpdd6nj.png",
+   "tags": [
+    "Beginners"
+   ],
+   "createdAt": 1734096728,
+   "url": "https://chessly.com/skill-courses/f0ef04f1-bb5a-4840-85c4-a87e8f30c8cd",
+   "comingSoon": false,
+   "videosDownloaded": true
+  },
+  {
+   "id": "b180776e-346f-457b-9d97-40356aeeae95",
+   "name": "The Beefeater Defense",
+   "shortName": "The Beefeater Defense",
+   "description": "A tricky system against d4, c4, and Nc3, which tries to take your opponents out of their comfort zone into murky positions.",
+   "type": "OPENING",
+   "color": "b",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1734099622/jjz9fqzndd59hmfxpcq1.png",
+   "tags": [
+    "Black Openings"
+   ],
+   "createdAt": 1734099589,
+   "url": "https://chessly.com/courses/b180776e-346f-457b-9d97-40356aeeae95",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "29efa96f-3cf6-4f49-80be-57eb3c015e0e",
+   "name": "The Bird Opening",
+   "shortName": "The Bird Opening",
+   "description": "Take flight with this amazing offbeat weapon. The Bird creates a central blockade with simple plans, often turning into huge attacks onto our opponent. Recommended for intermediate and advanced Chessly users.",
+   "type": "OPENING",
+   "color": "w",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1734098734/vn296iqqwvdawkngv5aw.png",
+   "tags": [
+    "White Openings"
+   ],
+   "createdAt": 1734098707,
+   "url": "https://chessly.com/courses/29efa96f-3cf6-4f49-80be-57eb3c015e0e",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "68a8fd6b-cb1a-4b18-9d2a-347484457123",
+   "name": "The Budapest Gambit",
+   "shortName": "The Budapest Gambit",
+   "description": "A fun counterpunch against the Queen's Gambit by White, and a bit more solid than the Albin. Also features a trap which can win you the game in less than 10 moves!",
+   "type": "OPENING",
+   "color": "b",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1733385213/blehyy18pv52fkkpae4r.png",
+   "tags": [
+    "Black Openings"
+   ],
+   "createdAt": 1733068202,
+   "url": "https://chessly.com/courses/68a8fd6b-cb1a-4b18-9d2a-347484457123",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "c326651a-49d6-427e-8d04-b4ec2840d52f",
+   "name": "The Caro-Kann Bonus Lines",
+   "shortName": "Caro-Kann Bonus Lines",
+   "description": "In this bonus course, you receive several more suggested variations for your repertoire, so that you can choose specific lines to play in your Caro-Kann!",
+   "type": "OPENING",
+   "color": "b",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1733067177/wjtwt2qbubowccwveccc.png",
+   "tags": [
+    "Black Openings"
+   ],
+   "createdAt": 1733067095,
+   "url": "https://chessly.com/courses/c326651a-49d6-427e-8d04-b4ec2840d52f",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "d4f3504b-8bbd-4435-ae30-a0b8372c9286",
+   "name": "The Caro-Kann Defense",
+   "shortName": "Caro-Kann Defense",
+   "description": "The opening that made Levy famous. An absolutely fantastic defense for Black which you can play up the entire rating ladder. Pair this opening with Levy's Caro-Kann playlist on YouTube, as well as the \"bonus\" course here on Chessly.",
+   "type": "OPENING",
+   "color": "b",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1733066727/qgbyqmuibeixzt31fqxm.png",
+   "tags": [
+    "Black Openings"
+   ],
+   "createdAt": 1733066754,
+   "url": "https://chessly.com/courses/d4f3504b-8bbd-4435-ae30-a0b8372c9286",
+   "comingSoon": false,
+   "videosDownloaded": true
+  },
+  {
+   "id": "f2f1cdfc-8fb7-41a6-adcb-5d8ff71fe542",
+   "name": "The Center Game",
+   "shortName": "The Center Game",
+   "description": "The Center Game is like the Scandinavian, but for White. We bring our queen out early and start a an attack. Perhaps a little too risky for beginners, although anyone can try!",
+   "type": "OPENING",
+   "color": "w",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1733133389/fqrn4vw5jbcducfksj5x.png",
+   "tags": [
+    "Coming soon"
+   ],
+   "createdAt": 1733079769,
+   "url": "https://chessly.com/courses/f2f1cdfc-8fb7-41a6-adcb-5d8ff71fe542",
+   "comingSoon": true,
+   "videosDownloaded": false
+  },
+  {
+   "id": "6bbb88ea-57b9-41a7-abc2-2d3e4e0c7ddc",
+   "name": "The Czech Benoni",
+   "shortName": "The Czech Benoni",
+   "description": "The Czech Benoni is an easy-to-learn defense that can become your main weapon with Black against 1.d4. You simply lock up the position and launch a huge attack.",
+   "type": "OPENING",
+   "color": "b",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1734715262/mcchkshweytzaurc47sd.png",
+   "tags": [
+    "Black Openings"
+   ],
+   "createdAt": 1734100022,
+   "url": "https://chessly.com/courses/6bbb88ea-57b9-41a7-abc2-2d3e4e0c7ddc",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "a0fdf334-d839-4069-a1e1-f6b0a7dba0ae",
+   "name": "The Danish Gambit",
+   "shortName": "The Danish Gambit",
+   "description": "Hyper-aggressive and tricky TRIPLE pawn gambit. If you're below 1500, this could score you some very crushing victories. Otherwise, the positions are fun and full of attacks.",
+   "type": "OPENING",
+   "color": "w",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1733068892/ceo5uom6fga5m0narxsp.png",
+   "tags": [
+    "White Openings"
+   ],
+   "createdAt": 1733068874,
+   "url": "https://chessly.com/courses/a0fdf334-d839-4069-a1e1-f6b0a7dba0ae",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "0897f49e-d26d-42f5-82e9-ce37307b760a",
+   "name": "The Dark Vienna",
+   "shortName": "The Dark Vienna",
+   "description": "Take your Vienna knowledge to the next level with this BONUS mini course. This pairs well with the 1.e4 Gotham Style Part 1.",
+   "type": "OPENING",
+   "color": "w",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1732996341/fkc61pm31nmfeycfofg5.png",
+   "tags": [
+    "White Openings"
+   ],
+   "createdAt": 1732996284,
+   "url": "https://chessly.com/courses/0897f49e-d26d-42f5-82e9-ce37307b760a",
+   "comingSoon": false,
+   "videosDownloaded": true
+  },
+  {
+   "id": "62a39420-2f65-4e78-ab12-988e98629973",
+   "name": "The English Opening",
+   "shortName": "The English Opening",
+   "description": "One of the \"Big 3\" chess openings is now on Chessly. The English is one of Levy's favorites, and an opening you can play for your entire chess career. Best suited for intermediate and advanced players, but of course anyone can try!",
+   "type": "OPENING",
+   "color": "w",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1732992349/rqtia015dnrb3m9ducua.png",
+   "tags": [
+    "White Openings"
+   ],
+   "createdAt": 1732991288,
+   "url": "https://chessly.com/courses/62a39420-2f65-4e78-ab12-988e98629973",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "edc4379a-6788-4bba-9e17-c1bd26ba814e",
+   "name": "The Englund Gambit",
+   "shortName": "The Englund Gambit",
+   "description": "The famous, fun gambit against White's 1.d4 which can get you a checkmate in 8 moves. Obviously a bit more dubious as you rise up the rating ladder, but for beginners: epic!",
+   "type": "OPENING",
+   "color": "b",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1733068815/zceacy3ippehy5be4nwd.png",
+   "tags": [
+    "Black Openings"
+   ],
+   "createdAt": 1733068761,
+   "url": "https://chessly.com/courses/edc4379a-6788-4bba-9e17-c1bd26ba814e",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "f5a37fdd-82fa-4f48-9dc7-65099627e9dd",
+   "name": "The Exchange Caro-Kann",
+   "shortName": "The Exchange Caro-Kann",
+   "description": "A simple yet effective solution against the Caro-Kann is the exchange variation. We trade on d5 and develop our pieces. This variation is played from beginner to master level.",
+   "type": "OPENING",
+   "color": "w",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1733080152/xatmy9eeyjdyc46flu0g.png",
+   "tags": [
+    "Coming soon"
+   ],
+   "createdAt": 1733079769,
+   "url": "https://chessly.com/courses/f5a37fdd-82fa-4f48-9dc7-65099627e9dd",
+   "comingSoon": true,
+   "videosDownloaded": false
+  },
+  {
+   "id": "76b3000f-dfd1-4c62-b706-238dbd5bb752",
+   "name": "The French Defense",
+   "shortName": "The French Defense",
+   "description": "A building-block opening against White's center. Not great for beginners due to lack of space. Pair with Winawer etc.",
+   "type": "OPENING",
+   "color": "b",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1734102844/nzn8qwow3ndniqh9ktvx.png",
+   "tags": [
+    "Coming soon"
+   ],
+   "createdAt": 1734102853,
+   "url": "https://chessly.com/courses/76b3000f-dfd1-4c62-b706-238dbd5bb752",
+   "comingSoon": true,
+   "videosDownloaded": false
+  },
+  {
+   "id": "6eece124-30ed-4053-8e4d-09c558213eb4",
+   "name": "The Fried Liver Attack",
+   "shortName": "The Fried Liver Attack",
+   "description": "This course teaches you the famous Fried Liver Attack out of the Italian Game. And as a bonus, you learn how to play a regular aggressive Italian after 3...Bc5. A great repertoire for beginners and intermediate players.",
+   "type": "OPENING",
+   "color": "w",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1734098433/vyxvlm80z6tkw7fprcat.png",
+   "tags": [
+    "White Openings"
+   ],
+   "createdAt": 1734098405,
+   "url": "https://chessly.com/courses/6eece124-30ed-4053-8e4d-09c558213eb4",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "6bf79f35-d2a5-41b0-b100-0e7d4b23df14",
+   "name": "The Gotham Dutch",
+   "shortName": "The Gotham Dutch",
+   "description": "The easiest Dutch Defense to learn, based on an early trade and a very straightforward setup of pieces. Harder to play above 2000 elo, but before that - fantastic!",
+   "type": "OPENING",
+   "color": "b",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1734102940/ujthhe9rhsesimwd3moa.png",
+   "tags": [
+    "Black Openings"
+   ],
+   "createdAt": 1732996662,
+   "url": "https://chessly.com/courses/6bf79f35-d2a5-41b0-b100-0e7d4b23df14",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "840e407d-54cc-45e3-9f3e-bff84a26d66d",
+   "name": "The Gotham Gambit",
+   "shortName": "The Gotham Gambit",
+   "description": "A tricky choice against 1.e4, this Petroff Gambit leads to attacking positions where you can crush your opponent.",
+   "type": "OPENING",
+   "color": "b",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1765410106/wvxqelmj1hd5oewcxylk.png",
+   "tags": [
+    "Black Openings"
+   ],
+   "createdAt": 1765410422,
+   "url": "https://chessly.com/courses/840e407d-54cc-45e3-9f3e-bff84a26d66d",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "87ec53e9-9572-4fe2-8f24-c51d0b9e3983",
+   "name": "The Grunfeld Defense",
+   "shortName": "The Grunfeld Defense",
+   "description": "One of the best defenses against White's 3 major openings: 1.d4, 1.c4, and 1.Nf3. We have an easy to learn repertoire available for you to play like the Grandmasters.",
+   "type": "OPENING",
+   "color": "b",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1733067353/j94rf5rk21c7yoqesbn3.png",
+   "tags": [
+    "Black Openings"
+   ],
+   "createdAt": 1733067293,
+   "url": "https://chessly.com/courses/87ec53e9-9572-4fe2-8f24-c51d0b9e3983",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "34edcf8b-2d5d-4651-aaf3-673a2f1de43f",
+   "name": "The Hillbilly Attack",
+   "shortName": "The Hillbilly Attack",
+   "description": "Although silly in name, this opening has been played by none other than Magnus Carlsen. It's a creative attacking weapon against the Caro-Kann defense. Due to the length of variations, I recommend this above intermediate level.",
+   "type": "OPENING",
+   "color": "w",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1734098121/vjtgjxlirwoyxzdhun5q.png",
+   "tags": [
+    "White Openings"
+   ],
+   "createdAt": 1734098064,
+   "url": "https://chessly.com/courses/34edcf8b-2d5d-4651-aaf3-673a2f1de43f",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "0aa60d8d-e4ca-448a-808c-630cb0656846",
+   "name": "The Jaenisch Gambit",
+   "shortName": "The Jaenisch Gambit",
+   "description": "A variation against White playing the Spanish or Ruy Lopez. We strike at the center and immediately seize the initiative. Very fun positions leading to super complicated games. Could be a little dangerous for beginners, but try it out!",
+   "type": "OPENING",
+   "color": "b",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1733385259/v08awfitpdjuoprb6bji.png",
+   "tags": [
+    "Black Openings"
+   ],
+   "createdAt": 1733068068,
+   "url": "https://chessly.com/courses/0aa60d8d-e4ca-448a-808c-630cb0656846",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "093aaeeb-5fe8-4852-a10c-d18062b7bf9e",
+   "name": "The Leningrad Dutch",
+   "shortName": "The Leningrad Dutch",
+   "description": "A dynamic defense based on Black's 1...f5 advance, which can be played against d4, c4, and Nf3 by White. Played by many strong Grandmasters, and hundreds of times by Levy.",
+   "type": "OPENING",
+   "color": "b",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1732996989/epycueuv5gtjtey9fzir.png",
+   "tags": [
+    "Black Openings"
+   ],
+   "createdAt": 1732997220,
+   "url": "https://chessly.com/courses/093aaeeb-5fe8-4852-a10c-d18062b7bf9e",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "6f04b1ed-6baf-48cd-9087-5b1d3b40fcbf",
+   "name": "The London System",
+   "shortName": "The London System",
+   "description": "One of the most famous openings in chess, and for good reason. It is very easy to learn, and you can choose between slower paced games or vicious attacks on your opponent.",
+   "type": "OPENING",
+   "color": "w",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1733069501/ehwtu76xg1oxjzjabmus.png",
+   "tags": [
+    "White Openings"
+   ],
+   "createdAt": 1733069478,
+   "url": "https://chessly.com/courses/6f04b1ed-6baf-48cd-9087-5b1d3b40fcbf",
+   "comingSoon": false,
+   "videosDownloaded": true
+  },
+  {
+   "id": "49d71d72-7d0e-4b55-bb66-5f257e37b4fc",
+   "name": "The Modern Defense",
+   "shortName": "The Modern Defense",
+   "description": "A tactical Black setup based on a kingside fianchetto which can be played against ALL of White's openings. Played by current GM Hikaru Nakamura and future GM Levy Rozman.",
+   "type": "OPENING",
+   "color": "b",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1734099491/v2ujhilcz6pavavrol41.png",
+   "tags": [
+    "Black Openings"
+   ],
+   "createdAt": 1734099472,
+   "url": "https://chessly.com/courses/49d71d72-7d0e-4b55-bb66-5f257e37b4fc",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "fcd36ab0-9705-4e69-9875-831929ac511b",
+   "name": "The Ponziani",
+   "shortName": "The Ponziani",
+   "description": "This is the \"Best Beginner Chess Opening\" and for good reason. The plans are easy to learn and there are so many traps for Black to lose in 10 moves.",
+   "type": "OPENING",
+   "color": "w",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1734097955/anzqbnm3og451howxeqc.png",
+   "tags": [
+    "White Openings"
+   ],
+   "createdAt": 1734097910,
+   "url": "https://chessly.com/courses/fcd36ab0-9705-4e69-9875-831929ac511b",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "780abea8-4d32-4633-a19c-b4e90c3cc6b0",
+   "name": "The Portuguese Gambit",
+   "shortName": "The Portuguese Gambit",
+   "description": "This repertoire features both the Portuguese and Icelandic Gambits and is a great attacking weapon for Black.",
+   "type": "OPENING",
+   "color": "b",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1734714081/iu8giylqul45q4cdlh62.png",
+   "tags": [
+    "Black Openings"
+   ],
+   "createdAt": 1734714128,
+   "url": "https://chessly.com/courses/780abea8-4d32-4633-a19c-b4e90c3cc6b0",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "d37755a0-252e-4925-8c5f-2d2f62d6a2ab",
+   "name": "The Scandinavian Defense",
+   "shortName": "Scandinavian Defense",
+   "description": "This is one of Black's best openings against 1.e4 below the master level. We almost always get a pretty easy game. Levy wins nearly 70% of the time with the Scandinavian Defense.",
+   "type": "OPENING",
+   "color": "b",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1733067648/joc4mi9jpufevp7pxyai.png",
+   "tags": [
+    "Black Openings"
+   ],
+   "createdAt": 1733067670,
+   "url": "https://chessly.com/courses/d37755a0-252e-4925-8c5f-2d2f62d6a2ab",
+   "comingSoon": false,
+   "videosDownloaded": true
+  },
+  {
+   "id": "7723083f-a0d5-4006-bb1a-78402ea0becd",
+   "name": "The Scotch Game",
+   "shortName": "The Scotch Game",
+   "description": "The Scotch is one of the oldest openings in chess, dating back to the year 1750. It also was Levy's first ever chess opening! It's easy to learn and the ideas are quite fun.",
+   "type": "OPENING",
+   "color": "w",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1733067822/ezwg16en8eime4tgrtr9.png",
+   "tags": [
+    "White Openings"
+   ],
+   "createdAt": 1733067783,
+   "url": "https://chessly.com/courses/7723083f-a0d5-4006-bb1a-78402ea0becd",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "37d7eb2d-cbed-4dc0-9581-b289ef2d688a",
+   "name": "The Sicilian Dragon",
+   "shortName": "The Sicilian Dragon",
+   "description": "An easy-to-learn and easy-to-play variation of the legendary Sicilian Defense, relying on Black's dark squared bishop on g7.",
+   "type": "OPENING",
+   "color": "b",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1734099309/ni9lpcochmg9haqw72pc.png",
+   "tags": [
+    "Black Openings"
+   ],
+   "createdAt": 1734099341,
+   "url": "https://chessly.com/courses/37d7eb2d-cbed-4dc0-9581-b289ef2d688a",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "fdad0b2b-3298-48f6-94bc-51aae96004f2",
+   "name": "The Smith-Morra Gambit",
+   "shortName": "The Smith-Morra Gambit",
+   "description": "A nasty gambit repertoire against 1.e4 c5, the Sicilian Defense. We rely on a pawn sacrifice to build a massive attack against our opponent and deliver swift checkmate.",
+   "type": "OPENING",
+   "color": "w",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1734097777/apsva07z6z44ffcvofzj.png",
+   "tags": [
+    "White Openings"
+   ],
+   "createdAt": 1734097754,
+   "url": "https://chessly.com/courses/fdad0b2b-3298-48f6-94bc-51aae96004f2",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "9b0204cd-f68e-4889-86db-5daa108a88d4",
+   "name": "The Stonewall Dutch",
+   "shortName": "The Stonewall Dutch",
+   "description": "A reliable defense, focusing on building a brick wall of pawns on light squares. Features many attacking ideas, so good for more aggressive/tactical players rather than patient ones.",
+   "type": "OPENING",
+   "color": "b",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1732996940/p64pcy4t3d67qjc0hm4b.png",
+   "tags": [
+    "Black Openings"
+   ],
+   "createdAt": 1732996806,
+   "url": "https://chessly.com/courses/9b0204cd-f68e-4889-86db-5daa108a88d4",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "72ddb8b5-0907-484e-82a9-b82fb1d28b6b",
+   "name": "The Traxler Counterattack",
+   "shortName": "Traxler Counterattack",
+   "description": "One of the BEST openings for Black against White's very famous Fried Liver Attack. You will win many games in under 15 moves with massive attacks on your opponent's king.",
+   "type": "OPENING",
+   "color": "b",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1733070295/sekbg02xxzd77665yqrq.png",
+   "tags": [
+    "Black Openings"
+   ],
+   "createdAt": 1733070275,
+   "url": "https://chessly.com/courses/72ddb8b5-0907-484e-82a9-b82fb1d28b6b",
+   "comingSoon": false,
+   "videosDownloaded": false
+  },
+  {
+   "id": "26e0f48b-6780-4128-85d6-6d0be6e7b3cd",
+   "name": "The Trompowsky Attack",
+   "shortName": "The Trompowsky Attack",
+   "description": "This opening helped Levy reach 2200 elo. The goal is to prevent your opponents from playing many theoretical defenses, instead fighting on your terms.",
+   "type": "OPENING",
+   "color": "w",
+   "imageUrl": "https://res.cloudinary.com/chessly/image/upload/v1734097501/st4vdiy0vub2udjwmr34.png",
+   "tags": [
+    "White Openings"
+   ],
+   "createdAt": 1734097457,
+   "url": "https://chessly.com/courses/26e0f48b-6780-4128-85d6-6d0be6e7b3cd",
+   "comingSoon": false,
+   "videosDownloaded": false
+  }
+ ],
+ "categories": [
+  {
+   "category": "Top",
+   "courseIds": [
+    "775a4eea-5a50-47da-b7dd-5790ef829fbe",
+    "d4f3504b-8bbd-4435-ae30-a0b8372c9286",
+    "fd553528-dcac-4f4f-a735-774502af7612",
+    "6bf79f35-d2a5-41b0-b100-0e7d4b23df14",
+    "6f04b1ed-6baf-48cd-9087-5b1d3b40fcbf",
+    "b881640e-8421-40e4-8bab-57e255447c7b",
+    "d37755a0-252e-4925-8c5f-2d2f62d6a2ab",
+    "237b3f02-cf07-4c70-a72c-52d701ec542a",
+    "5ce335b2-22e1-434e-a2f4-de67b83d4807",
+    "f0ef04f1-bb5a-4840-85c4-a87e8f30c8cd"
+   ]
+  },
+  {
+   "category": "White Openings",
+   "courseIds": [
+    "775a4eea-5a50-47da-b7dd-5790ef829fbe",
+    "6f04b1ed-6baf-48cd-9087-5b1d3b40fcbf",
+    "bdd25532-960a-4849-aa41-76284546610a",
+    "249988bd-dfa2-4f97-a434-c49f15b92448",
+    "62a39420-2f65-4e78-ab12-988e98629973",
+    "0897f49e-d26d-42f5-82e9-ce37307b760a",
+    "7723083f-a0d5-4006-bb1a-78402ea0becd",
+    "063af611-2444-4a60-9b9c-88823aa08b3f",
+    "8dc7622e-f87f-4937-86ad-c77f29584b69",
+    "a0fdf334-d839-4069-a1e1-f6b0a7dba0ae",
+    "8d12cef8-ec7a-421e-b7f5-19798e4255fc",
+    "1c85b58c-c773-42a3-ac19-b4e4afff3aa2",
+    "26e0f48b-6780-4128-85d6-6d0be6e7b3cd",
+    "fdad0b2b-3298-48f6-94bc-51aae96004f2",
+    "fcd36ab0-9705-4e69-9875-831929ac511b",
+    "34edcf8b-2d5d-4651-aaf3-673a2f1de43f",
+    "3af40081-374e-4a1d-bc24-eaab86295502",
+    "6eece124-30ed-4053-8e4d-09c558213eb4",
+    "6cdd46e2-7bff-4f8b-bfcf-aeddd9745e6c",
+    "29efa96f-3cf6-4f49-80be-57eb3c015e0e",
+    "d673407c-79dc-497c-9bb8-a2a709bf6df9",
+    "fb973fb9-8cb3-4ac4-9ed0-42f882cf9a2b",
+    "fede3b0d-19b9-4c92-b09d-e9d8e110c3a8"
+   ]
+  },
+  {
+   "category": "Black Openings",
+   "courseIds": [
+    "6bf79f35-d2a5-41b0-b100-0e7d4b23df14",
+    "5ce335b2-22e1-434e-a2f4-de67b83d4807",
+    "b094bf9e-a914-4a41-a3b1-d0c921636166",
+    "9b0204cd-f68e-4889-86db-5daa108a88d4",
+    "093aaeeb-5fe8-4852-a10c-d18062b7bf9e",
+    "ca013bce-73db-47f5-afbf-3f889a25eef1",
+    "d4f3504b-8bbd-4435-ae30-a0b8372c9286",
+    "c326651a-49d6-427e-8d04-b4ec2840d52f",
+    "87ec53e9-9572-4fe2-8f24-c51d0b9e3983",
+    "d37755a0-252e-4925-8c5f-2d2f62d6a2ab",
+    "840e407d-54cc-45e3-9f3e-bff84a26d66d",
+    "0aa60d8d-e4ca-448a-808c-630cb0656846",
+    "68a8fd6b-cb1a-4b18-9d2a-347484457123",
+    "edc4379a-6788-4bba-9e17-c1bd26ba814e",
+    "72ddb8b5-0907-484e-82a9-b82fb1d28b6b",
+    "4e6fc3ef-26b7-49e1-b2c5-4413220ebeea",
+    "1a186efb-82c1-4d71-82de-874f3644c474",
+    "f748b447-64b2-47c7-9a9e-728304499ee8",
+    "cd529bb4-aede-4d66-ab29-82380831acf7",
+    "68814342-f681-4b82-bb08-acf239720df8",
+    "37d7eb2d-cbed-4dc0-9581-b289ef2d688a",
+    "49d71d72-7d0e-4b55-bb66-5f257e37b4fc",
+    "b180776e-346f-457b-9d97-40356aeeae95",
+    "6bbb88ea-57b9-41a7-abc2-2d3e4e0c7ddc",
+    "43d1eef6-783d-4a92-82f4-cffa73e21354",
+    "780abea8-4d32-4633-a19c-b4e90c3cc6b0",
+    "5a2a0988-2a87-4d59-8360-7228ded553de"
+   ]
+  },
+  {
+   "category": "Skills Courses",
+   "courseIds": [
+    "ffd627ba-b8e0-4abd-81d5-6d6cf98206a3",
+    "f0ef04f1-bb5a-4840-85c4-a87e8f30c8cd",
+    "b881640e-8421-40e4-8bab-57e255447c7b",
+    "fd553528-dcac-4f4f-a735-774502af7612",
+    "f79c9680-3816-490e-aace-85e7bacea964",
+    "237b3f02-cf07-4c70-a72c-52d701ec542a",
+    "54d902b6-334e-4dbd-9800-33007398cf82",
+    "89ed8a7c-a6f9-4a4a-b93a-5ab15db9be87",
+    "94698d1b-42c5-4782-9f85-7aba5359373c",
+    "fc024bcd-33d7-435e-858a-02f624bc750b",
+    "9e6005e0-3bd6-4012-8c7f-b5c5494abed2",
+    "eface829-f03b-425b-af77-bf9c4064c56d",
+    "db18500e-a28b-4db0-a821-5ea2d5161380",
+    "f3b9f2ba-2215-4e45-9b05-e9727fcc7da1",
+    "9ba75052-7376-4ef0-b6e2-b8f429345535",
+    "8e16e954-60a1-4361-bd30-fd5eabad119d",
+    "8b18364f-fddf-415c-953a-69ba86d271fb"
+   ]
+  },
+  {
+   "category": "Coming Soon",
+   "courseIds": [
+    "f2f1cdfc-8fb7-41a6-adcb-5d8ff71fe542",
+    "f5a37fdd-82fa-4f48-9dc7-65099627e9dd",
+    "a2e04788-9eb5-4f28-b39c-e1e40824fb2f",
+    "defdb150-788a-4b44-8104-4e9ab7dede15",
+    "5e4b53ee-38ae-40f1-b9b8-1c7166e2211d",
+    "76b3000f-dfd1-4c62-b706-238dbd5bb752"
+   ]
+  }
+ ]
+}

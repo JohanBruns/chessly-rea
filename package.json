@@ -21,7 +21,8 @@
     "deploy-alert": "wrangler deploy --config usageAlert/wrangler.toml",
     "test-alert": "node scripts/testAlert.js",
     "abgleich": "node scripts/compareCourse.js",
-    "neuaufbau": "node scripts/buildFromChessly.js"
+    "neuaufbau": "node scripts/buildFromChessly.js",
+    "catalog": "node scripts/chesslyCatalog.js"
   },
   "dependencies": {
     "@lichess-org/chessground": "^10.5.0",

@@ -10,6 +10,7 @@ const KEYS = {
   state: 'state',
   ui: 'ui',
   sync: 'sync',
+  watch: 'watch',
 };
 
 // Diese Daten folgen dem Konto auf jedes Gerät; ui (eingeklappte Kapitel) und sync bleiben auf dem Gerät.
@@ -179,6 +180,15 @@ export function setChapterOpen(chapterId, open) {
   const ui = loadUi();
   ui.openChapters[chapterId] = open;
   write(KEYS.ui, ui);
+}
+
+// ---------- Vorgemerkte Chessly-Kurse (bleibt auf diesem Gerät) ----------
+export function loadWatchlist() {
+  return read(KEYS.watch, {});
+}
+
+export function saveWatchlist(list) {
+  return write(KEYS.watch, list);
 }
 
 // ---------- XP ----------
