@@ -144,7 +144,7 @@ export function renderSettings(root) {
         numberField('Verzögerung der Gegnerzüge', 'opponentDelay', 0, 3000, 50, '(ms)'),
         numberField('Lösung automatisch nach', 'hintAfterMistakes', 1, 10, 1, '(Fehlern)'),
         numberField('Stockfish-Stärke', 'engineSkill', 0, 20, 1, '(0–20)'),
-        toggle('Töne', 'sound'),
+        toggle('Sound', 'sound'),
       ),
       h(
         'section',
