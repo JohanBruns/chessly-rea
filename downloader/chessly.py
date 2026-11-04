@@ -70,8 +70,13 @@ def collect_lessons(page, course_url, log):
                     lessons.append({
                         "chapter_no": chapter_no,
                         "chapter": clean_name(chapter["name"]),
+                        "chapter_id": chapter["id"],
                         "lesson_no": lesson_no,
                         "lesson": name,
+                        "study_id": study["id"],
+                        "tile_id": tile["id"],
+                        "part": part,
+                        "parts": len(video_tiles),
                         "url": f"{url}/chapters/{chapter['id']}/studies/{study['id']}"
                                f"/path-video?tileId={tile['id']}",
                     })
@@ -87,8 +92,12 @@ def collect_lessons(page, course_url, log):
                 lessons.append({
                     "chapter_no": chapter_no,
                     "chapter": clean_name(chapter["name"]),
+                    "chapter_id": chapter["id"],
                     "lesson_no": lesson_no,
                     "lesson": clean_name(lesson["name"]),
+                    "lesson_id": lesson["id"],
+                    "part": 1,
+                    "parts": 1,
                     "url": f"{url}/chapters/{chapter['id']}/lessons/{lesson['id']}",
                 })
 

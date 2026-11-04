@@ -102,8 +102,25 @@ def fetch_course(page, course_url, log=print):
                 "variations": variations,
                 "comments": comments,
             })
-        chapters.append({"id": chapter["id"], "name": clean_name(chapter["name"]), "studies": studies})
-    return {"id": course_id, "name": course_name, "url": url, "chapters": chapters}
+        chapters.append({
+            "id": chapter["id"],
+            "name": clean_name(chapter["name"]),
+            "description": chapter.get("description") or "",
+            "studies": studies,
+        })
+    color = str(tree.get("color") or "").strip().lower()
+    color = {"white": "w", "w": "w", "black": "b", "b": "b"}.get(color, "")
+    if not color:
+        tags = tree.get("tags") or []
+        color = "w" if "White Openings" in tags else "b" if "Black Openings" in tags else ""
+    return {
+        "id": course_id,
+        "name": course_name,
+        "description": tree.get("description") or "",
+        "color": color,
+        "url": url,
+        "chapters": chapters,
+    }
 
 
 def main(urls):

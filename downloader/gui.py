@@ -3,69 +3,14 @@
 import queue
 import threading
 import tkinter as tk
-from pathlib import Path
 from tkinter import filedialog, scrolledtext
 
-from browser import PROJECT_DIR, login_window, open_browser
-from chessly import NotLoggedIn, collect_lessons, find_vimeo_id
-from downloader import Stopped, download_video, safe_filename
+from browser import PROJECT_DIR, login_window
+from chessly import NotLoggedIn
+from downloader import Stopped
+from exporter import export_course
 
 DEFAULT_TARGET = PROJECT_DIR / "downloads"
-
-
-def download_course(course_url, target_dir, log, should_stop=lambda: False):
-    """Der komplette Ablauf: Lektionen finden, Vimeo-IDs holen, Videos laden."""
-    from playwright.sync_api import sync_playwright
-
-    # Schritt 1: Im Browser alle Lektionen und ihre Vimeo-IDs sammeln.
-    with sync_playwright() as p:
-        context = open_browser(p, headless=True)
-        page = context.pages[0] if context.pages else context.new_page()
-        try:
-            log("Öffne Kursseite ...")
-            course_name, lessons = collect_lessons(page, course_url, log)
-            course_dir = Path(target_dir) / safe_filename(course_name)
-
-            jobs = []  # Liste von (vimeo_id, zieldatei)
-            for lesson in lessons:
-                if should_stop():
-                    raise Stopped()
-                file_name = safe_filename(
-                    f"{lesson['chapter_no']:02d}-{lesson['lesson_no']:02d} "
-                    f"{lesson['chapter']} - {lesson['lesson']}") + ".mp4"
-                target_file = course_dir / file_name
-                if target_file.exists():
-                    log(f"Schon vorhanden: {file_name}")
-                    continue
-                log(f"Suche Video: {file_name}")
-                vimeo_id = find_vimeo_id(page, lesson["url"])
-                if vimeo_id:
-                    jobs.append((vimeo_id, target_file))
-                else:
-                    log("  Kein Video auf dieser Seite - übersprungen.")
-        finally:
-            context.close()
-
-    # Schritt 2: Videos herunterladen. Fehler bei einem Video stoppen nicht den ganzen Kurs.
-    errors = 0
-    for number, (vimeo_id, target_file) in enumerate(jobs, start=1):
-        if should_stop():
-            raise Stopped()
-        log(f"[{number}/{len(jobs)}] Lade {target_file.name} (Vimeo {vimeo_id})")
-        try:
-            if not download_video(vimeo_id, target_file, log, should_stop):
-                errors += 1
-        except Exception as error:
-            if should_stop():
-                raise Stopped()
-            errors += 1
-            log(f"  FEHLER: {error}")
-
-    log("")
-    log(f"Fertig! Ordner: {course_dir}")
-    if errors:
-        log(f"{errors} Video(s) mit Fehler. Einfach nochmal starten - "
-            "fertige Videos werden übersprungen.")
 
 
 class App:
@@ -90,8 +35,15 @@ class App:
         tk.Entry(frame, textvariable=self.target_var).grid(row=1, column=1, sticky="ew", pady=2)
         tk.Button(frame, text="...", command=self.choose_folder).grid(row=1, column=2, padx=(5, 0))
 
+        self.full_export = tk.BooleanVar(value=True)
+        tk.Checkbutton(
+            frame,
+            text="Kompletter Kurs: Videos + Linien + PGN für openings/",
+            variable=self.full_export,
+        ).grid(row=2, column=0, columnspan=3, sticky="w")
+
         buttons = tk.Frame(frame)
-        buttons.grid(row=2, column=0, columnspan=3, sticky="w", pady=8)
+        buttons.grid(row=3, column=0, columnspan=3, sticky="w", pady=8)
         self.login_button = tk.Button(buttons, text="Login", width=12, command=self.login)
         self.login_button.pack(side="left")
         self.start_button = tk.Button(buttons, text="Download starten", width=16, command=self.start)
@@ -101,11 +53,12 @@ class App:
         self.stop_button.pack(side="left")
 
         self.log_box = scrolledtext.ScrolledText(frame, height=18, state="disabled")
-        self.log_box.grid(row=3, column=0, columnspan=3, sticky="nsew")
-        frame.rowconfigure(3, weight=1)
+        self.log_box.grid(row=4, column=0, columnspan=3, sticky="nsew")
+        frame.rowconfigure(4, weight=1)
 
         self.log("1. Einmal auf \"Login\" klicken, bei Chessly einloggen, Browserfenster schließen.")
         self.log("2. Kurs-Link einfügen und \"Download starten\" klicken.")
+        self.log("   Mit Häkchen: Videos + Kapitel/Linien + fertige PGN in openings/.")
         self.root.after(100, self.show_messages)
 
     # --- Log ---------------------------------------------------------------
@@ -150,9 +103,10 @@ class App:
             self.log("Bitte zuerst einen Kurs-Link einfügen.")
             return
         self.stop_requested = False
+        full = self.full_export.get()
         self.run_in_background(
-            lambda: download_course(url, self.target_var.get(), self.log,
-                                    lambda: self.stop_requested))
+            lambda: export_course(url, self.target_var.get(), self.log,
+                                  lambda: self.stop_requested, full))
 
     def stop(self):
         self.stop_requested = True

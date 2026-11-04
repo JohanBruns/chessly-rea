@@ -100,8 +100,10 @@ Browser-Speicher und folgen dem Konto auf andere Geräte.
 
 ## Kursvideos herunterladen (`downloader/`)
 
-Im Ordner `downloader/` liegt ein kleines Python-Tool, das alle Lektionsvideos eines Chessly-Kurses als MP4
-lädt (mit deinem eigenen Chessly-Login). Einmal `downloader\setup.bat`, danach `downloader\start.bat`.
+Im Ordner `downloader/` liegt ein kleines Python-Tool, das einen kompletten Chessly-Kurs auf den PC holt
+(mit deinem eigenen Chessly-Login): alle Lektionsvideos als MP4, alle Kapitel/Studies mit Linien und daraus
+eine fertige PGN in `openings/`. Einmal `downloader\setup.bat`, danach `downloader\start.bat`, Kurs-Link
+einfügen und **Download starten**. Danach nur noch `npm run upload-videos`, committen und pushen.
 Details in [downloader/README.md](downloader/README.md).
 
 Caro-Kann und London-System sind schon verknüpft: Jede Study hat einen `[Video]`-Eintrag auf ihre MP4 in
@@ -293,6 +295,9 @@ Danach vergleicht `npm run abgleich` jede PGN-Datei mit `[ChesslyCourse "<Kurs-I
 schreibt `downloader/lines/<Kurs> - Abgleich.md`: pro Study, welche Chessly-Varianten vollständig enthalten sind,
 wo du einen anderen eigenen Zug spielst, welcher Gegnerzug fehlt und welche Linien nur bei dir stehen.
 Kapitel und Studies werden in ihrer Reihenfolge zugeordnet.
+
+Für einen ganz neuen Kurs muss keine PGN-Vorlage existieren: Der Downloader legt sie mit
+`scripts/buildFromChessly.js --new downloader/lines/<Kurs>.json` automatisch in `openings/` an.
 
 `npm run neuaufbau -- openings/caroKann.pgn` baut die Studies einer PGN-Datei aus den Chessly-Linien neu auf:
 Kopfzeilen (deutsche Titel, Kapitelbeschreibungen, Videos) bleiben, Züge, Kommentare und Pfeile kommen von Chessly –
