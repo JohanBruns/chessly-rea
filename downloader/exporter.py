@@ -13,6 +13,7 @@ from browser import PROJECT_DIR, open_browser
 from chessly import collect_lessons, find_vimeo_id, parse_course_url
 from downloader import Stopped, download_video, safe_filename
 from lines import fetch_course
+from publisher import publish_course
 
 LINES_DIR = PROJECT_DIR / "lines"
 ROOT_DIR = PROJECT_DIR.parent
@@ -107,8 +108,9 @@ def build_pgn(lines_file, log=print):
     return saved
 
 
-def export_course(course_url, target_dir, log=print, should_stop=lambda: False, full=True):
-    """Lädt einen Kurs. Mit full=True zusätzlich Linien + PGN für openings/."""
+def export_course(course_url, target_dir, log=print, should_stop=lambda: False, full=True, publish=False):
+    """Lädt einen Kurs. Mit full=True zusätzlich Linien + PGN für openings/.
+    Mit publish=True (nur zusammen mit full) danach Videos nach R2 und die App auf Cloudflare."""
     from playwright.sync_api import sync_playwright
 
     kind, course_id = parse_course_url(course_url)
@@ -197,17 +199,32 @@ def export_course(course_url, target_dir, log=print, should_stop=lambda: False, 
     log(f"Fertig! Ordner: {course_dir}")
     if lines_file:
         log(f"Linien: {lines_file}")
-    if pgn_path:
-        log("Nächster Schritt – Videos in die Cloud und den Kurs committen:")
-        log("  npm run upload-videos")
-        log(f"  git add {project_relative(pgn_path)} {project_relative(lines_file)}")
-        log(f"  git commit -m \"Kurs: {course_name}\"")
-        log("  git push")
     if lines_course and not pgn_path:
         log("Die PGN wurde nicht neu geschrieben (Datei existiert schon oder Fehler). "
             "Für ein Update: npm run neuaufbau -- openings/<datei>.pgn")
     if errors:
         log(f"{errors} Video(s) mit Fehler. Einfach nochmal starten - "
             "fertige Videos werden übersprungen.")
+
+    # Schritt 4: Videos nach R2, App bauen und deployen. Auch wenn die PGN schon existiert, denn
+    # so lässt sich ein früher abgebrochener Kurs nachholen; upload-videos überspringt Fertiges.
+    published = False
+    if full and publish:
+        if errors:
+            log("Veröffentlichen übersprungen: Erst müssen alle Videos fehlerfrei geladen sein.")
+        elif not lines_course:
+            log("Veröffentlichen übersprungen: Nur Eröffnungskurse mit PGN erscheinen in der App.")
+        else:
+            published = publish_course(log, should_stop)
+
+    if pgn_path:
+        if published:
+            log("Zum Sichern im Repository:")
+        else:
+            log("Nächster Schritt – Videos in die Cloud, App veröffentlichen und den Kurs committen:")
+            log("  npm run upload-videos")
+            log("  npm run deploy")
+        log(f"  git add {project_relative(pgn_path)} {project_relative(lines_file)}")
+        log(f"  git commit -m \"Kurs: {course_name}\"")
     return {"course_name": course_name, "course_dir": course_dir,
-            "lines_file": lines_file, "pgn_path": pgn_path}
+            "lines_file": lines_file, "pgn_path": pgn_path, "published": published}

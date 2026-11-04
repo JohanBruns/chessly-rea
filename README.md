@@ -103,7 +103,8 @@ Browser-Speicher und folgen dem Konto auf andere Geräte.
 Im Ordner `downloader/` liegt ein kleines Python-Tool, das einen kompletten Chessly-Kurs auf den PC holt
 (mit deinem eigenen Chessly-Login): alle Lektionsvideos als MP4, alle Kapitel/Studies mit Linien und daraus
 eine fertige PGN in `openings/`. Einmal `downloader\setup.bat`, danach `downloader\start.bat`, Kurs-Link
-einfügen und **Download starten**. Danach nur noch `npm run upload-videos`, committen und pushen.
+einfügen und **Download starten**. Mit dem Standard-Häkchen lädt der Downloader die Videos danach selbst nach R2
+und veröffentlicht die App (`npm run upload-videos`, `npm run deploy`). Nur das Committen bleibt für dich.
 Details in [downloader/README.md](downloader/README.md).
 
 Caro-Kann und London-System sind schon verknüpft: Jede Study hat einen `[Video]`-Eintrag auf ihre MP4 in

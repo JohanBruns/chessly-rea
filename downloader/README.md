@@ -30,13 +30,25 @@ Ergebnis bei „Kompletter Kurs“:
 | `lines/<Kursname>.json` | alle Kapitel, Studies, Varianten, Kommentare und Video-Pfade |
 | `openings/<kursname>.pgn` | fertiger Kurs für die App – mit Kapiteln, Studies, `[Video]` und Linien |
 
-Danach nur noch:
+Mit dem zweiten Häkchen **„Danach automatisch hochladen und veröffentlichen“** (standardmäßig an)
+macht der Downloader danach selbst weiter, was man sonst von Hand eintippt:
+
+1. `npm run upload-videos` – Videos in den R2-Bucket (stoppt vor der 8-GB-Grenze).
+2. `npm run deploy` – App bauen und auf Cloudflare Pages hochladen.
+
+Schlägt der Upload fehl, wird nicht deployt. Bei fehlerhaften Videos oder Skill-Kursen
+(ohne PGN) wird das Veröffentlichen übersprungen. Einmalig vorher im Projektordner
+`npx wrangler login` ausführen, sonst meldet das Log „nicht angemeldet“.
+Zum Sichern im Repository zeigt das Log am Ende noch `git add` und `git commit`
+(das macht der Downloader nicht selbst).
+
+Ohne das zweite Häkchen bleibt es bei den manuellen Schritten:
 
 ```bash
 npm run upload-videos
+npm run deploy
 git add openings downloader/lines
 git commit -m "Kurs: <Kursname>"
-git push
 ```
 
 Bereits geladene Videos werden übersprungen. Nach einem Abbruch (oder **Stopp**)
@@ -56,6 +68,7 @@ Skill-Kurse haben bei Chessly keine Studien-Linien; dort werden nur die Videos g
 | `chessly.py` | Findet Kapitel/Lektionen eines Kurses und die Vimeo-ID jeder Lektion |
 | `downloader.py` | Lädt ein Vimeo-Video mit yt-dlp und fügt Bild + Ton zu MP4 zusammen |
 | `exporter.py` | Der komplette Ablauf: Videos + `lines/<Kurs>.json` + PGN in `openings/` |
+| `publisher.py` | Danach `npm run upload-videos` und `npm run deploy` (Tests: `tests/python/`) |
 | `lines.py` | Speichert alle Varianten (Züge + Kommentare) eines Kurses nach `lines/<Kurs>.json` – für `npm run abgleich` |
 | `catalog.py` | Liest alle Kurse deines Kontos nach `catalog.json` – für die Seite „Chessly-Katalog“ (`npm run catalog`) |
 

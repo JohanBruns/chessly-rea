@@ -1,7 +1,7 @@
 // Prüft den PGN-Neubau aus downloader/lines/<Kurs>.json (ohne vorhandene PGN-Vorlage).
 import { describe, expect, it } from 'vitest';
 import { Chess } from 'chess.js';
-import { buildNewPgn, slugify } from '../scripts/buildFromChessly.js';
+import { buildNewPgn, buildPgn, slugify } from '../scripts/buildFromChessly.js';
 import { parsePgn } from '../src/pgnParser.js';
 
 const START = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
@@ -146,6 +146,78 @@ describe('buildNewPgn', () => {
     const [game] = parsePgn(buildNewPgn(course({ color: 'b' })));
     expect(game.headers.Orientation).toBe('black');
     expect(game.headers.CourseColor).toBe('black');
+  });
+});
+
+// Beim Scandinavian-Kurs hängt Chessly die Einführung an den ersten Zug statt an die Startstellung.
+describe('Einführung am ersten Zug', () => {
+  function study(comments) {
+    return course({
+      chapters: [{
+        id: 'c1',
+        name: 'Kapitel',
+        description: '',
+        studies: [{
+          id: 's1',
+          name: 'Study',
+          videos: [],
+          variations: [{
+            id: 'v1',
+            index: 1,
+            startFen: START,
+            moves: [
+              { fen: START, san: 'd4', nextFen: AFTER_D4 },
+              { fen: AFTER_D4, san: 'd5', nextFen: AFTER_D5 },
+            ],
+          }],
+          comments,
+        }],
+      }],
+    });
+  }
+  const onFirstMove = { [AFTER_D4]: [{ text: 'Willkommen im Kurs.', arrows: { opportunities: ['d7d5'] } }] };
+
+  it('macht den Text des ersten Zugs zur Einführung der Study', () => {
+    const [game] = parsePgn(buildNewPgn(study(onFirstMove)));
+
+    expect(game.root.comment).toBe('Willkommen im Kurs.');
+  });
+
+  it('zeigt den Text nicht noch einmal am Zug, lässt dort aber die Pfeile', () => {
+    const [game] = parsePgn(buildNewPgn(study(onFirstMove)));
+    const first = game.root.children[0];
+
+    expect(first.comment || '').not.toContain('Willkommen');
+    expect(first.shapes).toEqual([{ orig: 'd7', dest: 'd5', brush: 'green' }]);
+  });
+
+  it('bevorzugt den Kommentar der Startstellung und lässt den Zug-Kommentar stehen', () => {
+    const comments = { ...onFirstMove, [START]: [{ text: 'Start.' }] };
+    const [game] = parsePgn(buildNewPgn(study(comments)));
+
+    expect(game.root.comment).toBe('Start.');
+    expect(game.root.children[0].comment).toContain('Willkommen im Kurs.');
+  });
+
+  it('bevorzugt eine eigene Einführung aus der Übersetzung', () => {
+    const [game] = parsePgn(buildNewPgn(study(onFirstMove), { translations: { 'intro:s1': 'Eigener Text.' } }));
+
+    expect(game.root.comment).toBe('Eigener Text.');
+    expect(game.root.children[0].comment).toContain('Willkommen im Kurs.');
+  });
+
+  it('übersetzt den Text, wenn eine Übersetzung vorliegt', () => {
+    const translations = { 'Willkommen im Kurs.': 'Welcome to the course.' };
+    const [game] = parsePgn(buildNewPgn(study(onFirstMove), { translations }));
+
+    expect(game.root.comment).toBe('Welcome to the course.');
+  });
+
+  it('bleibt beim Neuaufbau einer vorhandenen PGN gleich (npm run neuaufbau)', () => {
+    const chessly = study(onFirstMove);
+    const pgn = buildNewPgn(chessly);
+
+    expect(buildPgn(pgn, chessly)).toBe(pgn);
   });
 });
 

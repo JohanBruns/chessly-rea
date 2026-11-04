@@ -20,7 +20,7 @@ class App:
         self.stop_requested = False
 
         root.title("Chessly Downloader")
-        root.geometry("760x480")
+        root.geometry("760x520")
 
         frame = tk.Frame(root, padx=10, pady=10)
         frame.pack(fill="both", expand=True)
@@ -42,8 +42,15 @@ class App:
             variable=self.full_export,
         ).grid(row=2, column=0, columnspan=3, sticky="w")
 
+        self.publish = tk.BooleanVar(value=True)
+        tk.Checkbutton(
+            frame,
+            text="Danach automatisch hochladen und veröffentlichen (R2 + Cloudflare Pages)",
+            variable=self.publish,
+        ).grid(row=3, column=0, columnspan=3, sticky="w")
+
         buttons = tk.Frame(frame)
-        buttons.grid(row=3, column=0, columnspan=3, sticky="w", pady=8)
+        buttons.grid(row=4, column=0, columnspan=3, sticky="w", pady=8)
         self.login_button = tk.Button(buttons, text="Login", width=12, command=self.login)
         self.login_button.pack(side="left")
         self.start_button = tk.Button(buttons, text="Download starten", width=16, command=self.start)
@@ -53,12 +60,14 @@ class App:
         self.stop_button.pack(side="left")
 
         self.log_box = scrolledtext.ScrolledText(frame, height=18, state="disabled")
-        self.log_box.grid(row=4, column=0, columnspan=3, sticky="nsew")
-        frame.rowconfigure(4, weight=1)
+        self.log_box.grid(row=5, column=0, columnspan=3, sticky="nsew")
+        frame.rowconfigure(5, weight=1)
 
         self.log("1. Einmal auf \"Login\" klicken, bei Chessly einloggen, Browserfenster schließen.")
         self.log("2. Kurs-Link einfügen und \"Download starten\" klicken.")
         self.log("   Mit Häkchen: Videos + Kapitel/Linien + fertige PGN in openings/.")
+        self.log("   Mit dem zweiten Häkchen geht der Kurs danach auch gleich online")
+        self.log("   (einmalig vorher: `npx wrangler login` im Projektordner).")
         self.root.after(100, self.show_messages)
 
     # --- Log ---------------------------------------------------------------
@@ -104,9 +113,10 @@ class App:
             return
         self.stop_requested = False
         full = self.full_export.get()
+        publish = self.publish.get()
         self.run_in_background(
             lambda: export_course(url, self.target_var.get(), self.log,
-                                  lambda: self.stop_requested, full))
+                                  lambda: self.stop_requested, full, publish))
 
     def stop(self):
         self.stop_requested = True

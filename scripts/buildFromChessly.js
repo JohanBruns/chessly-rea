@@ -53,12 +53,40 @@ export function normalizeText(text) {
   return (text ?? '').replace(/[{}]/g, '').replace(/\s+/g, ' ').trim();
 }
 
+// Text eines Chessly-Kommentars (ohne Pfeile), übersetzt, falls vorhanden
+function plainText(entry, translations) {
+  const english = normalizeText(entry?.text);
+  return english ? normalizeText(translations[english] ?? english) : '';
+}
+
 // PGN-Kommentar aus Chessly-Kommentar, übersetzt, falls vorhanden
 function commentText(entry, translations) {
   if (!entry) return '';
-  const english = normalizeText(entry.text);
-  const text = english ? normalizeText(translations[english] ?? english) : '';
-  return [text, shapes(entry)].filter(Boolean).join(' ');
+  return [plainText(entry, translations), shapes(entry)].filter(Boolean).join(' ');
+}
+
+/**
+ * Einführung und Kommentar-Funktion einer Study.
+ * Reihenfolge der Einführung: eigene Übersetzung, Kommentar der Startstellung, dann – falls Chessly die
+ * Einführung erst an den ersten Zug der Hauptlinie hängt (z. B. beim Scandinavian-Kurs) – dessen Text.
+ * Der Text wandert dann in die Einführung und steht nicht noch einmal am Zug; Pfeile und Felder bleiben dort.
+ */
+function studyComments(study, tree, startKey, translations) {
+  const comments = new Map(Object.entries(study.comments ?? {}).map(([fen, list]) => [positionKey(fen), list[0]]));
+  let commentFor = (key) => commentText(comments.get(key), translations);
+  let intro = normalizeText(translations[`intro:${study.id}`]) || commentFor(startKey);
+  if (!intro) {
+    const first = tree.children[0];
+    const entry = first && comments.get(first.key);
+    const text = plainText(entry, translations);
+    if (text) {
+      intro = text;
+      const shapesOnly = commentText({ ...entry, text: '' }, translations);
+      const base = commentFor;
+      commentFor = (key) => (key === first.key ? shapesOnly : base(key));
+    }
+  }
+  return { intro, commentFor };
 }
 
 export function writeMoves(tree, commentFor) {
@@ -121,14 +149,10 @@ export function buildNewPgn(chessly, { translations = {} } = {}) {
   for (const chapter of chessly.chapters) {
     let firstOfChapter = true;
     for (const study of chapter.studies) {
-      const comments = new Map(
-        Object.entries(study.comments ?? {}).map(([fen, list]) => [positionKey(fen), list[0]]),
-      );
-      const commentFor = (key) => commentText(comments.get(key), translations);
       const variations = study.variations ?? [];
       const startFen = variations[0]?.startFen ?? START_FEN;
-      const intro =
-        normalizeText(translations[`intro:${study.id}`]) || commentFor(positionKey(startFen));
+      const tree = buildTree(variations);
+      const { intro, commentFor } = studyComments(study, tree, positionKey(startFen), translations);
 
       const headers = {};
       if (firstGame) {
@@ -149,7 +173,7 @@ export function buildNewPgn(chessly, { translations = {} } = {}) {
 
       const lines = [...headerLines(headers), ''];
       if (intro) lines.push(`{${intro}}`);
-      const moves = writeMoves(buildTree(variations), commentFor);
+      const moves = writeMoves(tree, commentFor);
       lines.push(moves ? `${moves} *` : '*');
       games.push(lines.join('\n'));
       firstGame = false;
@@ -182,16 +206,17 @@ export function buildPgn(oldPgn, chessly, translations = {}) {
   return games
     .map((game, i) => {
       const study = studies[i];
-      const comments = new Map(Object.entries(study.comments).map(([fen, list]) => [positionKey(fen), list[0]]));
-      const commentFor = (key) => commentText(comments.get(key), translations);
+      const tree = buildTree(study.variations);
       const startKey = positionKey(study.variations[0]?.startFen ?? START_FEN);
-      // Intro: eigene Einführung, sonst Chessly-Kommentar der Startstellung, sonst der bisherige Text
-      const intro = normalizeText(translations[`intro:${study.id}`]) || commentFor(startKey) || game.root.comment;
+      // Intro: eigene Einführung, sonst Chessly (Startstellung, dann erster Zug), sonst der bisherige Text
+      const studyIntro = studyComments(study, tree, startKey, translations);
+      const intro = studyIntro.intro || game.root.comment;
+      const commentFor = studyIntro.commentFor;
       const headers = { ...game.headers };
       delete headers.Result;
       const lines = [...headerLines(headers), ''];
       if (intro) lines.push(`{${intro}}`);
-      lines.push(`${writeMoves(buildTree(study.variations), commentFor)} *`);
+      lines.push(`${writeMoves(tree, commentFor)} *`);
       return lines.join('\n');
     })
     .join('\n\n')
