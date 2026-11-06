@@ -1,0 +1,134 @@
+{
+ "id": "237b3f02-cf07-4c70-a72c-52d701ec542a",
+ "name": "Beginner Openings",
+ "description": "A general overview of openings, perfect for newcomers to the game.",
+ "color": "",
+ "kind": "skill",
+ "url": "https://chessly.com/skill-courses/237b3f02-cf07-4c70-a72c-52d701ec542a",
+ "chapters": [
+  {
+   "id": "b273ca2d-3f47-41ec-bcb1-eaf5870a051d",
+   "name": "Openings for White",
+   "description": "",
+   "studies": [
+    {
+     "id": "842f8f57-e4c7-4739-ab6a-1b972733b877",
+     "name": "Golden Moves",
+     "url": "https://chessly.com/skill-courses/237b3f02-cf07-4c70-a72c-52d701ec542a/chapters/b273ca2d-3f47-41ec-bcb1-eaf5870a051d/lessons/842f8f57-e4c7-4739-ab6a-1b972733b877",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Beginner Openings/01-01 Openings for White - Golden Moves.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "d44042cb-3cdb-46c9-8600-741c8684bf0d",
+     "name": "The Vienna",
+     "url": "https://chessly.com/skill-courses/237b3f02-cf07-4c70-a72c-52d701ec542a/chapters/b273ca2d-3f47-41ec-bcb1-eaf5870a051d/lessons/d44042cb-3cdb-46c9-8600-741c8684bf0d",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Beginner Openings/01-02 Openings for White - The Vienna.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "ef2104b6-b3b2-4735-b25a-e46d0883f003",
+     "name": "The Sicilian",
+     "url": "https://chessly.com/skill-courses/237b3f02-cf07-4c70-a72c-52d701ec542a/chapters/b273ca2d-3f47-41ec-bcb1-eaf5870a051d/lessons/ef2104b6-b3b2-4735-b25a-e46d0883f003",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Beginner Openings/01-03 Openings for White - The Sicilian.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "9c7f6ae8-11d7-4706-94f0-1235c4f8135c",
+     "name": "Other Responses to 1. e4",
+     "url": "https://chessly.com/skill-courses/237b3f02-cf07-4c70-a72c-52d701ec542a/chapters/b273ca2d-3f47-41ec-bcb1-eaf5870a051d/lessons/9c7f6ae8-11d7-4706-94f0-1235c4f8135c",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Beginner Openings/01-04 Openings for White - Other Responses to 1. e4.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "6bf2bcab-5380-44e9-8eb5-29a10546ed9b",
+     "name": "The Queen's Pawn Openings",
+     "url": "https://chessly.com/skill-courses/237b3f02-cf07-4c70-a72c-52d701ec542a/chapters/b273ca2d-3f47-41ec-bcb1-eaf5870a051d/lessons/6bf2bcab-5380-44e9-8eb5-29a10546ed9b",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Beginner Openings/01-05 Openings for White - The Queen's Pawn Openings.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    }
+   ]
+  },
+  {
+   "id": "14e3051a-fc22-4b81-9de7-35926b74a3e1",
+   "name": "Openings for Black",
+   "description": "",
+   "studies": [
+    {
+     "id": "200fe166-0d5c-47ab-9f0b-72c06e2427a2",
+     "name": "Golden Moves Reversed",
+     "url": "https://chessly.com/skill-courses/237b3f02-cf07-4c70-a72c-52d701ec542a/chapters/14e3051a-fc22-4b81-9de7-35926b74a3e1/lessons/200fe166-0d5c-47ab-9f0b-72c06e2427a2",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Beginner Openings/02-01 Openings for Black - Golden Moves Reversed.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "6d4f30c9-7ee4-4626-a1b2-b8dc1492b857",
+     "name": "Symmetrical Play",
+     "url": "https://chessly.com/skill-courses/237b3f02-cf07-4c70-a72c-52d701ec542a/chapters/14e3051a-fc22-4b81-9de7-35926b74a3e1/lessons/6d4f30c9-7ee4-4626-a1b2-b8dc1492b857",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Beginner Openings/02-02 Openings for Black - Symmetrical Play.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "ff9af40d-5480-428b-ba67-d4024eecb61d",
+     "name": "Fighting 1.e4 with 1...e5",
+     "url": "https://chessly.com/skill-courses/237b3f02-cf07-4c70-a72c-52d701ec542a/chapters/14e3051a-fc22-4b81-9de7-35926b74a3e1/lessons/ff9af40d-5480-428b-ba67-d4024eecb61d",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Beginner Openings/02-03 Openings for Black - Fighting 1.e4 with 1...e5.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "06346a20-b333-4db0-8cdb-610eaace5962",
+     "name": "Building Blocks",
+     "url": "https://chessly.com/skill-courses/237b3f02-cf07-4c70-a72c-52d701ec542a/chapters/14e3051a-fc22-4b81-9de7-35926b74a3e1/lessons/06346a20-b333-4db0-8cdb-610eaace5962",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Beginner Openings/02-04 Openings for Black - Building Blocks.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "0c293934-b926-4778-92bc-71b11314e8ec",
+     "name": "Defending With Setups",
+     "url": "https://chessly.com/skill-courses/237b3f02-cf07-4c70-a72c-52d701ec542a/chapters/14e3051a-fc22-4b81-9de7-35926b74a3e1/lessons/0c293934-b926-4778-92bc-71b11314e8ec",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Beginner Openings/02-05 Openings for Black - Defending With Setups.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    }
+   ]
+  }
+ ]
+}

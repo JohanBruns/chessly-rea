@@ -1,0 +1,662 @@
+{
+ "id": "fd553528-dcac-4f4f-a735-774502af7612",
+ "name": "Tactics Masterclass",
+ "description": "Since chess is 99% tactics, this is the must-have of Chessly courses. The Tactics Masterclass takes you on a journey of chess patterns—from the building blocks of chess tactics to what some would call complex combinations.",
+ "color": "",
+ "kind": "skill",
+ "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612",
+ "chapters": [
+  {
+   "id": "0cb79bd9-5f1b-45bc-87fb-b294f063f5ca",
+   "name": "Forks and Double Attacks",
+   "description": "",
+   "studies": [
+    {
+     "id": "e414ad63-97d1-4ca0-bb34-507408d1dec0",
+     "name": "Introduction to Forks",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/0cb79bd9-5f1b-45bc-87fb-b294f063f5ca/lessons/e414ad63-97d1-4ca0-bb34-507408d1dec0",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/01-01 Forks and Double Attacks - Introduction to Forks.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "739cc130-348e-4a73-bd53-f157459dcd8b",
+     "name": "Video 1",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/0cb79bd9-5f1b-45bc-87fb-b294f063f5ca/lessons/739cc130-348e-4a73-bd53-f157459dcd8b",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/01-02 Forks and Double Attacks - Video 1.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "7bd2e323-5914-4bf6-ab66-5614fdf47d2d",
+     "name": "Video 2",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/0cb79bd9-5f1b-45bc-87fb-b294f063f5ca/lessons/7bd2e323-5914-4bf6-ab66-5614fdf47d2d",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/01-03 Forks and Double Attacks - Video 2.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "b2afe1b9-2e8e-492f-98e6-ea575460be90",
+     "name": "Video 3",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/0cb79bd9-5f1b-45bc-87fb-b294f063f5ca/lessons/b2afe1b9-2e8e-492f-98e6-ea575460be90",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/01-04 Forks and Double Attacks - Video 3.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "93db4add-543d-4a75-a31d-969b8a328a33",
+     "name": "Video 4",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/0cb79bd9-5f1b-45bc-87fb-b294f063f5ca/lessons/93db4add-543d-4a75-a31d-969b8a328a33",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/01-05 Forks and Double Attacks - Video 4.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    }
+   ]
+  },
+  {
+   "id": "d420588a-51b6-40ee-8b99-ec0fd1c238c7",
+   "name": "The Absolute and Relative Pins",
+   "description": "",
+   "studies": [
+    {
+     "id": "43e9d93b-ea7a-4fd8-8aa4-a3cf74cad622",
+     "name": "Introduction to Pins",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/d420588a-51b6-40ee-8b99-ec0fd1c238c7/lessons/43e9d93b-ea7a-4fd8-8aa4-a3cf74cad622",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/02-01 The Absolute and Relative Pins - Introduction to Pins.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "0c5faeda-fe93-4891-b6a6-cf8f87d87581",
+     "name": "Video 1",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/d420588a-51b6-40ee-8b99-ec0fd1c238c7/lessons/0c5faeda-fe93-4891-b6a6-cf8f87d87581",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/02-02 The Absolute and Relative Pins - Video 1.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "9c8344c0-5bec-4ab8-8999-58480a394c2b",
+     "name": "Video 2",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/d420588a-51b6-40ee-8b99-ec0fd1c238c7/lessons/9c8344c0-5bec-4ab8-8999-58480a394c2b",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/02-03 The Absolute and Relative Pins - Video 2.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "0126b2c4-c059-4927-bdf5-d9024c6234ba",
+     "name": "Video 3",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/d420588a-51b6-40ee-8b99-ec0fd1c238c7/lessons/0126b2c4-c059-4927-bdf5-d9024c6234ba",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/02-04 The Absolute and Relative Pins - Video 3.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "10fee8ce-c88f-489d-8a29-1f59abe21676",
+     "name": "Video 4",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/d420588a-51b6-40ee-8b99-ec0fd1c238c7/lessons/10fee8ce-c88f-489d-8a29-1f59abe21676",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/02-05 The Absolute and Relative Pins - Video 4.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    }
+   ]
+  },
+  {
+   "id": "3b9a6ae3-497e-49b5-8f31-b657c97f853d",
+   "name": "Discovered Attacks, Discovered Checks and Double Checks",
+   "description": "",
+   "studies": [
+    {
+     "id": "e4c78b37-acfd-496e-935f-4f07bd29a6ff",
+     "name": "Introduction to Discovered Attacks",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/3b9a6ae3-497e-49b5-8f31-b657c97f853d/lessons/e4c78b37-acfd-496e-935f-4f07bd29a6ff",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/03-01 Discovered Attacks, Discovered Checks and Double Checks - Introduction to Discovered Attacks.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "b4c9cbf8-9bbc-46a4-8f56-82cc316aa513",
+     "name": "Video 1",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/3b9a6ae3-497e-49b5-8f31-b657c97f853d/lessons/b4c9cbf8-9bbc-46a4-8f56-82cc316aa513",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/03-02 Discovered Attacks, Discovered Checks and Double Checks - Video 1.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "770726fa-dc04-4ccb-8978-0b7c8e3325e9",
+     "name": "Video 2",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/3b9a6ae3-497e-49b5-8f31-b657c97f853d/lessons/770726fa-dc04-4ccb-8978-0b7c8e3325e9",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/03-03 Discovered Attacks, Discovered Checks and Double Checks - Video 2.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "377e9193-996c-496a-a658-0827b58a38e4",
+     "name": "Video 3",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/3b9a6ae3-497e-49b5-8f31-b657c97f853d/lessons/377e9193-996c-496a-a658-0827b58a38e4",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/03-04 Discovered Attacks, Discovered Checks and Double Checks - Video 3.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "566e8467-93f4-43b1-960b-77ad00617db1",
+     "name": "Video 4",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/3b9a6ae3-497e-49b5-8f31-b657c97f853d/lessons/566e8467-93f4-43b1-960b-77ad00617db1",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/03-05 Discovered Attacks, Discovered Checks and Double Checks - Video 4.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    }
+   ]
+  },
+  {
+   "id": "6a33f221-f2f5-4ce9-8eaf-19728da85176",
+   "name": "Decoy/Deflection/Attraction",
+   "description": "",
+   "studies": [
+    {
+     "id": "8e74d4b9-8509-4e0e-b071-5b7b89241602",
+     "name": "Introduction to Decoys",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/6a33f221-f2f5-4ce9-8eaf-19728da85176/lessons/8e74d4b9-8509-4e0e-b071-5b7b89241602",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/04-01 DecoyDeflectionAttraction - Introduction to Decoys.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "073aa1fa-78bc-47dd-9385-3a65371901c7",
+     "name": "Video 1",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/6a33f221-f2f5-4ce9-8eaf-19728da85176/lessons/073aa1fa-78bc-47dd-9385-3a65371901c7",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/04-02 DecoyDeflectionAttraction - Video 1.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "e592f86c-c9ad-4cec-beb2-3a95195a4b01",
+     "name": "Video 2",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/6a33f221-f2f5-4ce9-8eaf-19728da85176/lessons/e592f86c-c9ad-4cec-beb2-3a95195a4b01",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/04-03 DecoyDeflectionAttraction - Video 2.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "92e7d28f-6bd2-44c4-9941-a8c1864863f2",
+     "name": "Video 3",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/6a33f221-f2f5-4ce9-8eaf-19728da85176/lessons/92e7d28f-6bd2-44c4-9941-a8c1864863f2",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/04-04 DecoyDeflectionAttraction - Video 3.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    }
+   ]
+  },
+  {
+   "id": "df1c0d6d-f3a3-437d-aa24-9a521136dea8",
+   "name": "Remove the Defender: Capture or Overload",
+   "description": "",
+   "studies": [
+    {
+     "id": "b52015c0-6303-4b5f-8e03-ad737bb9beff",
+     "name": "Introduction to Removing the Defender",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/df1c0d6d-f3a3-437d-aa24-9a521136dea8/lessons/b52015c0-6303-4b5f-8e03-ad737bb9beff",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/05-01 Remove the Defender Capture or Overload - Introduction to Removing the Defender.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "a3dc1103-fb63-4a87-8a07-7b44e91e9e48",
+     "name": "Video 1",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/df1c0d6d-f3a3-437d-aa24-9a521136dea8/lessons/a3dc1103-fb63-4a87-8a07-7b44e91e9e48",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/05-02 Remove the Defender Capture or Overload - Video 1.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "c49cf084-01d2-49e9-85aa-6ac832541931",
+     "name": "Video 2",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/df1c0d6d-f3a3-437d-aa24-9a521136dea8/lessons/c49cf084-01d2-49e9-85aa-6ac832541931",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/05-03 Remove the Defender Capture or Overload - Video 2.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "b4497893-1581-4d22-a093-3df723c4ecb2",
+     "name": "Video 3",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/df1c0d6d-f3a3-437d-aa24-9a521136dea8/lessons/b4497893-1581-4d22-a093-3df723c4ecb2",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/05-04 Remove the Defender Capture or Overload - Video 3.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    }
+   ]
+  },
+  {
+   "id": "14f42ee4-12d6-437d-8118-e0291054ae7c",
+   "name": "Skewers and X-Rays",
+   "description": "",
+   "studies": [
+    {
+     "id": "8f5d9092-2a0d-49fa-914e-9ec6f313288d",
+     "name": "Introduction to Skewers and X-Rays",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/14f42ee4-12d6-437d-8118-e0291054ae7c/lessons/8f5d9092-2a0d-49fa-914e-9ec6f313288d",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/06-01 Skewers and X-Rays - Introduction to Skewers and X-Rays.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "8c499573-6d4a-4c61-8cdc-90c4a9302a1e",
+     "name": "Video 1",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/14f42ee4-12d6-437d-8118-e0291054ae7c/lessons/8c499573-6d4a-4c61-8cdc-90c4a9302a1e",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/06-02 Skewers and X-Rays - Video 1.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "c4863820-2205-48bf-9620-42a0cd74aae6",
+     "name": "Video 2",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/14f42ee4-12d6-437d-8118-e0291054ae7c/lessons/c4863820-2205-48bf-9620-42a0cd74aae6",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/06-03 Skewers and X-Rays - Video 2.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "f18e458f-77ba-4034-8d16-5bf1fc363273",
+     "name": "Video 3",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/14f42ee4-12d6-437d-8118-e0291054ae7c/lessons/f18e458f-77ba-4034-8d16-5bf1fc363273",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/06-04 Skewers and X-Rays - Video 3.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    }
+   ]
+  },
+  {
+   "id": "fe6847bd-139e-432d-86ca-9bbb6906f69f",
+   "name": "Trapping Pieces",
+   "description": "",
+   "studies": [
+    {
+     "id": "2ea2748d-5935-4188-a5bc-561c3789689b",
+     "name": "Introduction to Trapped Pieces",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/fe6847bd-139e-432d-86ca-9bbb6906f69f/lessons/2ea2748d-5935-4188-a5bc-561c3789689b",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/07-01 Trapping Pieces - Introduction to Trapped Pieces.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "129f19cb-8dbb-4c2f-ae9d-9c0e7dcb88b8",
+     "name": "Video 1",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/fe6847bd-139e-432d-86ca-9bbb6906f69f/lessons/129f19cb-8dbb-4c2f-ae9d-9c0e7dcb88b8",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/07-02 Trapping Pieces - Video 1.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "4a6a5d60-4fd6-42f4-83fd-8a4e470d27b1",
+     "name": "Video 2",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/fe6847bd-139e-432d-86ca-9bbb6906f69f/lessons/4a6a5d60-4fd6-42f4-83fd-8a4e470d27b1",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/07-03 Trapping Pieces - Video 2.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "564b0792-fb83-4060-a757-917357df527b",
+     "name": "Video 3",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/fe6847bd-139e-432d-86ca-9bbb6906f69f/lessons/564b0792-fb83-4060-a757-917357df527b",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/07-04 Trapping Pieces - Video 3.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    }
+   ]
+  },
+  {
+   "id": "592c83c4-8b3a-4051-b9da-965d5c521281",
+   "name": "Checkmate Tactics",
+   "description": "",
+   "studies": [
+    {
+     "id": "7a5e0fd0-72a8-40a4-90e8-9327e039c238",
+     "name": "Video 1",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/592c83c4-8b3a-4051-b9da-965d5c521281/lessons/7a5e0fd0-72a8-40a4-90e8-9327e039c238",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/08-01 Checkmate Tactics - Video 1.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "a70da192-8bd2-4854-ad0b-66b890919ed3",
+     "name": "Video 2",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/592c83c4-8b3a-4051-b9da-965d5c521281/lessons/a70da192-8bd2-4854-ad0b-66b890919ed3",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/08-02 Checkmate Tactics - Video 2.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "76051b55-9436-426a-a1f1-d671018056c3",
+     "name": "Video 3",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/592c83c4-8b3a-4051-b9da-965d5c521281/lessons/76051b55-9436-426a-a1f1-d671018056c3",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/08-03 Checkmate Tactics - Video 3.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    }
+   ]
+  },
+  {
+   "id": "c94ae08d-6df0-4010-9493-97f99db10919",
+   "name": "Forced Draws",
+   "description": "",
+   "studies": [
+    {
+     "id": "dde29bee-5104-451c-b30f-4dc112d54ae0",
+     "name": "Video 1",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/c94ae08d-6df0-4010-9493-97f99db10919/lessons/dde29bee-5104-451c-b30f-4dc112d54ae0",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/09-01 Forced Draws - Video 1.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "efed3311-f4d5-4850-a9f9-138fa8d1f61c",
+     "name": "Video 2",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/c94ae08d-6df0-4010-9493-97f99db10919/lessons/efed3311-f4d5-4850-a9f9-138fa8d1f61c",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/09-02 Forced Draws - Video 2.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "e598b160-d19f-416a-b429-b9dfde0b2784",
+     "name": "Video 3",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/c94ae08d-6df0-4010-9493-97f99db10919/lessons/e598b160-d19f-416a-b429-b9dfde0b2784",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/09-03 Forced Draws - Video 3.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    }
+   ]
+  },
+  {
+   "id": "319f77e2-6253-405d-8948-1fc5868b8e24",
+   "name": "In-Between Moves",
+   "description": "",
+   "studies": [
+    {
+     "id": "f70f3799-758c-4b26-ac68-33f5d9a1cd98",
+     "name": "Video 1",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/319f77e2-6253-405d-8948-1fc5868b8e24/lessons/f70f3799-758c-4b26-ac68-33f5d9a1cd98",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/10-01 In-Between Moves - Video 1.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "308ddc2c-182a-4a6d-8edb-059182bbe556",
+     "name": "Video 2",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/319f77e2-6253-405d-8948-1fc5868b8e24/lessons/308ddc2c-182a-4a6d-8edb-059182bbe556",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/10-02 In-Between Moves - Video 2.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "ee42f0df-49cf-4161-b030-c092f7c08ebe",
+     "name": "Video 3",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/319f77e2-6253-405d-8948-1fc5868b8e24/lessons/ee42f0df-49cf-4161-b030-c092f7c08ebe",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/10-03 In-Between Moves - Video 3.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "9bb90528-6c96-4caf-b0d6-9b7c4968136a",
+     "name": "Video 4",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/319f77e2-6253-405d-8948-1fc5868b8e24/lessons/9bb90528-6c96-4caf-b0d6-9b7c4968136a",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/10-04 In-Between Moves - Video 4.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    }
+   ]
+  },
+  {
+   "id": "3e55f7a6-2c6a-4f3e-99ea-3a3bfa77abc5",
+   "name": "Sacrifices",
+   "description": "",
+   "studies": [
+    {
+     "id": "3ded910f-b500-44ed-b7b4-0079118e49af",
+     "name": "Video 1",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/3e55f7a6-2c6a-4f3e-99ea-3a3bfa77abc5/lessons/3ded910f-b500-44ed-b7b4-0079118e49af",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/11-01 Sacrifices - Video 1.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "a245231a-cbcf-4120-aaac-71679c260017",
+     "name": "Video 2",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/3e55f7a6-2c6a-4f3e-99ea-3a3bfa77abc5/lessons/a245231a-cbcf-4120-aaac-71679c260017",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/11-02 Sacrifices - Video 2.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "eeb1a083-0045-4454-914e-72b215311bba",
+     "name": "Video 3",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/3e55f7a6-2c6a-4f3e-99ea-3a3bfa77abc5/lessons/eeb1a083-0045-4454-914e-72b215311bba",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/11-03 Sacrifices - Video 3.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "a4a2d351-314a-4ea5-ae29-4c63402c4167",
+     "name": "Video 4",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/3e55f7a6-2c6a-4f3e-99ea-3a3bfa77abc5/lessons/a4a2d351-314a-4ea5-ae29-4c63402c4167",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/11-04 Sacrifices - Video 4.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    }
+   ]
+  },
+  {
+   "id": "07757480-7dfc-4c22-9676-0ea721e8a677",
+   "name": "Subscriber Tactics",
+   "description": "",
+   "studies": [
+    {
+     "id": "b42f82f4-f70d-4b5d-837e-8ff40ce850e6",
+     "name": "Video 1",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/07757480-7dfc-4c22-9676-0ea721e8a677/lessons/b42f82f4-f70d-4b5d-837e-8ff40ce850e6",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/12-01 Subscriber Tactics - Video 1.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "0f1ee75d-653a-43a8-b2f5-db3a1b9264c9",
+     "name": "Video 2",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/07757480-7dfc-4c22-9676-0ea721e8a677/lessons/0f1ee75d-653a-43a8-b2f5-db3a1b9264c9",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/12-02 Subscriber Tactics - Video 2.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "c1b3aee5-af1d-437f-b151-f12646548ae4",
+     "name": "Video 3",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/07757480-7dfc-4c22-9676-0ea721e8a677/lessons/c1b3aee5-af1d-437f-b151-f12646548ae4",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/12-03 Subscriber Tactics - Video 3.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    }
+   ]
+  },
+  {
+   "id": "74729313-822a-4257-b870-337da6498d10",
+   "name": "Hybrid Tactics",
+   "description": "",
+   "studies": [
+    {
+     "id": "dd8059f3-3ac4-46fa-b021-daa31896b246",
+     "name": "Video 1",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/74729313-822a-4257-b870-337da6498d10/lessons/dd8059f3-3ac4-46fa-b021-daa31896b246",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/13-01 Hybrid Tactics - Video 1.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "e1f20070-e006-4afd-bc60-6170c066e60f",
+     "name": "Video 2",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/74729313-822a-4257-b870-337da6498d10/lessons/e1f20070-e006-4afd-bc60-6170c066e60f",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/13-02 Hybrid Tactics - Video 2.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    },
+    {
+     "id": "3a1992ff-58a0-4039-8e2e-0e3bc9846037",
+     "name": "Video 3",
+     "url": "https://chessly.com/skill-courses/fd553528-dcac-4f4f-a735-774502af7612/chapters/74729313-822a-4257-b870-337da6498d10/lessons/3a1992ff-58a0-4039-8e2e-0e3bc9846037",
+     "hasVideo": true,
+     "videos": [
+      "/downloader/downloads/Tactics Masterclass/13-03 Hybrid Tactics - Video 3.mp4"
+     ],
+     "variations": [],
+     "comments": {}
+    }
+   ]
+  }
+ ]
+}
