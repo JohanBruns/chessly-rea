@@ -1,7 +1,7 @@
 """Veröffentlicht einen frisch geladenen Kurs: Videos nach R2 hochladen, App bauen und deployen.
 
 Das sind dieselben Befehle, die man sonst von Hand eintippt:
-    npm run upload-videos   (bricht selbst ab, wenn der Bucket über die 9,5-GB-Grenze käme)
+    npm run upload-videos   (bricht selbst ab, wenn der Bucket über die 25-GB-Sperre käme)
     npm run deploy          (baut die App und lädt sie auf Cloudflare Pages hoch)
 Schlägt der Upload fehl, wird nicht deployt – sonst stünde ein Kurs ohne Videos online.
 """

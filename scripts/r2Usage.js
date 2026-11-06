@@ -5,7 +5,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { BUCKET } from './r2Limits.js';
 
-export { ALERT_RATIO, BUCKET, formatGb, FREE_STORAGE_BYTES, STORAGE_LIMIT_BYTES } from './r2Limits.js';
+export { ALERT_RATIO, BUCKET, formatGb, FREE_STORAGE_BYTES, monthlyCostUsd, PRICE_PER_GB_MONTH, STORAGE_LIMIT_BYTES } from './r2Limits.js';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const wranglerBin = join(root, 'node_modules', 'wrangler', 'bin', 'wrangler.js');

@@ -5,3 +5,4 @@ public/stockfish/
 .mcp.json
 .wrangler/
 .dev.vars
+publish.log

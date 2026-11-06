@@ -50,7 +50,7 @@ Ergebnis bei „Kompletter Kurs“:
 Mit dem zweiten Häkchen **„Danach automatisch hochladen und veröffentlichen“** (standardmäßig an)
 macht der Downloader danach selbst weiter, was man sonst von Hand eintippt:
 
-1. `npm run upload-videos` – Videos in den R2-Bucket (stoppt vor der 9,5-GB-Grenze).
+1. `npm run upload-videos` – Videos in den R2-Bucket (stoppt vor der 25-GB-Sperre).
 2. `npm run deploy` – App bauen und auf Cloudflare Pages hochladen.
 
 Schlägt der Upload fehl, wird nicht deployt. Bei fehlerhaften Videos wird das

@@ -1,6 +1,6 @@
 // Lädt die Kursvideos, auf die die PGN-Dateien in openings/ verweisen, in den privaten R2-Bucket.
 // Schon hochgeladene Dateien (gleiche Größe und Änderungszeit) werden übersprungen. Würde der Bucket
-// dadurch größer als STORAGE_LIMIT_BYTES (unter der Gratis-Grenze), lädt das Skript gar nichts hoch.
+// dadurch größer als STORAGE_LIMIT_BYTES (die selbst gewählte Kostengrenze), lädt das Skript gar nichts hoch.
 // Aufruf: npm run upload-videos   (vorher einmal: npx wrangler login)
 import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -20,6 +20,23 @@ export function referencedVideos(pgnTexts) {
   }
   return [...keys].sort();
 }
+
+// Ein einzelner wrangler-Aufruf kann scheitern (Netz kurz weg, Anmeldung gerade abgelaufen: „401 Authentication error“).
+// Ein neuer Aufruf erneuert die Anmeldung selbst, deshalb gibt es bis zu drei Versuche mit wachsender Pause.
+// Ohne das bricht ein langer Lauf über Nacht beim ersten Aussetzer ab.
+export async function withRetry(action, { attempts = 3, pauseMs = 10_000, sleep = (ms) => new Promise((r) => setTimeout(r, ms)), onRetry = () => {} } = {}) {
+  for (let attempt = 1; ; attempt++) {
+    try {
+      return await action(attempt);
+    } catch (error) {
+      if (attempt >= attempts) throw error;
+      onRetry(attempt, error);
+      await sleep(pauseMs * attempt);
+    }
+  }
+}
+
+const retryNotice = (what) => (attempt) => console.warn(`  ${what} fehlgeschlagen (Versuch ${attempt} von 3) – neuer Versuch gleich ...`);
 
 // Bucket-Größe nach dem Upload. wrangler meldet die Größe mit etwas Verzögerung, deshalb zählt auch
 // die eigene Liste der hochgeladenen Dateien – es gilt der größere Wert.
@@ -47,11 +64,11 @@ async function main() {
     if (state[key] !== stamp) pending.push({ key, file, size, stamp });
   }
 
-  const usage = bucketUsage();
+  const usage = await withRetry(() => bucketUsage(), { onRetry: retryNotice('Abfrage der Bucket-Größe') });
   const projected = projectedBytes({ remoteBytes: usage.bytes, state, pending });
   console.log(`Bucket jetzt: ${formatGb(usage.bytes)}, nach dem Upload: ${formatGb(projected)} (Grenze ${formatGb(STORAGE_LIMIT_BYTES)})`);
   if (projected > STORAGE_LIMIT_BYTES) {
-    console.error('Abbruch: Damit wäre der Bucket zu nah an der kostenlosen Grenze von 10 GB. Nichts wurde hochgeladen.');
+    console.error(`Abbruch: Damit wäre der Bucket größer als die Upload-Sperre von ${formatGb(STORAGE_LIMIT_BYTES)} (STORAGE_LIMIT_BYTES in scripts/r2Limits.js). Nichts wurde hochgeladen.`);
     process.exitCode = 1;
     return;
   }
@@ -59,9 +76,11 @@ async function main() {
   let uploaded = 0;
   for (const [i, { key, file, size, stamp }] of pending.entries()) {
     console.log(`[${i + 1}/${pending.length}] ${key} (${(size / 1e6).toFixed(0)} MB)`);
-    wrangler(['r2', 'object', 'put', `${BUCKET}/${await videoObjectKey(key)}`, '--file', file, '--content-type', 'video/mp4', '--remote'], {
-      stdio: ['ignore', 'ignore', 'inherit'],
-    });
+    const objectKey = await videoObjectKey(key);
+    await withRetry(
+      () => wrangler(['r2', 'object', 'put', `${BUCKET}/${objectKey}`, '--file', file, '--content-type', 'video/mp4', '--remote'], { stdio: ['ignore', 'ignore', 'inherit'] }),
+      { onRetry: retryNotice('Upload') },
+    );
     state[key] = stamp;
     writeFileSync(statePath, JSON.stringify(state, null, 2));
     uploaded++;

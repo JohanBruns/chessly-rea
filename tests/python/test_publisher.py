@@ -43,7 +43,7 @@ class PublishCourseTest(unittest.TestCase):
         self.assertEqual([args for _, args in STEPS], [["run", "upload-videos"], ["run", "deploy"]])
 
     def test_failed_upload_skips_the_deploy(self):
-        npm = FakeNpm((1, ["Abbruch: Damit wäre der Bucket zu nah an der kostenlosen Grenze von 10 GB."]))
+        npm = FakeNpm((1, ["Abbruch: Damit wäre der Bucket größer als die Upload-Sperre von 25.00 GB."]))
         ok, log = self.run_publish(npm)
         self.assertFalse(ok)
         self.assertEqual(npm.calls, [["run", "upload-videos"]])
