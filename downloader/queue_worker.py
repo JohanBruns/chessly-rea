@@ -5,10 +5,15 @@ Deshalb legt der Knopf „Hinzufügen“ nur einen Auftrag in die Datenbank (Tab
 und dieses Programm holt ihn ab: Videos, Linien und PGN laden, Videos nach R2, App veröffentlichen.
 Für die Datenbank nutzt es den Login von `npx wrangler login`.
 
-Aufruf: warteschlange.bat (Fenster offen lassen). Es läuft immer nur ein Kurs auf einmal.
+Aufruf: unsichtbar über den Autostart (pythonw) oder mit warteschlange.bat im Fenster. Es läuft immer nur
+ein Kurs auf einmal und nur ein Worker. Alle Ausgaben stehen auch in queue_worker.log.
 """
 
+import contextlib
 import json
+import logging
+import logging.handlers
+import os
 import shutil
 import subprocess
 import sys
@@ -23,6 +28,8 @@ TARGET_DIR = PROJECT_DIR / "downloads"
 WRANGLER = ROOT_DIR / "node_modules" / "wrangler" / "bin" / "wrangler.js"
 DATABASE = "chessly-rea"
 POLL_SECONDS = 60
+LOG_FILE = PROJECT_DIR / "queue_worker.log"
+LOCK_FILE = PROJECT_DIR / "queue_worker.lock"
 
 # Diese Pfade entstehen beim Hinzufügen selbst und halten das Veröffentlichen nicht auf.
 COURSE_PATHS = ("openings/", "downloader/lines/", "downloader/catalog.json")
@@ -163,6 +170,56 @@ def process_course(db, course, log=print, export=default_export):
         set_status(db, course_id, "done")
 
 
+def make_log(path=LOG_FILE):
+    """Schreibt in die Logdatei und, falls es ein Fenster gibt, auch dorthin (ohne Fenster tut print nichts)."""
+    logger = logging.getLogger(f"queue_worker.{path}")
+    logger.setLevel(logging.INFO)
+    logger.propagate = False
+    handler = logging.handlers.RotatingFileHandler(path, maxBytes=2_000_000, backupCount=1, encoding="utf-8")
+    handler.setFormatter(logging.Formatter("%(asctime)s %(message)s", "%Y-%m-%d %H:%M:%S"))
+    logger.addHandler(handler)
+
+    def log(text=""):
+        logger.info(text)
+        print(text, flush=True)
+
+    return log
+
+
+def acquire_lock(path=LOCK_FILE):
+    """Hält die Sperrdatei, solange der Prozess läuft. Gibt None zurück, wenn schon ein Worker läuft:
+    Zwei Worker würden sich gegenseitig laufende Kurse zurücksetzen."""
+    handle = open(path, "a+")
+    try:
+        if os.name == "nt":
+            import msvcrt
+            handle.seek(0)
+            msvcrt.locking(handle.fileno(), msvcrt.LK_NBLCK, 1)
+        else:
+            import fcntl
+            fcntl.flock(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except OSError:
+        handle.close()
+        return None
+    return handle
+
+
+@contextlib.contextmanager
+def keep_awake():
+    """Während ein Kurs läuft, darf Windows nicht in den Ruhezustand gehen. Der Bildschirm darf aus."""
+    if os.name != "nt":
+        yield
+        return
+    import ctypes
+    continuous, system_required = 0x80000000, 0x00000001
+    state = ctypes.windll.kernel32.SetThreadExecutionState
+    state(ctypes.c_uint(continuous | system_required))
+    try:
+        yield
+    finally:
+        state(ctypes.c_uint(continuous))
+
+
 def run_forever(db, log=print):
     requeued = False
     last_blocker = None
@@ -177,21 +234,28 @@ def run_forever(db, log=print):
                 log(f"Warte mit dem nächsten Kurs: {blocker}")
             last_blocker = blocker
             if course and not blocker:
-                process_course(db, course, log)
-        except DatabaseError as error:
+                with keep_awake():
+                    process_course(db, course, log)
+        except Exception as error:  # Im Hintergrund sieht niemand einen Absturz, also weiterlaufen.
             log(f"FEHLER: {error}")
             requeued = False  # falls das Ergebnis eines Kurses nicht eingetragen werden konnte
         time.sleep(POLL_SECONDS)
 
 
 def main():
-    sys.stdout.reconfigure(errors="replace")  # Video-Titel können Zeichen enthalten, die das Fenster nicht kennt
+    if sys.stdout:  # Video-Titel können Zeichen enthalten, die das Fenster nicht kennt
+        sys.stdout.reconfigure(errors="replace")
+    lock = acquire_lock()
+    if lock is None:
+        print("Die Warteschlange läuft schon im Hintergrund. Die Ausgaben stehen in queue_worker.log.")
+        return 0
+    log = make_log()
     if not WRANGLER.exists():
-        print("wrangler nicht gefunden. Bitte im Projektordner einmal `npm install` ausführen.")
+        log("wrangler nicht gefunden. Bitte im Projektordner einmal `npm install` ausführen.")
         return 1
-    print(f"Warteschlange läuft, Prüfung alle {POLL_SECONDS} Sekunden. Zum Beenden das Fenster schließen.")
+    log(f"Warteschlange läuft, Prüfung alle {POLL_SECONDS} Sekunden.")
     try:
-        run_forever(Database())
+        run_forever(Database(), log)
     except KeyboardInterrupt:
         pass
     return 0

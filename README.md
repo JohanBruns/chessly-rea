@@ -138,13 +138,17 @@ anderen, und veröffentlicht danach automatisch (`npm run upload-videos`, `npm r
 Konten gleich: „In Warteschlange“, „Wird geladen …“, „Fertig: App neu laden“ oder die Fehlermeldung mit „Erneut versuchen“.
 Ein Konto kann höchstens 3 Kurse gleichzeitig in Arbeit haben.
 
-Einmalig einrichten: `npm run db:migrate`, `npm run deploy`, und im Haupt-Checkout `npx wrangler login`. Ist alles auf dem
-PC eingerichtet, `downloader\warteschlange.bat` starten und das Fenster offen lassen. Damit es nach jedem Neustart von selbst
-läuft, eine Verknüpfung darauf in den Autostart-Ordner legen (`Win+R`, `shell:startup`).
+Einmalig einrichten: `npm run db:migrate`, `npm run deploy`, und im Haupt-Checkout `npx wrangler login`. Der Worker
+startet dann unsichtbar mit der Windows-Anmeldung über die Verknüpfung „Chessly Warteschlange“ im Autostart-Ordner
+(`Win+R`, `shell:startup`): Ziel `downloader\.venv\Scripts\pythonw.exe`, Argument `queue_worker.py`, Ausführen in
+`downloader`. Seine Ausgaben stehen in `downloader\queue_worker.log`. Beenden geht im Task-Manager (`pythonw.exe`),
+abschalten durch Löschen der Verknüpfung. Mit `downloader\warteschlange.bat` läuft er stattdessen in einem Fenster;
+läuft er schon im Hintergrund, meldet das Fenster das nur, denn es darf immer nur einen Worker geben.
 
 Gut zu wissen:
 
-- Aufträge warten, solange der PC aus ist oder schläft oder das Fenster zu ist. Einen Hinweis darauf gibt es nur als festen Text in der App.
+- Aufträge warten, solange der PC aus ist oder schläft oder der Worker nicht läuft. Einen Hinweis darauf gibt es nur als
+  festen Text in der App. Während ein Kurs läuft, verhindert der Worker den Ruhezustand; der Bildschirm darf ausgehen.
 - Der Worker veröffentlicht nur von `main` und nur, wenn außerhalb von `openings/`, `downloader/lines/` und
   `downloader/catalog.json` nichts uncommittet ist. So stellt ein Klick in der App keine halbfertige Arbeit live.
   Solange das nicht passt, wartet der Kurs und das Fenster nennt den Grund.

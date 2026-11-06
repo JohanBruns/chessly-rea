@@ -6,8 +6,10 @@ Aufruf im Projektordner:
 
 import sqlite3
 import sys
+import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "downloader"))
@@ -123,6 +125,55 @@ class QueueTest(unittest.TestCase):
         worker.set_status(db, COURSE_ID, "failed", "Queen's Gambit'; DROP TABLE course_requests; --")
         self.assertEqual(db.row()["message"], "Queen's Gambit'; DROP TABLE course_requests; --")
         self.assertEqual(worker.sql_text(None), "NULL")
+
+
+class BackgroundTest(unittest.TestCase):
+    def setUp(self):
+        folder = tempfile.TemporaryDirectory(ignore_cleanup_errors=True)
+        self.addCleanup(folder.cleanup)
+        self.folder = Path(folder.name)
+
+    def test_nur_ein_worker_gleichzeitig(self):
+        path = self.folder / "worker.lock"
+        first = worker.acquire_lock(path)
+        self.assertIsNotNone(first)
+        self.addCleanup(first.close)
+        self.assertIsNone(worker.acquire_lock(path))
+        first.close()
+        second = worker.acquire_lock(path)
+        self.assertIsNotNone(second)
+        second.close()
+
+    def test_log_landet_in_der_datei_auch_ohne_fenster(self):
+        path = self.folder / "worker.log"
+        log = worker.make_log(path)
+        self.addCleanup(lambda: [h.close() for h in worker.logging.getLogger(f"queue_worker.{path}").handlers])
+        with mock.patch.object(sys, "stdout", None):
+            log("Queen's Gambit läuft")
+        self.assertIn("Queen's Gambit läuft", path.read_text(encoding="utf-8"))
+
+    def test_ruhezustand_wird_nur_waehrend_eines_kurses_verhindert(self):
+        with worker.keep_awake():
+            pass
+
+    def test_unerwarteter_fehler_beendet_die_schleife_nicht(self):
+        db = FakeDatabase()
+        db.add()
+        calls = []
+
+        def next_course(database):
+            calls.append(database)
+            if len(calls) == 1:
+                raise RuntimeError("kaputt")
+            return None
+
+        lines = []
+        with mock.patch.object(worker, "next_course", next_course), \
+                mock.patch.object(worker.time, "sleep", side_effect=[None, KeyboardInterrupt]):
+            with self.assertRaises(KeyboardInterrupt):
+                worker.run_forever(db, lines.append)
+        self.assertEqual(len(calls), 2)
+        self.assertIn("FEHLER: kaputt", lines)
 
 
 def git(branch="main", status=""):

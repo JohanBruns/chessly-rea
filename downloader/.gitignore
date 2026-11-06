@@ -10,6 +10,10 @@ session/
 # Heruntergeladene Videos
 downloads/
 
+# Worker im Hintergrund
+queue_worker.log*
+queue_worker.lock
+
 __pycache__/
 *.pyc
 *.part
