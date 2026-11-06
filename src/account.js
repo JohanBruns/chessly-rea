@@ -82,6 +82,15 @@ export async function register(username, password, inviteCode, askAdopt) {
   await signedIn(user, askAdopt);
 }
 
+export async function requestPasswordReset(username) {
+  await postJson('/api/forgotPassword', { username });
+}
+
+export async function resetPassword(token, password, askAdopt) {
+  const { user } = await postJson('/api/resetPassword', { token, password });
+  await signedIn(user, askAdopt);
+}
+
 // true, wenn der Server die Anmeldung nicht mehr kennt; dann fragt die Anmeldeseite neu. Offline bleibt alles, wie es ist.
 export async function sessionLost() {
   try {

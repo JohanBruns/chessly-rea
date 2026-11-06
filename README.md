@@ -206,6 +206,28 @@ Vorhandene Konten anzeigen:
 npx wrangler d1 execute chessly-rea --remote --command "SELECT username, datetime(created_at / 1000, 'unixepoch') AS erstellt FROM users"
 ```
 
+### Passwort-Links einrichten
+
+„Passwort vergessen“ verschickt über [Resend](https://resend.com) an `ADMIN_EMAIL` in `wrangler.toml`. Ohne eigene
+Domain muss das die Adresse des Resend-Kontos sein. Einmalig Tabelle anlegen und Schlüssel hinterlegen (der Befehl
+fragt danach; neuen Schlüssel unter **API Keys** in Resend anlegen, der vom Speicher-Worker lässt sich nicht
+auslesen), danach veröffentlichen:
+
+```bash
+npm run db:migrate
+```
+
+```bash
+npx wrangler pages secret put RESEND_API_KEY --project-name chessly-rea
+```
+
+```bash
+npm run deploy
+```
+
+Ohne Schlüssel sieht die Anmeldeseite genauso aus, es kommt aber keine Mail an. Der Grund steht dann im Log der
+Pages-Funktion.
+
 ### Videos hochladen und App veröffentlichen
 
 ```bash
@@ -280,8 +302,10 @@ jedes Gerät: anmelden, und der Stand ist da. Ein zweites Gerät mit einem ander
 - **Alter Lernstand:** Gibt es auf dem Gerät Fortschritt von vor den Konten, fragt die App bei der ersten Anmeldung,
   ob er ins Konto übernommen werden soll.
 - **Offline-Videos** liegen pro Gerät, alle Konten auf dem Gerät teilen sie sich.
-- **Passwort vergessen:** Es gibt keine E-Mail und daher keinen automatischen Weg. Das Konto lässt sich nur direkt
-  in der D1-Datenbank löschen, danach ist der Name wieder frei.
+- **Passwort vergessen:** Konten haben keine E-Mail-Adresse. Deshalb geht der Link von der Anmeldeseite per Mail an
+  den Admin (`ADMIN_EMAIL` in `wrangler.toml`), der ihn selbst nutzt oder an die Person weiterleitet. Der Link gilt
+  24 Stunden und nur einmal; danach sind alle anderen Geräte des Kontos abgemeldet. Pro Konto geht höchstens eine
+  Mail pro Stunde raus. Einrichtung siehe „Passwort-Links einrichten“.
 - **Lokal mit `npm run dev`:** Ohne Server-Funktionen gibt es keine Anmeldung, die App läuft ohne Konto wie bisher.
   Zum Testen mit Konten: `npm run build`, `npm run db:migrate:local`, dann `npx wrangler pages dev`.
 
@@ -340,7 +364,7 @@ npm run build
 | `src/ui/` | Topbar & Menü, Icons & Logo, Kurs-Icons, Kachelpfad (SVG), XP-Diagramm, Toasts |
 | `src/views/` | Home, Kurse, Kursseite, Sitzung, Explorer, Drill Shuffle, Wiederholen, Bot, Profil, Einstellungen, Import |
 | `src/account.js`, `src/sync.js` | Anmeldung auf dem Gerät, Abgleich des Lernstands mit dem Server, Zusammenführen |
-| `functions/api/`, `functions/_lib/`, `migrations/` | Registrieren mit Einladungscode, Anmelden, Abgleich, Rangliste, Passwort-Hash, Sitzungen und Fehlversuche auf D1 |
+| `functions/api/`, `functions/_lib/`, `migrations/` | Registrieren mit Einladungscode, Anmelden, Passwort-Links, Abgleich, Rangliste, Passwort-Hash, Sitzungen und Fehlversuche auf D1 |
 | `functions/app/`, `scripts/checkPrivateBundle.js` | App samt Kursinhalten nur mit Anmeldung; der Build bricht ab, wenn Kursinhalte im öffentlichen Teil landen |
 | `functions/downloader/`, `wrangler.toml` | Cloudflare Pages: Videos aus R2 mit Anmeldeprüfung und Range-Anfragen |
 | `usageAlert/` | Cloudflare Worker: täglicher Speicher-Check mit E-Mail-Warnung über Resend |

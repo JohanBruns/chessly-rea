@@ -20,14 +20,21 @@ export function json(data, status = 200, headers = {}) {
 }
 
 // Fehlermeldung für die Anzeige oder null, wenn alles passt
-export function credentialsError(username, password) {
-  if (typeof username !== 'string' || !/^[\p{L}\p{N}_.-]{3,32}$/u.test(username)) {
-    return 'Der Benutzername braucht 3 bis 32 Zeichen: Buchstaben, Ziffern, Punkt, Minus oder Unterstrich.';
-  }
+export function passwordError(password) {
   if (typeof password !== 'string' || password.length < 4) return 'Das Passwort braucht mindestens 4 Zeichen.';
   if (password.length > MAX_PASSWORD_LENGTH) return `Das Passwort darf höchstens ${MAX_PASSWORD_LENGTH} Zeichen haben.`;
   return null;
 }
+
+export function credentialsError(username, password) {
+  if (typeof username !== 'string' || !/^[\p{L}\p{N}_.-]{3,32}$/u.test(username)) {
+    return 'Der Benutzername braucht 3 bis 32 Zeichen: Buchstaben, Ziffern, Punkt, Minus oder Unterstrich.';
+  }
+  return passwordError(password);
+}
+
+// Zufallswert für Sitzungen und Links
+export const randomToken = () => toHex(crypto.getRandomValues(new Uint8Array(32)));
 
 async function pbkdf2(password, salt, iterations) {
   const key = await crypto.subtle.importKey('raw', encoder.encode(password), 'PBKDF2', false, ['deriveBits']);
@@ -68,7 +75,7 @@ function sessionToken(request) {
 
 // Legt die Sitzung an und liefert den Set-Cookie-Header. Alte Sitzungen räumt jede neue Anmeldung gleich mit weg.
 export async function startSession(request, env, userId, now = Date.now()) {
-  const token = toHex(crypto.getRandomValues(new Uint8Array(32)));
+  const token = randomToken();
   await env.DB.batch([
     env.DB.prepare('DELETE FROM sessions WHERE expires_at < ?').bind(now),
     env.DB.prepare('INSERT INTO sessions (token_hash, user_id, expires_at) VALUES (?, ?, ?)').bind(await tokenHash(token), userId, now + SESSION_MS),

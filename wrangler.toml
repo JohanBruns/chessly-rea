@@ -13,3 +13,8 @@ database_name = "chessly-rea"
 # Ausgabe von „npx wrangler d1 create chessly-rea“ (siehe README „Aufs iPhone“)
 database_id = "717a3893-4e7d-4b6b-a0ac-311872592d80"
 migrations_dir = "migrations"
+
+[vars]
+# Bekommt die Links aus „Passwort vergessen“. Ohne eigene Domain muss das die Adresse des Resend-Kontos sein.
+ADMIN_EMAIL = "deine-adresse@example.com"
+# RESEND_API_KEY ist ein Secret: npx wrangler pages secret put RESEND_API_KEY --project-name chessly-rea
