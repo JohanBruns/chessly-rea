@@ -152,8 +152,9 @@ Gut zu wissen:
 - Der Worker veröffentlicht nur von `main` und nur, wenn außerhalb von `openings/`, `downloader/lines/` und
   `downloader/catalog.json` nichts uncommittet ist. So stellt ein Klick in der App keine halbfertige Arbeit live.
   Solange das nicht passt, wartet der Kurs und das Fenster nennt den Grund.
-- Die neuen Dateien in `openings/` und `downloader/lines/` committet der Worker nicht. Das bleibt beim nächsten Commit
-  auf `main` zu tun, sonst fehlen die Kurse bei einem Deploy aus einem anderen Checkout.
+- Nach jedem veröffentlichten Kurs committet der Worker `openings/` und `downloader/lines/` und pusht `main`, also auch
+  alle anderen lokalen Commits auf `main`. Scheitert das (kein Netz, GitHub hat neuere Commits), bleibt der Kurs online,
+  der Fehler steht im Log und der nächste Kurs versucht es erneut. Force-Push und Pull macht der Worker nie.
 - Der Downloader und der Worker teilen sich den Login-Ordner und können nicht gleichzeitig laufen. Sonst schlägt der
   Kurs fehl und lässt sich mit „Erneut versuchen“ neu anstoßen.
 - Wer einen Kurs hinzufügt, bekommt beim Öffnen der App einen Hinweis, sobald er da ist; mit früher erteilter Erlaubnis

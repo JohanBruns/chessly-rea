@@ -46,8 +46,8 @@ def published(ok=True, failed=(), errors=0):
     return {"courses": [{"errors": errors}], "failed": list(failed), "published": ok}
 
 
-def process(db, export):
-    worker.process_course(db, worker.next_course(db), lambda text: None, export)
+def process(db, export, save=lambda name, log: None):
+    worker.process_course(db, worker.next_course(db), lambda text: None, export, save)
     return db.row()
 
 
@@ -66,6 +66,16 @@ class ProcessCourseTest(unittest.TestCase):
 
         self.assertEqual(process(self.db, export), {"status": "done", "message": None})
         self.assertEqual(seen, {"links": [COURSE_URL], "status": "running"})
+
+    def test_sichert_nur_einen_veroeffentlichten_kurs(self):
+        saved = []
+        save = lambda name, log: saved.append(name)  # noqa: E731
+        process(self.db, lambda links, log: published(False), save)
+        self.assertEqual(saved, [])
+
+        self.db.run(f"UPDATE course_requests SET status = 'queued' WHERE chessly_id = '{COURSE_ID}'")
+        self.assertEqual(process(self.db, lambda links, log: published(), save)["status"], "done")
+        self.assertEqual(saved, ["Kurs"])
 
     def test_fehler_stehen_verstaendlich_in_der_app(self):
         cases = [
@@ -180,6 +190,59 @@ def git(branch="main", status=""):
     def run(args, root):
         return branch + "\n" if args[0] == "rev-parse" else status
     return run
+
+
+class FakeGit:
+    def __init__(self, branch="main", status=" M openings/neu.pgn\n", fail=None):
+        self.branch, self.status, self.fail = branch, status, fail
+        self.calls = []
+
+    def __call__(self, args, root):
+        self.calls.append(args)
+        if args[0] == self.fail:
+            raise RuntimeError(f"{args[0]} kaputt")
+        if args[0] == "rev-parse":
+            return self.branch + "\n"
+        return self.status if args[0] == "status" else ""
+
+    def commands(self):
+        return [args[0] for args in self.calls]
+
+
+class SaveCourseTest(unittest.TestCase):
+    def save(self, fake, name="Queen's Gambit"):
+        lines = []
+        worker.save_course(name, lines.append, ".", fake)
+        return "\n".join(lines)
+
+    def test_committet_nur_kursdateien_und_pusht_main(self):
+        fake = FakeGit()
+        self.save(fake)
+        self.assertEqual(fake.commands(), ["rev-parse", "add", "status", "commit", "push"])
+        self.assertEqual(fake.calls[1], ["add", "-A", "--", "openings", "downloader/lines"])
+        self.assertEqual(fake.calls[3], ["commit", "-m", "feat: Kurs Queen's Gambit", "--", "openings", "downloader/lines"])
+        self.assertEqual(fake.calls[4], ["push", "origin", "main"])
+
+    def test_ohne_aenderung_kein_commit_aber_nachgeholter_push(self):
+        fake = FakeGit(status="")
+        self.save(fake)
+        self.assertNotIn("commit", fake.commands())
+        self.assertIn("push", fake.commands())
+
+    def test_auf_einem_anderen_branch_wird_nichts_gesichert(self):
+        fake = FakeGit(branch="feature")
+        self.assertIn("feature", self.save(fake))
+        self.assertEqual(fake.commands(), ["rev-parse"])
+
+    def test_fehler_stoppen_den_kurs_nicht(self):
+        for step in ("add", "commit", "push"):
+            with self.subTest(step=step):
+                self.assertIn(f"{step} kaputt", self.save(FakeGit(fail=step)))
+
+    def test_commit_fehler_verhindert_den_push(self):
+        fake = FakeGit(fail="commit")
+        self.save(fake)
+        self.assertNotIn("push", fake.commands())
 
 
 class PublishBlockerTest(unittest.TestCase):

@@ -2,7 +2,8 @@
 
 Die App liegt bei Cloudflare, der Chessly-Login und das Download-Werkzeug nur auf diesem PC.
 Deshalb legt der Knopf „Hinzufügen“ nur einen Auftrag in die Datenbank (Tabelle course_requests),
-und dieses Programm holt ihn ab: Videos, Linien und PGN laden, Videos nach R2, App veröffentlichen.
+und dieses Programm holt ihn ab: Videos, Linien und PGN laden, Videos nach R2, App veröffentlichen,
+Kursdateien committen und pushen.
 Für die Datenbank nutzt es den Login von `npx wrangler login`.
 
 Aufruf: unsichtbar über den Autostart (pythonw) oder mit warteschlange.bat im Fenster. Es läuft immer nur
@@ -28,11 +29,14 @@ TARGET_DIR = PROJECT_DIR / "downloads"
 WRANGLER = ROOT_DIR / "node_modules" / "wrangler" / "bin" / "wrangler.js"
 DATABASE = "chessly-rea"
 POLL_SECONDS = 60
+GIT_TIMEOUT_SECONDS = 300
 LOG_FILE = PROJECT_DIR / "queue_worker.log"
 LOCK_FILE = PROJECT_DIR / "queue_worker.lock"
 
 # Diese Pfade entstehen beim Hinzufügen selbst und halten das Veröffentlichen nicht auf.
 COURSE_PATHS = ("openings/", "downloader/lines/", "downloader/catalog.json")
+# Das Veröffentlichen baut die App aus allen Dateien in openings/. Genau das wird danach auch gesichert.
+SAVED_PATHS = ("openings", "downloader/lines")
 RELEASE_BRANCH = "main"
 
 # Die Meldungen sehen alle Konten in der App.
@@ -102,10 +106,13 @@ def requeue_running(db):
 def git_output(args, root):
     result = subprocess.run(
         ["git", *args], cwd=root, capture_output=True, text=True, encoding="utf-8", errors="replace",
+        env={**os.environ, "GIT_TERMINAL_PROMPT": "0"},  # im Hintergrund kann niemand ein Passwort eintippen
+        stdin=subprocess.DEVNULL,
+        timeout=GIT_TIMEOUT_SECONDS,
         creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0),
     )
     if result.returncode != 0:
-        raise RuntimeError((result.stderr or "").strip())
+        raise RuntimeError((result.stderr or result.stdout or "").strip())
     return result.stdout
 
 
@@ -127,6 +134,24 @@ def publish_blocker(root=ROOT_DIR, git=git_output):
     return None
 
 
+def save_course(name, log=print, root=ROOT_DIR, git=git_output):
+    """Committet die Kursdateien und pusht main. Der Kurs ist da schon online, deshalb stoppt ein Fehler hier
+    nichts: Er landet im Log, und der nächste Kurs holt Commit und Push mit nach."""
+    try:
+        branch = git(["rev-parse", "--abbrev-ref", "HEAD"], root).strip()
+        if branch != RELEASE_BRANCH:
+            log(f"Nicht gesichert: Der Projektordner steht inzwischen auf „{branch}“.")
+            return
+        git(["add", "-A", "--", *SAVED_PATHS], root)
+        if git(["status", "--porcelain", "--", *SAVED_PATHS], root).strip():
+            git(["commit", "-m", f"feat: Kurs {name}", "--", *SAVED_PATHS], root)
+            log(f"Committet: {name}")
+        git(["push", "origin", RELEASE_BRANCH], root)
+        log("Nach GitHub gepusht.")
+    except (OSError, RuntimeError, subprocess.SubprocessError) as error:
+        log(f"Nicht gesichert: {error}. Der nächste Kurs versucht es erneut.")
+
+
 def failure_message(result):
     """Meldung für die App oder None, wenn der Kurs online ist."""
     if result["published"]:
@@ -143,8 +168,8 @@ def default_export(links, log):
     return export_courses(links, TARGET_DIR, log, lambda: False, True, True, DEFAULT_WORKERS)
 
 
-def process_course(db, course, log=print, export=default_export):
-    """Lädt und veröffentlicht einen Kurs und trägt das Ergebnis ein."""
+def process_course(db, course, log=print, export=default_export, save=save_course):
+    """Lädt, veröffentlicht und sichert einen Kurs und trägt das Ergebnis ein."""
     course_id, name = course["chessly_id"], course["name"]
     links, _, _ = parse_course_links(course["url"])
     if not links:
@@ -167,6 +192,7 @@ def process_course(db, course, log=print, export=default_export):
         set_status(db, course_id, "failed", message)
     else:
         log(f"Fertig: {name}")
+        save(name, log)
         set_status(db, course_id, "done")
 
 
