@@ -123,12 +123,12 @@ export function renderCourses(root, params) {
         ? h(
             'a',
             { class: 'card catalog-banner', href: '#/chessly' },
-            h('span', { class: 'catalog-banner-icon' }, icon('bell', { size: 22 })),
+            h('span', { class: 'catalog-banner-icon' }, icon('download', { size: 22 })),
             h(
               'div',
               {},
               h('strong', {}, `${missing.length} Chessly-Kurse fehlen noch`),
-              h('span', { class: 'muted small' }, 'Alle ansehen, vormerken und benachrichtigt werden, sobald sie da sind.'),
+              h('span', { class: 'muted small' }, 'Alle ansehen und selbst hinzufügen.'),
             ),
             icon('chevronRight', { size: 20, cls: 'muted' }),
           )

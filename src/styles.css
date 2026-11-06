@@ -1306,7 +1306,7 @@ a.tile:focus-visible .tile-top {
   margin-bottom: 2px;
 }
 .catalog-banner-icon,
-.watch-banner-icon {
+.request-banner-icon {
   display: grid;
   place-items: center;
   width: 44px;
@@ -1319,30 +1319,20 @@ a.tile:focus-visible .tile-top {
 .catalog-banner > .icon {
   margin-left: auto;
 }
-.watch-banner {
+.request-banner {
   display: flex;
   align-items: center;
   gap: 14px;
   padding: 14px 18px;
   border-color: var(--accent-line);
 }
-.watch-banner-text {
+.request-banner-text {
   flex: 1;
   min-width: 0;
 }
-.watch-banner-text strong {
+.request-banner-text strong {
   display: block;
   margin-bottom: 2px;
-}
-.watch-banner .btn {
-  flex: none;
-}
-.tag-watch-on {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  background: var(--accent-soft);
-  color: var(--accent);
 }
 .tag-soon {
   background: color-mix(in srgb, var(--warn) 16%, transparent);
@@ -1397,6 +1387,10 @@ a.tile:focus-visible .tile-top {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+.catalog-error {
+  margin: 0;
+  color: var(--bad);
+}
 .catalog-actions {
   display: flex;
   flex-wrap: wrap;
@@ -1412,14 +1406,6 @@ a.tile:focus-visible .tile-top {
 }
 .catalog-hint .icon {
   flex: none;
-}
-@media (max-width: 640px) {
-  .watch-banner {
-    flex-wrap: wrap;
-  }
-  .watch-banner .btn {
-    width: 100%;
-  }
 }
 
 

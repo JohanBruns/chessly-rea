@@ -46,7 +46,7 @@ Dann <http://localhost:5173> öffnen. `npm install` kopiert die Stockfish-Engine
 |---|---|
 | Home („Hallo, Name“, Level, XP-Diagramm, aktueller Kurs) | `#/` |
 | Alle Kurse (Suche, Filter Weiß/Schwarz/Importiert) | `#/courses` |
-| Chessly-Katalog (fehlende Kurse, Vormerken) | `#/chessly` |
+| Chessly-Katalog (fehlende Kurse selbst hinzufügen) | `#/chessly` |
 | Kursseite (Kapitel, Studies, Lernpfade, Bot/Drill/Wiederholen) | `#/course/<kurs>` |
 | Kachel-Sitzung | `#/course/<kurs>/tile/<kachel>` |
 | Study-Linien-Explorer | `#/course/<kurs>/study/<study>` |
@@ -114,10 +114,10 @@ Caro-Kann und London-System sind schon verknüpft: Jede Study hat einen `[Video]
 Dev-Server (`npm run dev` bzw. `start.cmd`) die Dateien aus, in der iPhone-App der private Cloudflare-Speicher
 (siehe unten). Die Videos selbst sind nicht in Git.
 
-## Fehlende Chessly-Kurse und Benachrichtigungen
+## Fehlende Chessly-Kurse hinzufügen
 
 Unter **Menü → Chessly-Katalog** (`#/chessly`) stehen alle Kurse aus deinem Chessly-Konto, die noch nicht in
-`openings/` liegen – mit Suche und Filtern (Eröffnung, Skill-Kurs, Weiß/Schwarz, vorgemerkt). Kurse mit dem Tag
+`openings/` liegen – mit Suche und Filtern (Eröffnung, Skill-Kurs, Weiß/Schwarz, in Arbeit). Kurse mit dem Tag
 „Bald verfügbar“ sind bei Chessly noch nicht erschienen; „Videos geladen“ heißt, dass schon MP4-Dateien in
 `downloader/downloads/` liegen.
 
@@ -131,15 +131,29 @@ npm run catalog
 Danach die Seite neu laden (im Dev-Server reicht das, für die veröffentlichte App `npm run deploy`). Ob ein Kurs
 schon vorhanden ist, erkennt die App am `[ChesslyCourse "<Kurs-ID>"]`-Header der PGN-Datei, sonst am Kursnamen.
 
-**Vormerken:** Der Knopf mit der Glocke merkt einen Kurs auf diesem Gerät vor. Beim nächsten Öffnen der App prüft
-sie, ob ein vorgemerkter Kurs
+**Hinzufügen:** Jedes Konto kann mit dem Knopf **Hinzufügen** einen Kurs komplett in die App holen, also Videos,
+Linien und PGN. Der Knopf legt nur einen Auftrag in die Datenbank (`course_requests`), denn Chessly-Login und
+Download-Werkzeug gibt es nur auf dem PC. Dort holt `downloader\warteschlange.bat` die Aufträge ab, ein Kurs nach dem
+anderen, und veröffentlicht danach automatisch (`npm run upload-videos`, `npm run deploy`). Der Stand ist für alle
+Konten gleich: „In Warteschlange“, „Wird geladen …“, „Fertig: App neu laden“ oder die Fehlermeldung mit „Erneut versuchen“.
+Ein Konto kann höchstens 3 Kurse gleichzeitig in Arbeit haben.
 
-- jetzt in der App auftaucht,
-- bei Chessly nicht mehr „Coming soon“ ist, oder
-- als Video heruntergeladen wurde (neuer Katalog-Abgleich).
+Einmalig einrichten: `npm run db:migrate`, `npm run deploy`, und im Haupt-Checkout `npx wrangler login`. Ist alles auf dem
+PC eingerichtet, `downloader\warteschlange.bat` starten und das Fenster offen lassen. Damit es nach jedem Neustart von selbst
+läuft, eine Verknüpfung darauf in den Autostart-Ordner legen (`Win+R`, `shell:startup`).
 
-Dann erscheint ein Hinweis in der App und – wenn erlaubt – eine Browser-Benachrichtigung. Die Merkliste hängt am
-Konto, bleibt aber bewusst auf dem Gerät und wird nicht synchronisiert.
+Gut zu wissen:
+
+- Aufträge warten, solange der PC aus ist oder schläft oder das Fenster zu ist. Einen Hinweis darauf gibt es nur als festen Text in der App.
+- Der Worker veröffentlicht nur von `main` und nur, wenn außerhalb von `openings/`, `downloader/lines/` und
+  `downloader/catalog.json` nichts uncommittet ist. So stellt ein Klick in der App keine halbfertige Arbeit live.
+  Solange das nicht passt, wartet der Kurs und das Fenster nennt den Grund.
+- Die neuen Dateien in `openings/` und `downloader/lines/` committet der Worker nicht. Das bleibt beim nächsten Commit
+  auf `main` zu tun, sonst fehlen die Kurse bei einem Deploy aus einem anderen Checkout.
+- Der Downloader und der Worker teilen sich den Login-Ordner und können nicht gleichzeitig laufen. Sonst schlägt der
+  Kurs fehl und lässt sich mit „Erneut versuchen“ neu anstoßen.
+- Wer einen Kurs hinzufügt, bekommt beim Öffnen der App einen Hinweis, sobald er da ist; mit früher erteilter Erlaubnis
+  auch als Browser-Benachrichtigung. Die Merkliste dafür bleibt auf dem Gerät.
 
 ## Aufs iPhone (Cloudflare, privat)
 
@@ -335,6 +349,7 @@ npm run build
 | `src/scheduler.js` | Spaced Repetition |
 | `src/courseCompare.js`, `scripts/compareCourse.js` | Abgleich eines Kurses mit den Chessly-Linien (`npm run abgleich`) |
 | `src/chesslyCatalog.js`, `src/views/chesslyView.js`, `downloader/catalog.py`, `scripts/chesslyCatalog.js` | Chessly-Katalog der fehlenden Kurse (`npm run catalog`) und die Seite `#/chessly` |
+| `functions/api/courseRequests.js`, `src/courseRequests.js`, `downloader/queue_worker.py` | Warteschlange hinter dem Knopf „Hinzufügen“: App → D1 → PC |
 | `src/watchlist.js` | Vorgemerkte Kurse, Benachrichtigungen und Prüfung beim Öffnen der App |
 | `src/bot.js`, `src/engine.js` | Repertoire-Züge des Bots, Stockfish als Web Worker |
 | `src/ui/` | Topbar & Menü, Icons & Logo, Kurs-Icons, Kachelpfad (SVG), XP-Diagramm, Toasts |
