@@ -46,7 +46,7 @@ Dann <http://localhost:5173> öffnen. `npm install` kopiert die Stockfish-Engine
 |---|---|
 | Home („Hallo, Name“, Level, XP-Diagramm, aktueller Kurs) | `#/` |
 | Alle Kurse (Suche, Filter Weiß/Schwarz/Importiert) | `#/courses` |
-| Chessly-Katalog (fehlende Kurse, Vormerken) | `#/chessly` |
+| Chessly-Katalog (fehlende Kurse selbst hinzufügen) | `#/chessly` |
 | Kursseite (Kapitel, Studies, Lernpfade, Bot/Drill/Wiederholen) | `#/course/<kurs>` |
 | Kachel-Sitzung | `#/course/<kurs>/tile/<kachel>` |
 | Study-Linien-Explorer | `#/course/<kurs>/study/<study>` |
@@ -114,10 +114,10 @@ Caro-Kann und London-System sind schon verknüpft: Jede Study hat einen `[Video]
 Dev-Server (`npm run dev` bzw. `start.cmd`) die Dateien aus, in der iPhone-App der private Cloudflare-Speicher
 (siehe unten). Die Videos selbst sind nicht in Git.
 
-## Fehlende Chessly-Kurse und Benachrichtigungen
+## Fehlende Chessly-Kurse hinzufügen
 
 Unter **Menü → Chessly-Katalog** (`#/chessly`) stehen alle Kurse aus deinem Chessly-Konto, die noch nicht in
-`openings/` liegen – mit Suche und Filtern (Eröffnung, Skill-Kurs, Weiß/Schwarz, vorgemerkt). Kurse mit dem Tag
+`openings/` liegen – mit Suche und Filtern (Eröffnung, Skill-Kurs, Weiß/Schwarz, in Arbeit). Kurse mit dem Tag
 „Bald verfügbar“ sind bei Chessly noch nicht erschienen; „Videos geladen“ heißt, dass schon MP4-Dateien in
 `downloader/downloads/` liegen.
 
@@ -131,15 +131,29 @@ npm run catalog
 Danach die Seite neu laden (im Dev-Server reicht das, für die veröffentlichte App `npm run deploy`). Ob ein Kurs
 schon vorhanden ist, erkennt die App am `[ChesslyCourse "<Kurs-ID>"]`-Header der PGN-Datei, sonst am Kursnamen.
 
-**Vormerken:** Der Knopf mit der Glocke merkt einen Kurs auf diesem Gerät vor. Beim nächsten Öffnen der App prüft
-sie, ob ein vorgemerkter Kurs
+**Hinzufügen:** Jedes Konto kann mit dem Knopf **Hinzufügen** einen Kurs komplett in die App holen, also Videos,
+Linien und PGN. Der Knopf legt nur einen Auftrag in die Datenbank (`course_requests`), denn Chessly-Login und
+Download-Werkzeug gibt es nur auf dem PC. Dort holt `downloader\warteschlange.bat` die Aufträge ab, ein Kurs nach dem
+anderen, und veröffentlicht danach automatisch (`npm run upload-videos`, `npm run deploy`). Der Stand ist für alle
+Konten gleich: „In Warteschlange“, „Wird geladen …“, „Fertig: App neu laden“ oder die Fehlermeldung mit „Erneut versuchen“.
+Ein Konto kann höchstens 3 Kurse gleichzeitig in Arbeit haben.
 
-- jetzt in der App auftaucht,
-- bei Chessly nicht mehr „Coming soon“ ist, oder
-- als Video heruntergeladen wurde (neuer Katalog-Abgleich).
+Einmalig einrichten: `npm run db:migrate`, `npm run deploy`, und im Haupt-Checkout `npx wrangler login`. Ist alles auf dem
+PC eingerichtet, `downloader\warteschlange.bat` starten und das Fenster offen lassen. Damit es nach jedem Neustart von selbst
+läuft, eine Verknüpfung darauf in den Autostart-Ordner legen (`Win+R`, `shell:startup`).
 
-Dann erscheint ein Hinweis in der App und – wenn erlaubt – eine Browser-Benachrichtigung. Die Merkliste hängt am
-Konto, bleibt aber bewusst auf dem Gerät und wird nicht synchronisiert.
+Gut zu wissen:
+
+- Aufträge warten, solange der PC aus ist oder schläft oder das Fenster zu ist. Einen Hinweis darauf gibt es nur als festen Text in der App.
+- Der Worker veröffentlicht nur von `main` und nur, wenn außerhalb von `openings/`, `downloader/lines/` und
+  `downloader/catalog.json` nichts uncommittet ist. So stellt ein Klick in der App keine halbfertige Arbeit live.
+  Solange das nicht passt, wartet der Kurs und das Fenster nennt den Grund.
+- Die neuen Dateien in `openings/` und `downloader/lines/` committet der Worker nicht. Das bleibt beim nächsten Commit
+  auf `main` zu tun, sonst fehlen die Kurse bei einem Deploy aus einem anderen Checkout.
+- Der Downloader und der Worker teilen sich den Login-Ordner und können nicht gleichzeitig laufen. Sonst schlägt der
+  Kurs fehl und lässt sich mit „Erneut versuchen“ neu anstoßen.
+- Wer einen Kurs hinzufügt, bekommt beim Öffnen der App einen Hinweis, sobald er da ist; mit früher erteilter Erlaubnis
+  auch als Browser-Benachrichtigung. Die Merkliste dafür bleibt auf dem Gerät.
 
 ## Aufs iPhone (Cloudflare, privat)
 
@@ -148,7 +162,7 @@ D1-Datenbank. Ein neues Konto lässt sich nur mit dem Einladungscode anlegen. Ö
 Die App samt Kursinhalten (`dist/app/`) und die Videos liefert der Server nur mit gültiger Anmeldung aus
 (`functions/app/[[path]].js`, `functions/downloader/downloads/[[path]].js`). Nach zehn Fehlversuchen beim Anmelden
 oder beim Code ist der Absender für 15 Minuten gesperrt. Alles läuft im kostenlosen Tarif. R2 enthält 10 GB Speicher
-(darüber kostet es 0,015 $ pro GB und Monat, bei der Upload-Sperre von 25 GB etwa 0,23 $) und berechnet keinen Download-Traffic. Cloudflare verlangt fürs Aktivieren von R2 aber eine hinterlegte
+(darüber kostet es 0,015 $ pro GB und Monat, bei 25 GB also etwa 0,23 $ und bei 100 GB etwa 1,35 $) und berechnet keinen Download-Traffic. Cloudflare verlangt fürs Aktivieren von R2 aber eine hinterlegte
 Zahlungsmethode.
 
 ### Einmalig einrichten
@@ -249,14 +263,12 @@ npm run usage
 ```
 
 zeigt, wie viel der 10 GB belegt sind und, falls du darüber liegst, was der Speicher im Monat kostet. `upload-videos`
-bricht ab, bevor der Bucket größer als 25 GB würde, und lädt dann gar nichts hoch. Die Grenze steht in
-`scripts/r2Limits.js` (`STORAGE_LIMIT_BYTES`), dort lässt sie sich jederzeit ändern. Kosten über den freien 10 GB:
-0,015 $ pro GB und Monat (R2 rundet auf volle GB auf), also 12 GB ≈ 0,03 $, 20 GB ≈ 0,15 $, 25 GB ≈ 0,23 $.
+hat keine Obergrenze. Kosten über den freien 10 GB: 0,015 $ pro GB und Monat (R2 rundet auf volle GB auf), also
+12 GB ≈ 0,03 $, 25 GB ≈ 0,23 $, 100 GB ≈ 1,35 $.
 
 **E-Mail-Warnung:** Der Worker in `usageAlert/` zählt jeden Morgen (07:00 UTC) die Videos im Bucket und
-schickt ab **21,25 GB** (85 % der 25-GB-Sperre) eine E-Mail. Solange der Bucket darüber bleibt, kommt sie täglich.
-Willst du schon beim Überschreiten der freien 10 GB Bescheid bekommen, setze `ALERT_RATIO` in `scripts/r2Limits.js`
-auf `0.4` und deploye den Worker neu (`npm run deploy-alert`).
+schickt ab **100 GB** eine E-Mail. Solange der Bucket darüber bleibt, kommt sie täglich; Uploads stoppt sie nicht.
+Die Schwelle steht in `scripts/r2Limits.js` (`ALERT_BYTES`), danach den Worker neu deployen (`npm run deploy-alert`).
 Versendet wird über [Resend](https://resend.com) (kostenlos, 100 Mails/Tag). Einmalig einrichten:
 
 1. Im Cloudflare-Dashboard einmal **Workers & Pages** öffnen. Dabei legt Cloudflare die
@@ -363,6 +375,7 @@ npm run build
 | `src/scheduler.js` | Spaced Repetition |
 | `src/courseCompare.js`, `scripts/compareCourse.js` | Abgleich eines Kurses mit den Chessly-Linien (`npm run abgleich`) |
 | `src/chesslyCatalog.js`, `src/views/chesslyView.js`, `downloader/catalog.py`, `scripts/chesslyCatalog.js` | Chessly-Katalog der fehlenden Kurse (`npm run catalog`) und die Seite `#/chessly` |
+| `functions/api/courseRequests.js`, `src/courseRequests.js`, `downloader/queue_worker.py` | Warteschlange hinter dem Knopf „Hinzufügen“: App → D1 → PC |
 | `src/watchlist.js` | Vorgemerkte Kurse, Benachrichtigungen und Prüfung beim Öffnen der App |
 | `src/bot.js`, `src/engine.js` | Repertoire-Züge des Bots, Stockfish als Web Worker |
 | `src/ui/` | Topbar & Menü, Icons & Logo, Kurs-Icons, Kachelpfad (SVG), XP-Diagramm, Toasts |
@@ -372,7 +385,7 @@ npm run build
 | `functions/app/`, `scripts/checkPrivateBundle.js` | App samt Kursinhalten nur mit Anmeldung; der Build bricht ab, wenn Kursinhalte im öffentlichen Teil landen |
 | `functions/downloader/`, `wrangler.toml` | Cloudflare Pages: Videos aus R2 mit Anmeldeprüfung und Range-Anfragen |
 | `usageAlert/` | Cloudflare Worker: täglicher Speicher-Check mit E-Mail-Warnung über Resend |
-| `scripts/uploadVideos.js`, `scripts/usage.js`, `scripts/r2Limits.js` | Video-Upload mit 25-GB-Sperre, Verbrauchsanzeige, gemeinsame Grenzen |
+| `scripts/uploadVideos.js`, `scripts/usage.js`, `scripts/r2Limits.js` | Video-Upload, Verbrauchsanzeige und Kosten, Warnschwelle |
 | `public/sw.js`, `public/manifest.webmanifest` | Installierbare App (PWA), Offline-Cache für App und Stockfish |
 | `downloader/` | Python-Tool (tkinter, Playwright, yt-dlp) zum Herunterladen der Chessly-Kursvideos |
 

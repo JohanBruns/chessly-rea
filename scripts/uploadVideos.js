@@ -1,12 +1,11 @@
 // Lädt die Kursvideos, auf die die PGN-Dateien in openings/ verweisen, in den privaten R2-Bucket.
-// Schon hochgeladene Dateien (gleiche Größe und Änderungszeit) werden übersprungen. Würde der Bucket
-// dadurch größer als STORAGE_LIMIT_BYTES (die selbst gewählte Kostengrenze), lädt das Skript gar nichts hoch.
+// Schon hochgeladene Dateien (gleiche Größe und Änderungszeit) werden übersprungen.
 // Aufruf: npm run upload-videos   (vorher einmal: npx wrangler login)
 import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { videoObjectKey } from '../functions/downloader/downloads/[[path]].js';
-import { BUCKET, bucketUsage, formatGb, loadUploadState, statePath, STORAGE_LIMIT_BYTES, uploadedBytes, wrangler } from './r2Usage.js';
+import { BUCKET, bucketUsage, formatGb, loadUploadState, monthlyCostUsd, statePath, uploadedBytes, wrangler } from './r2Usage.js';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const PREFIX = '/downloader/downloads/';
@@ -66,12 +65,7 @@ async function main() {
 
   const usage = await withRetry(() => bucketUsage(), { onRetry: retryNotice('Abfrage der Bucket-Größe') });
   const projected = projectedBytes({ remoteBytes: usage.bytes, state, pending });
-  console.log(`Bucket jetzt: ${formatGb(usage.bytes)}, nach dem Upload: ${formatGb(projected)} (Grenze ${formatGb(STORAGE_LIMIT_BYTES)})`);
-  if (projected > STORAGE_LIMIT_BYTES) {
-    console.error(`Abbruch: Damit wäre der Bucket größer als die Upload-Sperre von ${formatGb(STORAGE_LIMIT_BYTES)} (STORAGE_LIMIT_BYTES in scripts/r2Limits.js). Nichts wurde hochgeladen.`);
-    process.exitCode = 1;
-    return;
-  }
+  console.log(`Bucket jetzt: ${formatGb(usage.bytes)}, nach dem Upload: ${formatGb(projected)} (ca. ${monthlyCostUsd(projected).toFixed(2)} $ pro Monat)`);
 
   let uploaded = 0;
   for (const [i, { key, file, size, stamp }] of pending.entries()) {

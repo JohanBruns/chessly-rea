@@ -1,26 +1,11 @@
-// Merkliste für Chessly-Kurse: Kurs vormerken, Benachrichtigung erlauben und beim
-// nächsten Öffnen prüfen, ob ein vorgemerkter Kurs inzwischen da oder heruntergeladen ist.
+// Merkliste für Chessly-Kurse: Wer einen Kurs hinzufügt, merkt ihn damit vor. Beim nächsten Öffnen
+// prüft die App, ob er inzwischen da ist, und meldet das (mit erteilter Erlaubnis auch als Benachrichtigung).
 import { catalogCourse, findOwnedCourse, loadChesslyCatalog } from './chesslyCatalog.js';
 import { loadWatchlist, saveWatchlist } from './storage.js';
 import { toast } from './ui/toast.js';
 
-export function notificationsSupported() {
+function notificationsSupported() {
   return typeof window !== 'undefined' && 'Notification' in window;
-}
-
-export function notificationPermission() {
-  if (!notificationsSupported()) return 'unsupported';
-  return Notification.permission;
-}
-
-export async function requestNotifications() {
-  if (!notificationsSupported()) return 'unsupported';
-  if (Notification.permission !== 'default') return Notification.permission;
-  try {
-    return await Notification.requestPermission();
-  } catch {
-    return 'denied';
-  }
 }
 
 function sendNotification(title, body, tag) {
@@ -42,13 +27,8 @@ function sendNotification(title, body, tag) {
   }
 }
 
-export function toggleWatch(course) {
+export function watchCourse(course) {
   const watch = loadWatchlist();
-  if (watch[course.id]) {
-    delete watch[course.id];
-    saveWatchlist(watch);
-    return false;
-  }
   watch[course.id] = {
     name: course.name,
     since: Date.now(),
@@ -56,11 +36,6 @@ export function toggleWatch(course) {
     videosDownloaded: Boolean(course.videosDownloaded),
   };
   saveWatchlist(watch);
-  return true;
-}
-
-export function activeWatchCount(watch = loadWatchlist()) {
-  return Object.values(watch).filter((entry) => !entry.notifiedAt).length;
 }
 
 /**

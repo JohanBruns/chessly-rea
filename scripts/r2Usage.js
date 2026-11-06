@@ -1,11 +1,11 @@
-// Kostenschutz für den R2-Bucket: Das Upload-Skript bricht ab, bevor es STORAGE_LIMIT_BYTES reißt.
+// Belegung des R2-Buckets: Abfrage über wrangler und die eigene Liste der hochgeladenen Dateien.
 import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { BUCKET } from './r2Limits.js';
 
-export { ALERT_RATIO, BUCKET, formatGb, FREE_STORAGE_BYTES, monthlyCostUsd, PRICE_PER_GB_MONTH, STORAGE_LIMIT_BYTES } from './r2Limits.js';
+export { ALERT_BYTES, BUCKET, formatGb, FREE_STORAGE_BYTES, monthlyCostUsd, PRICE_PER_GB_MONTH } from './r2Limits.js';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const wranglerBin = join(root, 'node_modules', 'wrangler', 'bin', 'wrangler.js');

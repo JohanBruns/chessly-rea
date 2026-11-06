@@ -1,12 +1,14 @@
 // Chessly-Katalog: alle Kurse aus dem Chessly-Konto, die noch nicht in der App sind.
-// Jeder Kurs lässt sich vormerken; beim nächsten Öffnen prüft die App, ob er da ist.
+// „Hinzufügen“ legt einen Kurs in die Warteschlange, die der PC mit dem Chessly-Login abarbeitet (downloader/queue_worker.py).
+import { addCourse, fetchCourseRequests, isOpenRequest } from '../courseRequests.js';
 import { loadAllCourses } from '../courses.js';
 import { loadChesslyCatalog, missingChesslyCourses } from '../chesslyCatalog.js';
 import { add, fill, h } from '../dom.js';
-import { loadWatchlist } from '../storage.js';
 import { icon } from '../ui/icons.js';
 import { toast } from '../ui/toast.js';
-import { activeWatchCount, notificationPermission, requestNotifications, toggleWatch } from '../watchlist.js';
+import { watchCourse } from '../watchlist.js';
+
+const REFRESH_MS = 30_000;
 
 const FILTERS = [
   { id: 'all', label: 'Alle', test: () => true },
@@ -14,15 +16,15 @@ const FILTERS = [
   { id: 'skill', label: 'Skill-Kurse', test: (c) => c.type === 'LEGACY' },
   { id: 'w', label: 'Weiß', test: (c) => c.color === 'w' },
   { id: 'b', label: 'Schwarz', test: (c) => c.color === 'b' },
-  { id: 'watch', label: 'Vorgemerkt', test: (c, watch) => Boolean(watch[c.id]) },
+  { id: 'requested', label: 'In Arbeit', test: (c, requests) => isOpenRequest(requests[c.id]) },
 ];
 
-export function filterChesslyCourses(courses, { filter = 'all', query = '', watch = {} } = {}) {
+export function filterChesslyCourses(courses, { filter = 'all', query = '', requests = {} } = {}) {
   const f = FILTERS.find((entry) => entry.id === filter) || FILTERS[0];
   const q = query.trim().toLowerCase();
   return courses.filter(
     (course) =>
-      f.test(course, watch) &&
+      f.test(course, requests) &&
       (!q || `${course.name} ${course.description} ${(course.tags || []).join(' ')}`.toLowerCase().includes(q)),
   );
 }
@@ -61,7 +63,8 @@ export function renderChessly(root, params) {
   const { courses } = loadAllCourses();
   const catalog = loadChesslyCatalog();
   const missing = missingChesslyCourses(courses, catalog);
-  let watch = loadWatchlist();
+  let requests = {};
+  const adding = new Set();
   let filter = FILTERS.some((entry) => entry.id === params.filter) ? params.filter : 'all';
   let query = '';
 
@@ -77,8 +80,7 @@ export function renderChessly(root, params) {
   });
 
   function renderBanner() {
-    const count = activeWatchCount(watch);
-    const permission = notificationPermission();
+    const count = Object.values(requests).filter(isOpenRequest).length;
     if (!count) {
       fill(bannerEl);
       return;
@@ -87,40 +89,14 @@ export function renderChessly(root, params) {
       bannerEl,
       h(
         'div',
-        { class: 'card watch-banner' },
-        h('span', { class: 'watch-banner-icon' }, icon('bell', { size: 22 })),
+        { class: 'card request-banner' },
+        h('span', { class: 'request-banner-icon' }, icon('download', { size: 22 })),
         h(
           'div',
-          { class: 'watch-banner-text' },
-          h('strong', {}, `${count} Kurs${count === 1 ? '' : 'e'} vorgemerkt`),
-          h(
-            'span',
-            { class: 'muted small' },
-            permission === 'granted'
-              ? 'Du bekommst eine Benachrichtigung, sobald ein Kurs in der App auftaucht oder die Videos heruntergeladen sind.'
-              : permission === 'denied'
-                ? 'Benachrichtigungen sind im Browser blockiert – beim Öffnen der App erscheint trotzdem ein Hinweis.'
-                : 'Erlaube Benachrichtigungen, damit du es auch mitbekommst, wenn die App geschlossen ist.',
-          ),
+          { class: 'request-banner-text' },
+          h('strong', {}, `${count} Kurs${count === 1 ? ' wird' : 'e werden'} hinzugefügt`),
+          h('span', { class: 'muted small' }, 'Das kann ein paar Stunden dauern und läuft nur, wenn der PC mit dem Chessly-Login an ist. Der Stand hier ist für alle gleich.'),
         ),
-        permission === 'default'
-          ? h(
-              'button',
-              {
-                class: 'btn btn-sm btn-primary',
-                onclick: async () => {
-                  const result = await requestNotifications();
-                  if (result === 'granted') toast('Benachrichtigungen sind an.', { iconName: 'bell' });
-                  else if (result === 'denied') toast('Benachrichtigungen wurden blockiert.', { iconName: 'bellOff' });
-                  renderBanner();
-                },
-              },
-              icon('bell', { size: 16 }),
-              'Erlauben',
-            )
-          : permission === 'granted'
-            ? h('span', { class: 'tag tag-watch-on' }, icon('check', { size: 13, strokeWidth: 3 }), 'An')
-            : null,
       ),
     );
   }
@@ -138,14 +114,56 @@ export function renderChessly(root, params) {
             onclick: () => ((filter = entry.id), renderChips(), renderGrid()),
           },
           entry.label,
-          h('span', { class: 'chip-count' }, String(filterChesslyCourses(missing, { filter: entry.id, watch }).length)),
+          h('span', { class: 'chip-count' }, String(filterChesslyCourses(missing, { filter: entry.id, requests }).length)),
         ),
       ),
     );
   }
 
+  function renderAll() {
+    renderBanner();
+    renderChips();
+    renderGrid();
+  }
+
+  async function addToApp(course) {
+    adding.add(course.id);
+    renderGrid();
+    try {
+      requests = { ...requests, [course.id]: await addCourse(course.id) };
+      watchCourse(course);
+      toast(`„${course.name}“ wird hinzugefügt. Das kann ein paar Stunden dauern.`, { iconName: 'download', duration: 5000 });
+    } catch (err) {
+      toast(err.message, { duration: 5000 });
+    }
+    adding.delete(course.id);
+    renderAll();
+  }
+
+  function action(course) {
+    const request = requests[course.id];
+    const status = (label) => h('button', { class: 'btn btn-sm btn-ghost', disabled: true }, icon('download', { size: 16 }), label);
+    if (adding.has(course.id)) return status('Wird angefragt …');
+    if (request?.status === 'queued') return status('In Warteschlange');
+    if (request?.status === 'running') return status('Wird geladen …');
+    if (request?.status === 'done') {
+      return h('button', { class: 'btn btn-sm btn-primary', onclick: () => location.reload() }, icon('check', { size: 16, strokeWidth: 3 }), 'Fertig: App neu laden');
+    }
+    return h(
+      'button',
+      {
+        class: 'btn btn-sm btn-primary',
+        disabled: course.comingSoon,
+        title: course.comingSoon ? 'Dieser Kurs ist bei Chessly noch nicht erschienen' : null,
+        onclick: () => addToApp(course),
+      },
+      icon('plus', { size: 16 }),
+      request?.status === 'failed' ? 'Erneut versuchen' : 'Hinzufügen',
+    );
+  }
+
   function card(course) {
-    const watched = Boolean(watch[course.id]);
+    const failure = requests[course.id]?.status === 'failed' ? requests[course.id].message : null;
     return h(
       'article',
       { class: ['card', 'catalog-card', course.comingSoon ? 'is-coming' : ''] },
@@ -168,42 +186,8 @@ export function renderChessly(root, params) {
         ),
       ),
       course.description ? h('p', { class: 'muted small catalog-desc' }, course.description) : null,
-      h(
-        'div',
-        { class: 'catalog-actions' },
-        h(
-          'button',
-          {
-            class: ['btn', 'btn-sm', watched ? 'btn-primary' : 'btn-ghost'],
-            'aria-pressed': String(watched),
-            title: watched ? 'Nicht mehr benachrichtigen' : 'Benachrichtigung, sobald der Kurs verfügbar ist',
-            onclick: async () => {
-              const nowWatched = toggleWatch(course);
-              watch = loadWatchlist();
-              renderBanner();
-              renderChips();
-              renderGrid();
-              if (nowWatched) {
-                toast(`„${course.name}“ vorgemerkt.`, { iconName: 'bell' });
-                const permission = await requestNotifications();
-                if (permission === 'granted') toast('Benachrichtigungen sind an.', { iconName: 'bell' });
-                else if (permission === 'denied') toast('Benachrichtigungen sind blockiert – der Hinweis kommt beim Öffnen der App.', { iconName: 'bellOff' });
-                renderBanner();
-              } else {
-                toast(`„${course.name}“ nicht mehr vorgemerkt.`, { iconName: 'bellOff' });
-              }
-            },
-          },
-          icon(watched ? 'bellOff' : 'bell', { size: 16 }),
-          watched ? 'Vorgemerkt' : 'Benachrichtigen',
-        ),
-        h(
-          'a',
-          { class: 'btn btn-sm btn-ghost', href: course.url, target: '_blank', rel: 'noopener noreferrer' },
-          icon('external', { size: 16 }),
-          'Auf Chessly',
-        ),
-      ),
+      failure ? h('p', { class: 'small catalog-error' }, failure) : null,
+      h('div', { class: 'catalog-actions' }, action(course)),
     );
   }
 
@@ -231,7 +215,7 @@ export function renderChessly(root, params) {
   }
 
   function renderGrid() {
-    const list = filterChesslyCourses(missing, { filter, query, watch });
+    const list = filterChesslyCourses(missing, { filter, query, requests });
     fill(gridEl, ...list.map(card));
     if (!list.length) add(gridEl, emptyState());
   }
@@ -247,7 +231,7 @@ export function renderChessly(root, params) {
       h(
         'div',
         { class: 'page-head' },
-        h('div', { class: 'page-icon' }, icon('bell', { size: 26 })),
+        h('div', { class: 'page-icon' }, icon('download', { size: 26 })),
         h(
           'div',
           {},
@@ -274,8 +258,24 @@ export function renderChessly(root, params) {
       gridEl,
     ),
   );
-  renderBanner();
-  renderChips();
-  renderGrid();
-  return null;
+  renderAll();
+
+  // Stand der Warteschlange holen; neu aufbauen nur bei Änderungen, sonst flackern die Bilder.
+  let shown = '{}';
+  const refresh = async () => {
+    if (document.hidden) return;
+    try {
+      const latest = await fetchCourseRequests();
+      const text = JSON.stringify(latest);
+      if (text === shown) return;
+      shown = text;
+      requests = latest;
+      renderAll();
+    } catch (err) {
+      console.warn('Stand der Warteschlange nicht ladbar:', err);
+    }
+  };
+  refresh();
+  const timer = setInterval(refresh, REFRESH_MS);
+  return () => clearInterval(timer);
 }
