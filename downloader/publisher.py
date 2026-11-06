@@ -1,7 +1,7 @@
 """Veröffentlicht einen frisch geladenen Kurs: Videos nach R2 hochladen, App bauen und deployen.
 
 Das sind dieselben Befehle, die man sonst von Hand eintippt:
-    npm run upload-videos   (bricht selbst ab, wenn der Bucket über die 25-GB-Sperre käme)
+    npm run upload-videos
     npm run deploy          (baut die App und lädt sie auf Cloudflare Pages hoch)
 Schlägt der Upload fehl, wird nicht deployt – sonst stünde ein Kurs ohne Videos online.
 """
@@ -76,8 +76,6 @@ def failure_hint(tail):
     if NOT_LOGGED_IN.search(text):
         return ("Bei Cloudflare nicht angemeldet. Einmal im Projektordner `npx wrangler login` "
                 "ausführen und danach den Kurs nochmal starten.")
-    if "Abbruch" in text:
-        return "Der Bucket ist zu voll. Nicht mehr benötigte Videos löschen oder die Videos kleiner kodieren."
     return None
 
 

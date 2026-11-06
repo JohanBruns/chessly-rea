@@ -36,8 +36,6 @@ Kurs-Link ist, wird im Log ignoriert.
 - Ein Kurs, der sich nicht lesen lässt, stoppt die anderen nicht; er steht am Ende in der Zusammenfassung.
 - Hochladen und Veröffentlichen laufen **einmal am Ende** für alle Kurse zusammen. Gibt es bei einem
   Video einen Fehler, wird nichts veröffentlicht. Einfach nochmal starten, fertige Videos werden übersprungen.
-- Passen alle Videos zusammen nicht mehr in den R2-Bucket, lädt `upload-videos` gar nichts hoch (siehe
-  „Aufs iPhone“ in der Haupt-README). Dann die Kurse in kleineren Gruppen hinzufügen.
 
 Ergebnis bei „Kompletter Kurs“:
 
@@ -50,7 +48,7 @@ Ergebnis bei „Kompletter Kurs“:
 Mit dem zweiten Häkchen **„Danach automatisch hochladen und veröffentlichen“** (standardmäßig an)
 macht der Downloader danach selbst weiter, was man sonst von Hand eintippt:
 
-1. `npm run upload-videos` – Videos in den R2-Bucket (stoppt vor der 25-GB-Sperre).
+1. `npm run upload-videos` – Videos in den R2-Bucket.
 2. `npm run deploy` – App bauen und auf Cloudflare Pages hochladen.
 
 Schlägt der Upload fehl, wird nicht deployt. Bei fehlerhaften Videos wird das

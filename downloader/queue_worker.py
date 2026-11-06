@@ -31,11 +31,9 @@ RELEASE_BRANCH = "main"
 # Die Meldungen sehen alle Konten in der App.
 NOT_LOGGED_IN = "Die Chessly-Anmeldung auf dem PC ist abgelaufen."
 READ_FAILED = "Der Kurs ließ sich bei Chessly nicht lesen."
-STORAGE_FULL = "Der Videospeicher ist voll."
 PUBLISH_FAILED = "Hochladen oder Veröffentlichen ist fehlgeschlagen."
 UNEXPECTED = "Beim Hinzufügen ist ein Fehler aufgetreten."
 BAD_LINK = "Der Link zu diesem Kurs ist ungültig."
-STORAGE_FULL_LOG = "Bucket ist zu voll"  # steht im Log, wenn publisher.failure_hint den vollen Bucket erkennt
 
 
 class DatabaseError(Exception):
@@ -122,7 +120,7 @@ def publish_blocker(root=ROOT_DIR, git=git_output):
     return None
 
 
-def failure_message(result, log_lines):
+def failure_message(result):
     """Meldung für die App oder None, wenn der Kurs online ist."""
     if result["published"]:
         return None
@@ -131,8 +129,6 @@ def failure_message(result, log_lines):
     errors = sum(plan["errors"] for plan in result["courses"])
     if errors:
         return f"{errors} Video(s) konnten nicht geladen werden."
-    if any(STORAGE_FULL_LOG in line for line in log_lines):
-        return STORAGE_FULL
     return PUBLISH_FAILED
 
 
@@ -150,14 +146,8 @@ def process_course(db, course, log=print, export=default_export):
     set_status(db, course_id, "running")
     log(f"Hinzufügen: {name}")
 
-    lines = []
-
-    def collect(text):
-        lines.append(text)
-        log(text)
-
     try:
-        message = failure_message(export(links, collect), lines)
+        message = failure_message(export(links, log))
     except NotLoggedIn:
         log('Nicht eingeloggt! Bitte im Downloader (start.bat) auf "Login" klicken.')
         message = NOT_LOGGED_IN

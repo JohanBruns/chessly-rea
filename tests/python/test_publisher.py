@@ -43,11 +43,11 @@ class PublishCourseTest(unittest.TestCase):
         self.assertEqual([args for _, args in STEPS], [["run", "upload-videos"], ["run", "deploy"]])
 
     def test_failed_upload_skips_the_deploy(self):
-        npm = FakeNpm((1, ["Abbruch: Damit wäre der Bucket größer als die Upload-Sperre von 25.00 GB."]))
+        npm = FakeNpm((1, ["upload failed"]))
         ok, log = self.run_publish(npm)
         self.assertFalse(ok)
         self.assertEqual(npm.calls, [["run", "upload-videos"]])
-        self.assertIn("Bucket ist zu voll", log)
+        self.assertIn("`npm run upload-videos` ist mit Code 1 beendet worden", log)
         self.assertNotIn("Veröffentlicht!", log)
 
     def test_failed_deploy_is_reported(self):

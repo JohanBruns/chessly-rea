@@ -97,7 +97,7 @@ describe('Kurs hinzufügen', () => {
   it('stellt einen fehlgeschlagenen Kurs neu an und löscht die Fehlermeldung', async () => {
     const cookie = await signUp('anna');
     await add(available[0].id, cookie);
-    await setStatus(available[0].id, 'failed', 'Der Videospeicher ist voll.');
+    await setStatus(available[0].id, 'failed', 'Hochladen oder Veröffentlichen ist fehlgeschlagen.');
 
     const response = await add(available[0].id, await signUp('ben'));
     expect((await response.json()).request).toEqual({ id: available[0].id, status: 'queued', message: null });

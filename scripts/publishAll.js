@@ -2,7 +2,7 @@
 //   1. Vorprüfung: Fehlt ein Video, auf das eine PGN verweist, startet gar nichts (kein halb fertiger Kurs online).
 //   2. Videos nach R2 hochladen – bei Netzfehlern bis zu 3 Versuche, Fertiges wird übersprungen.
 //   3. App bauen und auf Cloudflare Pages veröffentlichen (bis zu 2 Versuche).
-//   4. Den Worker der E-Mail-Warnung mit der aktuellen Sperre neu deployen (Fehler hier ist nur eine Warnung).
+//   4. Den Worker der E-Mail-Warnung mit der aktuellen Schwelle neu deployen (Fehler hier ist nur eine Warnung).
 //   5. Verbrauch und Kosten anzeigen.
 // Alles, was auf dem Bildschirm steht, landet auch in publish.log. Unter Windows hält das Skript den PC wach.
 // Optionen:  --check     nur die Vorprüfung, nichts hochladen
@@ -27,9 +27,9 @@ export function missingVideos(projectRoot) {
 }
 
 // Ein neuer Versuch lohnt sich bei Netz-, Server- und Anmeldeproblemen (ein neuer wrangler-Aufruf erneuert ein
-// abgelaufenes Token selbst), aber nicht bei der Upload-Sperre oder wenn Videos lokal fehlen.
+// abgelaufenes Token selbst), aber nicht, wenn Videos lokal fehlen.
 export function shouldRetry(output) {
-  return !/Abbruch:|Nicht gefunden \(erst/i.test(output);
+  return !/Nicht gefunden \(erst/i.test(output);
 }
 
 function createLog() {

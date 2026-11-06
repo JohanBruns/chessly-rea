@@ -1,9 +1,9 @@
 // Cloudflare Worker, läuft täglich per Cron: zählt die Videos im R2-Bucket selbst nach (die Statistik im
-// Dashboard hinkt hinterher) und schickt über Resend eine E-Mail, sobald der Bucket ALERT_RATIO der
-// Upload-Sperre erreicht. Solange er darüber bleibt, kommt jeden Tag eine Erinnerung.
-import { ALERT_RATIO, formatGb, FREE_STORAGE_BYTES, monthlyCostUsd, STORAGE_LIMIT_BYTES } from '../scripts/r2Limits.js';
+// Dashboard hinkt hinterher) und schickt über Resend eine E-Mail, sobald der Bucket ALERT_BYTES erreicht.
+// Solange er darüber bleibt, kommt jeden Tag eine Erinnerung. Uploads stoppt das nicht.
+import { ALERT_BYTES, formatGb, FREE_STORAGE_BYTES, monthlyCostUsd } from '../scripts/r2Limits.js';
 
-export const ALERT_BYTES = STORAGE_LIMIT_BYTES * ALERT_RATIO;
+export { ALERT_BYTES };
 
 export async function bucketUsage(bucket) {
   let bytes = 0;
@@ -21,18 +21,16 @@ export async function bucketUsage(bucket) {
 }
 
 export function alertMail({ bytes, objects }, { test = false } = {}) {
-  const pct = Math.round((bytes / STORAGE_LIMIT_BYTES) * 100);
-  const subject = test ? 'Chessly-REA: Test der Speicher-Warnung' : `Chessly-REA: Video-Speicher bei ${pct} % der Grenze`;
+  const subject = test ? 'Chessly-REA: Test der Speicher-Warnung' : `Chessly-REA: Video-Speicher bei ${formatGb(bytes)}`;
   const text = [
-    test ? 'Das ist eine Probe-Mail – die Warnung ist richtig eingerichtet.' : 'Der Video-Speicher nähert sich der selbst gesetzten Grenze.',
+    test ? 'Das ist eine Probe-Mail – die Warnung ist richtig eingerichtet.' : 'Der Video-Speicher ist größer als die Warnschwelle. Uploads laufen weiter.',
     '',
     `Belegt: ${formatGb(bytes)} in ${objects} Videos`,
     `Warnung ab: ${formatGb(ALERT_BYTES)}`,
-    `Upload-Sperre ab: ${formatGb(STORAGE_LIMIT_BYTES)} (npm run upload-videos lädt dann nichts mehr hoch)`,
     `Kostenlos bei Cloudflare: ${formatGb(FREE_STORAGE_BYTES)}`,
     `Speicherkosten jetzt: ca. ${monthlyCostUsd(bytes).toFixed(2)} $ pro Monat`,
     '',
-    test ? '' : 'Bevor du weitere Videos hochlädst, alte Videos aus dem Bucket löschen oder die Sperre in scripts/r2Limits.js anheben.',
+    test ? '' : 'Die Schwelle steht in scripts/r2Limits.js (ALERT_BYTES), danach npm run deploy-alert.',
   ].join('\n');
   return { subject, text };
 }

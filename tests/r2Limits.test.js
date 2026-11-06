@@ -1,14 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { ALERT_RATIO, FREE_STORAGE_BYTES, monthlyCostUsd, STORAGE_LIMIT_BYTES } from '../scripts/r2Limits.js';
+import { ALERT_BYTES, FREE_STORAGE_BYTES, monthlyCostUsd } from '../scripts/r2Limits.js';
 
 describe('R2-Grenzen', () => {
-  it('sperrt Uploads ab 25 GB und warnt bei 85 % davon', () => {
-    expect(STORAGE_LIMIT_BYTES).toBe(25e9);
-    expect(Math.round(STORAGE_LIMIT_BYTES * ALERT_RATIO)).toBe(21.25e9);
-  });
-
-  it('lässt die Sperre über dem Freikontingent von 10 GB', () => {
-    expect(STORAGE_LIMIT_BYTES).toBeGreaterThan(FREE_STORAGE_BYTES);
+  it('warnt ab 100 GB, also über dem Freikontingent von 10 GB', () => {
+    expect(ALERT_BYTES).toBe(100e9);
+    expect(ALERT_BYTES).toBeGreaterThan(FREE_STORAGE_BYTES);
+    expect(monthlyCostUsd(ALERT_BYTES)).toBeCloseTo(1.35, 10);
   });
 });
 

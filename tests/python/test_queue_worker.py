@@ -13,7 +13,6 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "downloader"))
 
 from chessly import NotLoggedIn  # noqa: E402
-from publisher import failure_hint  # noqa: E402
 import queue_worker as worker  # noqa: E402
 
 COURSE_ID = "0897f49e-d26d-42f5-82e9-ce37307b760a"
@@ -77,13 +76,6 @@ class ProcessCourseTest(unittest.TestCase):
                 self.db.run(f"UPDATE course_requests SET status = 'queued' WHERE chessly_id = '{COURSE_ID}'")
                 self.assertEqual(process(self.db, lambda links, log: result),
                                  {"status": "failed", "message": message})
-
-    def test_erkennt_den_vollen_videospeicher_am_hinweis_des_publishers(self):
-        def export(links, log):
-            log(failure_hint(["Abbruch: zu groß"]))
-            return published(False)
-
-        self.assertEqual(process(self.db, export), {"status": "failed", "message": worker.STORAGE_FULL})
 
     def test_abgelaufener_login(self):
         def export(links, log):
