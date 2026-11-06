@@ -1,7 +1,7 @@
 // Cloudflare Worker, läuft täglich per Cron: zählt die Videos im R2-Bucket selbst nach (die Statistik im
 // Dashboard hinkt hinterher) und schickt über Resend eine E-Mail, sobald der Bucket ALERT_RATIO der
 // Upload-Sperre erreicht. Solange er darüber bleibt, kommt jeden Tag eine Erinnerung.
-import { ALERT_RATIO, formatGb, FREE_STORAGE_BYTES, STORAGE_LIMIT_BYTES } from '../scripts/r2Limits.js';
+import { ALERT_RATIO, formatGb, FREE_STORAGE_BYTES, monthlyCostUsd, STORAGE_LIMIT_BYTES } from '../scripts/r2Limits.js';
 
 export const ALERT_BYTES = STORAGE_LIMIT_BYTES * ALERT_RATIO;
 
@@ -30,8 +30,9 @@ export function alertMail({ bytes, objects }, { test = false } = {}) {
     `Warnung ab: ${formatGb(ALERT_BYTES)}`,
     `Upload-Sperre ab: ${formatGb(STORAGE_LIMIT_BYTES)} (npm run upload-videos lädt dann nichts mehr hoch)`,
     `Kostenlos bei Cloudflare: ${formatGb(FREE_STORAGE_BYTES)}`,
+    `Speicherkosten jetzt: ca. ${monthlyCostUsd(bytes).toFixed(2)} $ pro Monat`,
     '',
-    test ? '' : 'Bevor du weitere Videos hochlädst, alte Videos aus dem Bucket löschen.',
+    test ? '' : 'Bevor du weitere Videos hochlädst, alte Videos aus dem Bucket löschen oder die Sperre in scripts/r2Limits.js anheben.',
   ].join('\n');
   return { subject, text };
 }

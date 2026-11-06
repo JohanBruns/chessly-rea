@@ -25,8 +25,8 @@ function fakeResend(status = 200) {
 const env = (sizes) => ({ VIDEOS: fakeBucket(sizes), RESEND_API_KEY: 're_test', ALERT_EMAIL: 'ich@example.org' });
 
 describe('Speicher-Warnung', () => {
-  it('liegt bei 85 % der Upload-Sperre von 9,5 GB', () => {
-    expect(ALERT_BYTES).toBe(8.075e9);
+  it('liegt bei 85 % der Upload-Sperre von 25 GB', () => {
+    expect(Math.round(ALERT_BYTES)).toBe(21.25e9);
   });
 
   it('zählt alle Seiten der Bucket-Liste', async () => {
@@ -42,8 +42,8 @@ describe('Speicher-Warnung', () => {
 
   it('schickt ab der Schwelle eine Mail an die eigene Adresse', async () => {
     const resend = fakeResend();
-    const result = await checkUsage(env([4e9, 4.075e9]), { fetchImpl: resend.fetchImpl });
-    expect(result).toEqual({ bytes: 8.075e9, objects: 2, sent: true });
+    const result = await checkUsage(env([10e9, 11.25e9]), { fetchImpl: resend.fetchImpl });
+    expect(result).toEqual({ bytes: 21.25e9, objects: 2, sent: true });
     expect(resend.calls[0].url).toBe('https://api.resend.com/emails');
     expect(resend.calls[0].init.headers.Authorization).toBe('Bearer re_test');
     expect(resend.calls[0].body.to).toEqual(['ich@example.org']);
@@ -58,13 +58,18 @@ describe('Speicher-Warnung', () => {
   });
 
   it('meldet abgelehnte Mails und fehlende Einstellungen als Fehler', async () => {
-    await expect(checkUsage(env([9e9]), { fetchImpl: fakeResend(401).fetchImpl })).rejects.toThrow('401');
-    await expect(checkUsage({ VIDEOS: fakeBucket([9e9]) }, { fetchImpl: fakeResend().fetchImpl })).rejects.toThrow('RESEND_API_KEY');
+    await expect(checkUsage(env([22e9]), { fetchImpl: fakeResend(401).fetchImpl })).rejects.toThrow('401');
+    await expect(checkUsage({ VIDEOS: fakeBucket([22e9]) }, { fetchImpl: fakeResend().fetchImpl })).rejects.toThrow('RESEND_API_KEY');
   });
 
   it('nennt in der Warnung Belegung und Grenzen', () => {
     const { text } = alertMail({ bytes: 7e9, objects: 50 });
     expect(text).toContain('Belegt: 7.00 GB in 50 Videos');
-    expect(text).toContain('Upload-Sperre ab: 9.50 GB');
+    expect(text).toContain('Upload-Sperre ab: 25.00 GB');
+  });
+
+  it('nennt in der Warnung die Speicherkosten über den freien 10 GB', () => {
+    expect(alertMail({ bytes: 22e9, objects: 300 }).text).toContain('Speicherkosten jetzt: ca. 0.18 $ pro Monat');
+    expect(alertMail({ bytes: 7e9, objects: 50 }).text).toContain('Speicherkosten jetzt: ca. 0.00 $ pro Monat');
   });
 });
