@@ -13,6 +13,7 @@ downloads/
 # Worker im Hintergrund
 queue_worker.log*
 queue_worker.lock
+queue_worker_notified.json
 
 __pycache__/
 *.pyc

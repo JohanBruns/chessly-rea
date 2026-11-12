@@ -157,6 +157,10 @@ Gut zu wissen:
   der Fehler steht im Log und der nächste Kurs versucht es erneut. Force-Push und Pull macht der Worker nie.
 - Der Downloader und der Worker teilen sich den Login-Ordner und können nicht gleichzeitig laufen. Sonst schlägt der
   Kurs fehl und lässt sich mit „Erneut versuchen“ neu anstoßen.
+- Fügt ein anderes Konto als `OWNER_USERNAME` (oben in `downloader/queue_worker.py`) einen Kurs hinzu, öffnet sich
+  auf dem PC einmal ein Hinweisfenster mit Kontoname und Kurs, sobald der Worker ihn anfängt. Der Kurs lädt dabei schon
+  weiter. Welche Aufträge schon gemeldet wurden, steht in `downloader\queue_worker_notified.json`, damit ein Kurs nach
+  einem Neustart nicht nochmal meldet; ein neuer Versuch nach einem Fehler meldet wieder.
 - Wer einen Kurs hinzufügt, bekommt beim Öffnen der App einen Hinweis, sobald er da ist; mit früher erteilter Erlaubnis
   auch als Browser-Benachrichtigung. Die Merkliste dafür bleibt auf dem Gerät.
 

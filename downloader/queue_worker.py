@@ -4,6 +4,7 @@ Die App liegt bei Cloudflare, der Chessly-Login und das Download-Werkzeug nur au
 Deshalb legt der Knopf „Hinzufügen“ nur einen Auftrag in die Datenbank (Tabelle course_requests),
 und dieses Programm holt ihn ab: Videos, Linien und PGN laden, Videos nach R2, App veröffentlichen,
 Kursdateien committen und pushen.
+Kommt ein Kurs von einem anderen Konto als OWNER_USERNAME, öffnet sich dabei einmal ein Hinweisfenster mit dem Konto.
 Für die Datenbank nutzt es den Login von `npx wrangler login`.
 
 Aufruf: unsichtbar über den Autostart (pythonw) oder mit warteschlange.bat im Fenster. Es läuft immer nur
@@ -32,6 +33,12 @@ POLL_SECONDS = 60
 GIT_TIMEOUT_SECONDS = 300
 LOG_FILE = PROJECT_DIR / "queue_worker.log"
 LOCK_FILE = PROJECT_DIR / "queue_worker.lock"
+NOTIFIED_FILE = PROJECT_DIR / "queue_worker_notified.json"
+NOTIFIED_KEEP = 200
+
+# Mein Konto in der App. Fügt ein anderes Konto einen Kurs hinzu, zeigt der PC einmal ein Fenster.
+OWNER_USERNAME = "Johan_Mafia"
+POPUP_TITLE = "Chessly Warteschlange"
 
 # Diese Pfade entstehen beim Hinzufügen selbst und halten das Veröffentlichen nicht auf.
 COURSE_PATHS = ("openings/", "downloader/lines/", "downloader/catalog.json")
@@ -86,8 +93,10 @@ def sql_text(value):
 
 
 def next_course(db):
-    rows = db.run("SELECT chessly_id, name, url FROM course_requests "
-                  "WHERE status = 'queued' ORDER BY requested_at LIMIT 1")
+    """Der älteste wartende Kurs; requested_by ist der Kontoname (None, wenn das Konto gelöscht ist)."""
+    rows = db.run("SELECT r.chessly_id, r.name, r.url, r.requested_at, u.username AS requested_by "
+                  "FROM course_requests r LEFT JOIN users u ON u.id = r.requested_by "
+                  "WHERE r.status = 'queued' ORDER BY r.requested_at LIMIT 1")
     return rows[0] if rows else None
 
 
@@ -152,6 +161,53 @@ def save_course(name, log=print, root=ROOT_DIR, git=git_output):
         log(f"Nicht gesichert: {error}. Der nächste Kurs versucht es erneut.")
 
 
+def show_popup(title, text):
+    """Hinweisfenster über allen anderen Fenstern. Es läuft in einem eigenen Thread, damit der Kurs
+    schon lädt, während das Fenster offen ist."""
+    if os.name != "nt":
+        return
+    import ctypes
+    import threading
+    info, set_foreground, topmost = 0x40, 0x10000, 0x40000
+    threading.Thread(
+        target=ctypes.windll.user32.MessageBoxW,
+        args=(None, text, title, info | set_foreground | topmost),
+        daemon=True,
+    ).start()
+
+
+def is_own_request(course):
+    username = course.get("requested_by")
+    return bool(username) and username.casefold() == OWNER_USERNAME.casefold()
+
+
+def notify_foreign_request(course, log=print, path=NOTIFIED_FILE, show=show_popup):
+    """Zeigt einmal pro Auftrag ein Fenster, wenn ein anderes Konto den Kurs hinzugefügt hat. Gezeigte Aufträge
+    stehen in NOTIFIED_FILE, damit ein Kurs, der nach einem Neustart wieder drankommt, nicht nochmal meldet.
+    Ein neuer Versuch nach einem Fehler ist ein neuer Auftrag (neues requested_at) und meldet wieder."""
+    if is_own_request(course):
+        return False
+    key = f"{course['chessly_id']}:{course.get('requested_at')}"
+    try:
+        seen = json.loads(path.read_text(encoding="utf-8"))
+        if not isinstance(seen, list):
+            seen = []
+    except (OSError, ValueError):
+        seen = []
+    if key in seen:
+        return False
+    try:
+        path.write_text(json.dumps((seen + [key])[-NOTIFIED_KEEP:]), encoding="utf-8")
+    except OSError as error:
+        log(f"Gezeigte Hinweise nicht gespeichert: {error}")
+
+    who = course.get("requested_by") or "Ein gelöschtes Konto"
+    log(f"Hinweis: {who} hat {course['name']} hinzugefügt.")
+    show(POPUP_TITLE, f"{who} hat den Kurs „{course['name']}“ hinzugefügt.\n\n"
+                      "Die Warteschlange lädt ihn jetzt herunter und veröffentlicht ihn danach.")
+    return True
+
+
 def failure_message(result):
     """Meldung für die App oder None, wenn der Kurs online ist."""
     if result["published"]:
@@ -168,7 +224,7 @@ def default_export(links, log):
     return export_courses(links, TARGET_DIR, log, lambda: False, True, True, DEFAULT_WORKERS)
 
 
-def process_course(db, course, log=print, export=default_export, save=save_course):
+def process_course(db, course, log=print, export=default_export, save=save_course, notify=notify_foreign_request):
     """Lädt, veröffentlicht und sichert einen Kurs und trägt das Ergebnis ein."""
     course_id, name = course["chessly_id"], course["name"]
     links, _, _ = parse_course_links(course["url"])
@@ -176,7 +232,11 @@ def process_course(db, course, log=print, export=default_export, save=save_cours
         set_status(db, course_id, "failed", BAD_LINK)
         return
     set_status(db, course_id, "running")
-    log(f"Hinzufügen: {name}")
+    log(f"Hinzufügen: {name} (von {course.get('requested_by') or 'gelöschtem Konto'})")
+    try:
+        notify(course, log)
+    except Exception as error:  # Ein Hinweisfenster darf den Kurs nicht aufhalten.
+        log(f"Hinweisfenster fehlgeschlagen: {error}")
 
     try:
         message = failure_message(export(links, log))

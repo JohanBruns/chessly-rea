@@ -33,10 +33,15 @@ class FakeDatabase:
     def run(self, sql):
         return [dict(row) for row in self.connection.execute(sql).fetchall()]
 
-    def add(self, course_id=COURSE_ID, url=COURSE_URL, status="queued", requested_at=1, name="Kurs"):
+    def add(self, course_id=COURSE_ID, url=COURSE_URL, status="queued", requested_at=1, name="Kurs", requested_by=None):
+        user_id = None
+        if requested_by:
+            self.connection.execute("INSERT OR IGNORE INTO users (username, password_hash, created_at) VALUES (?, '', 0)",
+                                    (requested_by,))
+            user_id = self.connection.execute("SELECT id FROM users WHERE username = ?", (requested_by,)).fetchone()[0]
         self.connection.execute(
-            "INSERT INTO course_requests (chessly_id, name, url, status, requested_at, updated_at) "
-            "VALUES (?, ?, ?, ?, ?, 0)", (course_id, name, url, status, requested_at))
+            "INSERT INTO course_requests (chessly_id, name, url, status, requested_by, requested_at, updated_at) "
+            "VALUES (?, ?, ?, ?, ?, ?, 0)", (course_id, name, url, status, user_id, requested_at))
 
     def row(self, course_id=COURSE_ID):
         return self.run(f"SELECT status, message FROM course_requests WHERE chessly_id = '{course_id}'")[0]
@@ -46,8 +51,8 @@ def published(ok=True, failed=(), errors=0):
     return {"courses": [{"errors": errors}], "failed": list(failed), "published": ok}
 
 
-def process(db, export, save=lambda name, log: None):
-    worker.process_course(db, worker.next_course(db), lambda text: None, export, save)
+def process(db, export, save=lambda name, log: None, notify=lambda course, log: None):
+    worker.process_course(db, worker.next_course(db), lambda text: None, export, save, notify)
     return db.row()
 
 
@@ -109,6 +114,68 @@ class ProcessCourseTest(unittest.TestCase):
             self.fail("darf nicht laden")
 
         self.assertEqual(process(db, export), {"status": "failed", "message": worker.BAD_LINK})
+
+
+class NotifyTest(unittest.TestCase):
+    def setUp(self):
+        folder = tempfile.TemporaryDirectory(ignore_cleanup_errors=True)
+        self.addCleanup(folder.cleanup)
+        self.path = Path(folder.name) / "notified.json"
+        self.shown = []
+
+    def notify(self, course):
+        return worker.notify_foreign_request(course, lambda text: None, self.path,
+                                             lambda title, text: self.shown.append(text))
+
+    def course(self, requested_by="Daniel", requested_at=5, name="The Ponziani"):
+        db = FakeDatabase()
+        db.add(requested_by=requested_by, requested_at=requested_at, name=name)
+        return worker.next_course(db)
+
+    def test_naechster_kurs_kennt_das_konto(self):
+        self.assertEqual(self.course()["requested_by"], "Daniel")
+
+    def test_fremdes_konto_meldet_mit_name_und_kurs(self):
+        self.assertTrue(self.notify(self.course()))
+        self.assertEqual(len(self.shown), 1)
+        self.assertIn("Daniel", self.shown[0])
+        self.assertIn("The Ponziani", self.shown[0])
+
+    def test_eigenes_konto_meldet_nicht(self):
+        for username in (worker.OWNER_USERNAME, worker.OWNER_USERNAME.lower()):
+            with self.subTest(username=username):
+                self.assertFalse(self.notify(self.course(requested_by=username)))
+        self.assertEqual(self.shown, [])
+
+    def test_nur_einmal_auch_nach_neustart(self):
+        self.notify(self.course())
+        self.assertFalse(self.notify(self.course()))
+        self.assertEqual(len(self.shown), 1)
+
+    def test_neuer_auftrag_nach_fehler_meldet_wieder(self):
+        self.notify(self.course(requested_at=5))
+        self.assertTrue(self.notify(self.course(requested_at=9)))
+        self.assertEqual(len(self.shown), 2)
+
+    def test_geloeschtes_konto(self):
+        self.notify(self.course(requested_by=None))
+        self.assertIn("gelöschtes Konto", self.shown[0])
+
+    def test_kaputte_merkliste_meldet_trotzdem(self):
+        self.path.write_text("kein json", encoding="utf-8")
+        self.assertTrue(self.notify(self.course()))
+
+    def test_meldet_beim_start_und_haelt_den_kurs_nicht_auf(self):
+        db = FakeDatabase()
+        db.add(requested_by="Daniel")
+        calls = []
+
+        def notify(course, log):
+            calls.append(course["requested_by"])
+            raise RuntimeError("kein Fenster")
+
+        self.assertEqual(process(db, lambda links, log: published(), notify=notify)["status"], "done")
+        self.assertEqual(calls, ["Daniel"])
 
 
 class QueueTest(unittest.TestCase):

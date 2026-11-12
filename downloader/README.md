@@ -93,7 +93,7 @@ Lektionen ohne Video bei Chessly fehlen im Kurs.
 | `downloader.py` | Lädt ein Vimeo-Video mit yt-dlp und fügt Bild + Ton zu MP4 zusammen |
 | `exporter.py` | Der komplette Ablauf für einen oder mehrere Kurse: lesen → Videos (parallel) → `lines/<Kurs>.json` + PGN in `openings/` |
 | `publisher.py` | Danach `npm run upload-videos` und `npm run deploy` (Tests: `tests/python/`) |
-| `queue_worker.py` | Arbeitet die Kurse ab, die in der App mit „Hinzufügen“ angefragt wurden; läuft im Hintergrund über den Autostart oder mit `warteschlange.bat` im Fenster (siehe Haupt-README) |
+| `queue_worker.py` | Arbeitet die Kurse ab, die in der App mit „Hinzufügen“ angefragt wurden; läuft im Hintergrund über den Autostart oder mit `warteschlange.bat` im Fenster; meldet Kurse anderer Konten einmal per Hinweisfenster (siehe Haupt-README) |
 | `lines.py` | Speichert alle Varianten (Züge + Kommentare) eines Kurses nach `lines/<Kurs>.json` – für `npm run abgleich` |
 | `catalog.py` | Liest alle Kurse deines Kontos nach `catalog.json` – für die Seite „Chessly-Katalog“ (`npm run catalog`) |
 
