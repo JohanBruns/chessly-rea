@@ -261,6 +261,10 @@ npm run deploy
 überspringt es (Liste in `downloader/downloads/.uploaded.json`). Nach neuen Kursen oder Videos einfach beide
 Befehle erneut ausführen.
 
+`npm run deploy` veröffentlicht immer in Produktion (`--branch main`), egal auf welchem Git-Branch du gerade bist. Ohne
+diese Angabe nimmt Cloudflare den aktuellen Branch und legt bei jedem anderen nur eine Vorschau an, die nicht unter der
+normalen Adresse erreichbar ist.
+
 ### Kosten im Blick
 
 ```bash

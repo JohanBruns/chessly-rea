@@ -15,7 +15,7 @@
     "test": "vitest run",
     "upload-videos": "node scripts/uploadVideos.js",
     "publish-all": "node scripts/publishAll.js",
-    "deploy": "npm run build && wrangler pages deploy",
+    "deploy": "npm run build && wrangler pages deploy --branch main --commit-dirty=true",
     "db:migrate": "wrangler d1 migrations apply chessly-rea --remote",
     "db:migrate:local": "wrangler d1 migrations apply chessly-rea --local",
     "usage": "node scripts/usage.js",
