@@ -9,6 +9,7 @@ import itertools
 import json
 import subprocess
 import threading
+import time
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -17,6 +18,7 @@ from chessly import NotLoggedIn, collect_lessons, find_vimeo_id, parse_course_ur
 from downloader import Stopped, download_video, safe_filename
 from lines import fetch_course
 from publisher import publish_course
+from speed import DOWNLOADED, describe_transfer
 
 LINES_DIR = PROJECT_DIR / "lines"
 ROOT_DIR = PROJECT_DIR.parent
@@ -241,12 +243,17 @@ def download_jobs(jobs, log, should_stop, workers=DEFAULT_WORKERS, download=down
             log(f"  FEHLER bei {target_file.name}: {error}")
 
     stopped = False
+    bytes_before, started = DOWNLOADED.total, time.monotonic()
     with ThreadPoolExecutor(max_workers=workers) as pool:
         for future in [pool.submit(work, job) for job in jobs]:
             try:
                 future.result()
             except Stopped:
                 stopped = True
+    loaded = DOWNLOADED.total - bytes_before
+    if loaded:
+        # Wanduhrzeit statt Summe der Einzelzeiten: bei parallelen Downloads ist das das echte Gesamttempo.
+        log(f"Download gesamt: {describe_transfer(loaded, time.monotonic() - started)}")
     if stopped:
         raise Stopped()
 
