@@ -58,6 +58,7 @@ export function createBoard(el, { orientation = 'w', coordinates = true, onMove 
   const cg = Chessground(el, {
     orientation: COLOR[orientation],
     coordinates,
+    ranksPosition: 'left', // Zahlen links; chessground färbt sie dann passend zum Feld darunter
     animation: { enabled: true, duration: 220 },
     highlight: { lastMove: true, check: true },
     movable: { free: false, color: undefined, showDests: true, events: { after: (orig, dest) => onMove?.(orig, dest) } },

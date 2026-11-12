@@ -2391,17 +2391,69 @@ body[data-board='green'] cg-board {
   background-color: #ffffdd;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' shape-rendering='crispEdges'%3E%3Cpath fill='%2386a666' d='M1 0h1v1h-1zM3 0h1v1h-1zM5 0h1v1h-1zM7 0h1v1h-1zM0 1h1v1h-1zM2 1h1v1h-1zM4 1h1v1h-1zM6 1h1v1h-1zM1 2h1v1h-1zM3 2h1v1h-1zM5 2h1v1h-1zM7 2h1v1h-1zM0 3h1v1h-1zM2 3h1v1h-1zM4 3h1v1h-1zM6 3h1v1h-1zM1 4h1v1h-1zM3 4h1v1h-1zM5 4h1v1h-1zM7 4h1v1h-1zM0 5h1v1h-1zM2 5h1v1h-1zM4 5h1v1h-1zM6 5h1v1h-1zM1 6h1v1h-1zM3 6h1v1h-1zM5 6h1v1h-1zM7 6h1v1h-1zM0 7h1v1h-1zM2 7h1v1h-1zM4 7h1v1h-1zM6 7h1v1h-1z'/%3E%3C/svg%3E");
 }
-body[data-board='blue'] .cg-wrap coords coord {
-  color: #8ca2ad !important;
+/* ---------- Brettkoordinaten ---------- */
+/* chessground legt Zahlen und Buchstaben mit festen Versätzen außerhalb des Bretts ab (top: -20px,
+   left: 24px). .board-wrap schneidet das ab, darum landen sie verrutscht im falschen Feld. Wie bei
+   Lichess kommen sie stattdessen aufs Brett: Zahlen oben links in der linken Spalte, Buchstaben
+   unten rechts in der unteren Reihe – jeweils in der Farbe des anderen Feldtyps. */
+.cg-wrap {
+  container-type: inline-size; /* Schriftgröße der Koordinaten wächst mit dem Brett */
+  --coord-on-light: #b58863;
+  --coord-on-dark: #f0d9b5;
 }
-body[data-board='blue'] .cg-wrap coords coord:nth-child(2n) {
-  color: #dee3e6 !important;
+body[data-board='blue'] .cg-wrap {
+  --coord-on-light: #8ca2ad;
+  --coord-on-dark: #dee3e6;
 }
-body[data-board='green'] .cg-wrap coords coord {
-  color: #86a666 !important;
+body[data-board='green'] .cg-wrap {
+  --coord-on-light: #86a666;
+  --coord-on-dark: #ffffdd;
 }
-body[data-board='green'] .cg-wrap coords coord:nth-child(2n) {
-  color: #ffffdd !important;
+.cg-wrap coords.ranks,
+.cg-wrap coords.ranks.left,
+.cg-wrap coords.files {
+  left: 0;
+  opacity: 1;
+  font-size: clamp(10px, 2.8cqi, 15px);
+  font-weight: 700;
+  line-height: 1;
+}
+.cg-wrap coords.ranks,
+.cg-wrap coords.ranks.left {
+  top: 0;
+  width: 12.5%;
+  height: 100%;
+  align-items: stretch;
+}
+.cg-wrap coords.files {
+  bottom: 0;
+  width: 100%;
+  height: 12.5%;
+}
+.cg-wrap coords.ranks coord,
+.cg-wrap coords.files coord {
+  flex: 1 1 0;
+  display: flex;
+  transform: none;
+}
+.cg-wrap coords.ranks coord {
+  padding: 3px 0 0 3px;
+}
+.cg-wrap coords.files coord {
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 0 3px 2px 0;
+}
+/* chessground markiert, auf welchem Feldtyp jede Koordinate steht (coord-light / coord-dark).
+   Die Regeln aus chessground.brown.css zählen dagegen mit nth-child und gehen von Zahlen am
+   rechten Rand aus – darum hier mit höherer Spezifität überschreiben. */
+.cg-wrap coords.ranks coord.coord-light,
+.cg-wrap coords.files coord.coord-light {
+  color: var(--coord-on-light);
+}
+.cg-wrap coords.ranks coord.coord-dark,
+.cg-wrap coords.files coord.coord-dark {
+  color: var(--coord-on-dark);
 }
 cg-board square.last-move {
   background-color: rgba(45, 212, 191, 0.32);
