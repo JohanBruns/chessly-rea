@@ -51,10 +51,14 @@ macht der Downloader danach selbst weiter, was man sonst von Hand eintippt:
 1. `npm run upload-videos` – Videos in den R2-Bucket.
 2. `npm run deploy` – App bauen und auf Cloudflare Pages hochladen.
 
-Das Log zeigt dabei die Geschwindigkeit: bei jedem Video das aktuelle Tempo (bei 25, 50 und 100 %) und am Ende
-Größe, Zeit und Durchschnitt, bei mehreren gleichzeitigen Downloads außerdem „Download gesamt“ (echtes Gesamttempo
+Das Log zeigt dabei die Geschwindigkeit: bei jedem Video getrennt für Bild („Video“) und Ton („Audio“) das
+Durchschnittstempo bei 25, 50, 75 und 100 % und am Ende Größe, Zeit und Durchschnitt, bei mehreren gleichzeitigen Downloads außerdem „Download gesamt“ (echtes Gesamttempo
 der Leitung). Der Upload meldet dasselbe pro Video und als „Upload gesamt“, jeweils in MB/s und Mbit/s. Beim Upload
 steckt der Start von `wrangler` mit in der Zeit, bei kleinen Dateien wirkt das Tempo deshalb niedriger als es ist.
+
+Vimeo liefert die Videos in 6-Sekunden-Stücken (HLS) über zwei Netze, Akamai und Fastly. Der Downloader nimmt
+Akamai und lädt 4 Stücke gleichzeitig, denn bei Fastly hängen einzelne Stücke oft sekundenlang (ein 75-MB-Video:
+5 min 35 s über Fastly, 13 s über Akamai). Gibt es ein Video nicht bei Akamai, lädt er es wie früher.
 
 Schlägt der Upload fehl, wird nicht deployt. Bei fehlerhaften Videos wird das
 Veröffentlichen übersprungen. Einmalig vorher im Projektordner
