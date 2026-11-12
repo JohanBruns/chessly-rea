@@ -14,6 +14,7 @@ downloads/
 queue_worker.log*
 queue_worker.lock
 queue_worker_notified.json
+queue_history.log
 
 __pycache__/
 *.pyc

@@ -7,6 +7,7 @@ Aufruf im Projektordner:
 import sqlite3
 import sys
 import tempfile
+import time
 import unittest
 from pathlib import Path
 from unittest import mock
@@ -51,8 +52,9 @@ def published(ok=True, failed=(), errors=0):
     return {"courses": [{"errors": errors}], "failed": list(failed), "published": ok}
 
 
-def process(db, export, save=lambda name, log: None, notify=lambda course, log: None):
-    worker.process_course(db, worker.next_course(db), lambda text: None, export, save, notify)
+def process(db, export, save=lambda name, log: None, notify=lambda course, log: None,
+            history=lambda course, result, log: None):
+    worker.process_course(db, worker.next_course(db), lambda text: None, export, save, notify, history)
     return db.row()
 
 
@@ -124,8 +126,8 @@ class NotifyTest(unittest.TestCase):
         self.shown = []
 
     def notify(self, course):
-        return worker.notify_foreign_request(course, lambda text: None, self.path,
-                                             lambda title, text: self.shown.append(text))
+        return worker.notify_request(course, lambda text: None, self.path,
+                                     lambda title, text: self.shown.append(text))
 
     def course(self, requested_by="Daniel", requested_at=5, name="The Ponziani"):
         db = FakeDatabase()
@@ -135,17 +137,15 @@ class NotifyTest(unittest.TestCase):
     def test_naechster_kurs_kennt_das_konto(self):
         self.assertEqual(self.course()["requested_by"], "Daniel")
 
-    def test_fremdes_konto_meldet_mit_name_und_kurs(self):
+    def test_meldet_mit_name_und_kurs(self):
         self.assertTrue(self.notify(self.course()))
         self.assertEqual(len(self.shown), 1)
         self.assertIn("Daniel", self.shown[0])
         self.assertIn("The Ponziani", self.shown[0])
 
-    def test_eigenes_konto_meldet_nicht(self):
-        for username in (worker.OWNER_USERNAME, worker.OWNER_USERNAME.lower()):
-            with self.subTest(username=username):
-                self.assertFalse(self.notify(self.course(requested_by=username)))
-        self.assertEqual(self.shown, [])
+    def test_eigenes_konto_meldet_auch(self):
+        self.assertTrue(self.notify(self.course(requested_by="Johan_Mafia")))
+        self.assertIn("Johan_Mafia", self.shown[0])
 
     def test_nur_einmal_auch_nach_neustart(self):
         self.notify(self.course())
@@ -176,6 +176,44 @@ class NotifyTest(unittest.TestCase):
 
         self.assertEqual(process(db, lambda links, log: published(), notify=notify)["status"], "done")
         self.assertEqual(calls, ["Daniel"])
+
+
+class HistoryTest(unittest.TestCase):
+    def setUp(self):
+        folder = tempfile.TemporaryDirectory(ignore_cleanup_errors=True)
+        self.addCleanup(folder.cleanup)
+        self.path = Path(folder.name) / "history.log"
+
+    def run_course(self, export, requested_by="Daniel", url=COURSE_URL):
+        db = FakeDatabase()
+        added = time.mktime((2026, 11, 10, 18, 31, 0, 0, 0, -1)) * 1000
+        db.add(requested_by=requested_by, requested_at=added, name="The Ponziani", url=url)
+        finished = time.mktime((2026, 11, 12, 21, 35, 0, 0, 0, -1)) * 1000
+        history = lambda course, result, log: worker.record_history(course, result, log, self.path, finished)  # noqa: E731
+        process(db, export, history=history)
+        return self.path.read_text(encoding="utf-8").splitlines()
+
+    def test_zeile_mit_wann_wer_was_und_ergebnis(self):
+        self.assertEqual(self.run_course(lambda links, log: published()),
+                         ["2026-11-10 18:31 | Daniel | The Ponziani | fertig 2026-11-12 21:35"])
+
+    def test_fehler_steht_mit_grund_im_verlauf(self):
+        lines = self.run_course(lambda links, log: published(False), requested_by="Johan_Mafia")
+        self.assertEqual(lines, [f"2026-11-10 18:31 | Johan_Mafia | The Ponziani | "
+                                 f"fehlgeschlagen ({worker.PUBLISH_FAILED}) 2026-11-12 21:35"])
+
+    def test_ungueltiger_link_steht_im_verlauf(self):
+        lines = self.run_course(lambda links, log: self.fail("darf nicht laden"), url="https://example.com/nichts")
+        self.assertIn(worker.BAD_LINK, lines[0])
+
+    def test_verlauf_wird_angehaengt(self):
+        self.run_course(lambda links, log: published())
+        self.assertEqual(len(self.run_course(lambda links, log: published())), 2)
+
+    def test_nicht_schreibbarer_verlauf_haelt_nichts_auf(self):
+        lines = []
+        worker.record_history({"name": "Kurs", "requested_at": 1}, "fertig", lines.append, Path(self.path.parent, "fehlt", "x.log"))
+        self.assertIn("Verlauf nicht gespeichert", lines[0])
 
 
 class QueueTest(unittest.TestCase):
