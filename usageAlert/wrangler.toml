@@ -9,9 +9,9 @@ preview_urls = false
 [triggers]
 crons = ["0 7 * * *"] # täglich 07:00 UTC (8 Uhr Winterzeit)
 
-[vars]
-ALERT_EMAIL = "deine-adresse@example.com"
-# RESEND_API_KEY ist ein Secret: npx wrangler secret put RESEND_API_KEY --config usageAlert/wrangler.toml
+# Secrets (nicht im Repo):
+# ALERT_EMAIL: npx wrangler secret put ALERT_EMAIL --config usageAlert/wrangler.toml
+# RESEND_API_KEY: npx wrangler secret put RESEND_API_KEY --config usageAlert/wrangler.toml
 
 [[r2_buckets]]
 binding = "VIDEOS"
